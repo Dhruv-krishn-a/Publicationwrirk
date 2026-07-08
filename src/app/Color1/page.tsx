@@ -205,7 +205,7 @@ const faqs = [
 function SectionTitle({ eyebrow, title, subtitle }: { eyebrow: string; title: string; subtitle: string }) {
   return (
     <div className="max-w-3xl">
-      <div className="mb-3 text-[11px] uppercase tracking-[0.4em] text-cyan-200/70">{eyebrow}</div>
+      <div className="mb-3 text-[11px] uppercase tracking-[0.4em] text-amber-200/70">{eyebrow}</div>
       <h2 className="text-3xl md:text-5xl leading-[1.04] tracking-tight text-slate-50 font-semibold">
         {title}
       </h2>
@@ -216,7 +216,7 @@ function SectionTitle({ eyebrow, title, subtitle }: { eyebrow: string; title: st
 
 function Pill({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-full border border-cyan-400/25 bg-cyan-400/10 px-3 py-1 text-[11px] tracking-[0.28em] uppercase text-cyan-100/90 shadow-[0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm">
+    <span className="inline-flex items-center rounded-full border border-amber-400/25 bg-amber-400/10 px-3 py-1 text-[11px] tracking-[0.28em] uppercase text-amber-100/90 shadow-[0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm">
       {children}
     </span>
   );
@@ -224,10 +224,10 @@ function Pill({ children }: { children: ReactNode }) {
 
 function ServiceLine({ title, text }: { title: string; text: string }) {
   return (
-    <div className="group rounded-[28px] border border-white/10 bg-white/5 p-5 md:p-6 shadow-[0_24px_80px_rgba(0,0,0,0.22)] transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/30 hover:bg-white/8 hover:shadow-[0_30px_120px_rgba(0,0,0,0.32)]">
+    <div className="group rounded-[28px] border border-white/10 bg-white/5 p-5 md:p-6 shadow-[0_24px_80px_rgba(0,0,0,0.22)] transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/30 hover:bg-white/8 hover:shadow-[0_30px_120px_rgba(0,0,0,0.32)]">
       <div className="flex items-center justify-between gap-3">
         <h3 className="text-lg font-semibold text-slate-50">{title}</h3>
-        <ArrowRight className="h-4 w-4 text-cyan-300 transition-transform duration-300 group-hover:translate-x-1" />
+        <ArrowRight className="h-4 w-4 text-amber-300 transition-transform duration-300 group-hover:translate-x-1" />
       </div>
       <p className="mt-3 text-sm leading-6 text-slate-300">{text}</p>
     </div>
@@ -239,9 +239,9 @@ function FloatingActionButton({ href, icon: Icon, label, className }: { href: st
     <a
       href={href}
       aria-label={label}
-      className={`group flex items-center overflow-hidden rounded-full border border-white/10 bg-[#0c1418]/90 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-md transition-all duration-300 hover:scale-[1.03] hover:border-cyan-400/35 ${className ?? ''}`}
+      className={`group flex items-center overflow-hidden rounded-full border border-white/10 bg-[#0c1418]/90 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-md transition-all duration-300 hover:scale-[1.03] hover:border-amber-400/35 ${className ?? ''}`}
     >
-      <span className="flex h-14 w-14 items-center justify-center rounded-full bg-cyan-500/15 text-cyan-200 transition-all duration-300 group-hover:bg-cyan-500/25">
+      <span className="flex h-14 w-14 items-center justify-center rounded-full bg-amber-500/15 text-amber-200 transition-all duration-300 group-hover:bg-amber-500/25">
         <Icon className="h-5 w-5" />
       </span>
       <span className="max-w-0 overflow-hidden whitespace-nowrap pr-0 text-sm font-medium text-slate-100 transition-all duration-300 group-hover:max-w-[180px] group-hover:pr-4">
@@ -253,7 +253,7 @@ function FloatingActionButton({ href, icon: Icon, label, className }: { href: st
 
 function QuoteMark() {
   return (
-    <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-2xl leading-none text-cyan-200">
+    <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-2xl leading-none text-amber-200">
       “
     </div>
   );
@@ -263,9 +263,9 @@ export default function WrirkLandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
-    <div className="min-h-screen bg-[#071316] text-slate-100">
-      <div className="pointer-events-none fixed inset-0 opacity-[0.28] [background-image:radial-gradient(rgba(34,211,238,0.12)_1px,transparent_1px)] [background-size:24px_24px]" />
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,211,238,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(15,118,110,0.14),transparent_30%)]" />
+    <div className="min-h-screen bg-[#032F3C] text-slate-100">
+      <div className="pointer-events-none fixed inset-0 opacity-[0.28] [background-image:radial-gradient(rgba(251,191,36,0.12)_1px,transparent_1px)] [background-size:24px_24px]" />
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,191,36,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(180,83,9,0.14),transparent_30%)]" />
 
       {/* Floating actions */}
       <div className="fixed bottom-6 left-6 z-50 flex flex-col gap-3">
@@ -273,7 +273,7 @@ export default function WrirkLandingPage() {
         <FloatingActionButton href="tel:+91XXXXXXXXXX" icon={PhoneCall} label="Call now" />
       </div>
 
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#071316]/80 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#032F3C]/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8">
           <div className="flex items-center gap-3">
             <img
@@ -283,21 +283,21 @@ export default function WrirkLandingPage() {
             />
             <div>
               <div className="text-sm font-semibold tracking-[0.28em] uppercase text-slate-50">Wrirk</div>
-              <div className="text-[11px] tracking-[0.32em] uppercase text-cyan-100/65">Research Publication Support</div>
+              <div className="text-[11px] tracking-[0.32em] uppercase text-amber-100/65">Research Publication Support</div>
             </div>
           </div>
 
           <nav className="hidden items-center gap-7 text-[11px] uppercase tracking-[0.28em] text-slate-300 md:flex">
-            <a href="#services" className="transition hover:text-cyan-200">Services</a>
-            <a href="#profile" className="transition hover:text-cyan-200">Profile</a>
-            <a href="#journal" className="transition hover:text-cyan-200">Journal Match</a>
-            <a href="#process" className="transition hover:text-cyan-200">Process</a>
-            <a href="#contact" className="transition hover:text-cyan-200">Contact</a>
+            <a href="#services" className="transition hover:text-amber-200">Services</a>
+            <a href="#profile" className="transition hover:text-amber-200">Profile</a>
+            <a href="#journal" className="transition hover:text-amber-200">Journal Match</a>
+            <a href="#process" className="transition hover:text-amber-200">Process</a>
+            <a href="#contact" className="transition hover:text-amber-200">Contact</a>
           </nav>
 
           <a
             href="#contact"
-            className="group inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-cyan-100 transition hover:border-cyan-300/40 hover:bg-cyan-400/15 hover:text-white"
+            className="group inline-flex items-center gap-2 rounded-full border border-amber-400/20 bg-amber-400/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-amber-100 transition hover:border-amber-300/40 hover:bg-amber-400/15 hover:text-white"
           >
             Book a consultation <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
           </a>
@@ -320,13 +320,13 @@ export default function WrirkLandingPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="#contact"
-                className="group inline-flex items-center gap-2 rounded-full bg-cyan-400 px-6 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950 shadow-[0_18px_50px_rgba(34,211,238,0.24)] transition hover:-translate-y-0.5 hover:bg-cyan-300"
+                className="group inline-flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950 shadow-[0_18px_50px_rgba(251,191,36,0.24)] transition hover:-translate-y-0.5 hover:bg-amber-300"
               >
                 Book a free consultation <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
               <a
                 href="#services"
-                className="group inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-6 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-100 transition hover:-translate-y-0.5 hover:border-cyan-300/30 hover:bg-white/8"
+                className="group inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-6 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-100 transition hover:-translate-y-0.5 hover:border-amber-300/30 hover:bg-white/8"
               >
                 Explore services <SquareArrowOutUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-0.5" />
               </a>
@@ -334,7 +334,7 @@ export default function WrirkLandingPage() {
 
             <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
               {stats.map((stat) => (
-                <div key={stat.label} className="rounded-[24px] border border-white/10 bg-white/5 p-4 shadow-[0_18px_60px_rgba(0,0,0,0.18)] transition hover:-translate-y-1 hover:border-cyan-400/20 hover:bg-white/7">
+                <div key={stat.label} className="rounded-[24px] border border-white/10 bg-white/5 p-4 shadow-[0_18px_60px_rgba(0,0,0,0.18)] transition hover:-translate-y-1 hover:border-amber-400/20 hover:bg-white/7">
                   <div className="text-2xl font-semibold tracking-tight text-slate-50">{stat.value}</div>
                   <div className="mt-1 text-[11px] uppercase tracking-[0.24em] text-slate-400">{stat.label}</div>
                 </div>
@@ -344,7 +344,7 @@ export default function WrirkLandingPage() {
             <div className="mt-8 rounded-[30px] border border-white/10 bg-white/5 p-5 md:p-6">
               <div className="flex flex-wrap gap-2">
                 {reasons.map((item) => (
-                  <span key={item} className="rounded-full border border-white/10 bg-[#0c171b] px-3 py-2 text-[11px] uppercase tracking-[0.22em] text-slate-200 transition hover:border-cyan-300/30 hover:bg-white/8">
+                  <span key={item} className="rounded-full border border-white/10 bg-[#0c171b] px-3 py-2 text-[11px] uppercase tracking-[0.22em] text-slate-200 transition hover:border-amber-300/30 hover:bg-white/8">
                     {item}
                   </span>
                 ))}
@@ -353,7 +353,7 @@ export default function WrirkLandingPage() {
           </div>
 
           <div className="relative flex items-center justify-center">
-            <div className="absolute right-6 top-8 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
+            <div className="absolute right-6 top-8 h-72 w-72 rounded-full bg-amber-400/10 blur-3xl" />
             <div className="relative w-full max-w-xl">
               <div className="absolute -left-3 top-6 h-full w-full -rotate-6 rounded-[34px] border border-white/10 bg-white/5 animate-[floatBack_8s_ease-in-out_infinite]" />
               <div className="absolute left-2 top-2 h-full w-full -rotate-3 rounded-[34px] border border-white/10 bg-white/8 animate-[floatMid_7s_ease-in-out_infinite]" />
@@ -367,10 +367,10 @@ export default function WrirkLandingPage() {
                   <div className="mt-6 rounded-[26px] border border-white/10 bg-[#0c171b]/90 p-4 shadow-sm md:p-6">
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <div className="text-[11px] uppercase tracking-[0.25em] text-cyan-200/80">Journal shortlist</div>
+                        <div className="text-[11px] uppercase tracking-[0.25em] text-amber-200/80">Journal shortlist</div>
                         <div className="mt-2 text-2xl font-semibold tracking-tight text-slate-50">Best-fit journal match</div>
                       </div>
-                      <div className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-[11px] uppercase tracking-[0.25em] text-cyan-100">
+                      <div className="rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1 text-[11px] uppercase tracking-[0.25em] text-amber-100">
                         94% fit
                       </div>
                     </div>
@@ -422,7 +422,7 @@ export default function WrirkLandingPage() {
         <section className="py-16 md:py-20">
           <div className="grid gap-6 rounded-[36px] border border-white/10 bg-white/5 p-7 md:grid-cols-[1fr_0.9fr] md:p-10">
             <div>
-              <div className="text-[11px] uppercase tracking-[0.35em] text-cyan-200/70">SEO focus</div>
+              <div className="text-[11px] uppercase tracking-[0.35em] text-amber-200/70">SEO focus</div>
               <h2 className="mt-4 text-3xl md:text-5xl font-semibold leading-[1.02] tracking-tight text-slate-50">
                 Research publication support that helps your paper get closer to acceptance.
               </h2>
@@ -433,8 +433,8 @@ export default function WrirkLandingPage() {
                 publication process.
               </p>
             </div>
-            <div className="rounded-[30px] border border-cyan-400/15 bg-[#0c171b] p-6 shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
-              <div className="flex items-center gap-2 text-cyan-200">
+            <div className="rounded-[30px] border border-amber-400/15 bg-[#0c171b] p-6 shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
+              <div className="flex items-center gap-2 text-amber-200">
                 <Sparkles className="h-4 w-4" />
                 <span className="text-[11px] uppercase tracking-[0.35em]">What people search for</span>
               </div>
@@ -468,8 +468,8 @@ export default function WrirkLandingPage() {
             {painPoints.map((item) => (
               <div key={item.title} className="rounded-[28px] border border-white/10 bg-white/5 p-6 transition hover:-translate-y-1 hover:bg-white/8">
                 <div className="flex items-center justify-between">
-                  <div className="h-10 w-10 rounded-full border border-cyan-400/20 bg-cyan-400/10" />
-                  <ArrowRight className="h-4 w-4 text-cyan-300" />
+                  <div className="h-10 w-10 rounded-full border border-amber-400/20 bg-amber-400/10" />
+                  <ArrowRight className="h-4 w-4 text-amber-300" />
                 </div>
                 <h3 className="mt-5 text-lg font-semibold text-slate-50">{item.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-slate-300">{item.text}</p>
@@ -488,10 +488,10 @@ export default function WrirkLandingPage() {
 
           <div className="mt-14 grid gap-5 md:grid-cols-5">
             {profileSteps.map((step, index) => (
-              <div key={step.title} className="group relative rounded-[28px] border border-white/10 bg-white/5 p-5 md:p-6 shadow-[0_20px_80px_rgba(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/25 hover:bg-white/7">
+              <div key={step.title} className="group relative rounded-[28px] border border-white/10 bg-white/5 p-5 md:p-6 shadow-[0_20px_80px_rgba(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/25 hover:bg-white/7">
                 <div className="flex items-center justify-between">
                   <div className="text-[11px] uppercase tracking-[0.3em] text-slate-400">0{index + 1}</div>
-                  {index < profileSteps.length - 1 ? <ArrowRight className="hidden h-4 w-4 text-cyan-300 md:block transition-transform group-hover:translate-x-1" /> : null}
+                  {index < profileSteps.length - 1 ? <ArrowRight className="hidden h-4 w-4 text-amber-300 md:block transition-transform group-hover:translate-x-1" /> : null}
                 </div>
                 <h3 className="mt-8 text-lg font-semibold text-slate-50">{step.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-slate-300">{step.text}</p>
@@ -503,10 +503,10 @@ export default function WrirkLandingPage() {
         {/* Manifesto section */}
         <section className="grid gap-8 border-y border-white/10 py-16 md:grid-cols-[1.05fr_0.95fr] md:py-20">
           <div>
-            <div className="text-[11px] uppercase tracking-[0.35em] text-cyan-200/70">Why publications matter</div>
+            <div className="text-[11px] uppercase tracking-[0.35em] text-amber-200/70">Why publications matter</div>
             <div className="mt-4 max-w-2xl text-5xl font-semibold leading-[0.98] tracking-tight text-slate-50 md:text-7xl">
               Publication is not the end of research.
-              <span className="block text-cyan-300 italic">It is the beginning of academic influence.</span>
+              <span className="block text-amber-300 italic">It is the beginning of academic influence.</span>
             </div>
             <p className="mt-6 max-w-xl text-base leading-8 text-slate-300">
               A strong publication improves visibility, builds credibility, attracts collaboration, supports career growth, and creates a lasting academic footprint.
@@ -514,7 +514,7 @@ export default function WrirkLandingPage() {
           </div>
           <div className="rounded-[34px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.04))] p-8 shadow-[0_20px_80px_rgba(0,0,0,0.24)] md:p-10">
             <div className="text-[11px] uppercase tracking-[0.3em] text-slate-400">Editorial note</div>
-            <p className="mt-6 text-2xl md:text-4xl leading-tight italic text-cyan-100">
+            <p className="mt-6 text-2xl md:text-4xl leading-tight italic text-amber-100">
               "A well-published researcher is not simply visible. They are trusted, cited, and invited into the conversation."
             </p>
             <div className="mt-8 text-sm uppercase tracking-[0.3em] text-slate-400">Wrirk academic advisory lens</div>
@@ -534,7 +534,7 @@ export default function WrirkLandingPage() {
               <div className="text-[11px] uppercase tracking-[0.3em] text-slate-400">Decision factors</div>
               <div className="mt-5 flex flex-wrap gap-2">
                 {journalFactors.map((factor, idx) => (
-                  <span key={factor} className={`rounded-full border px-4 py-2 text-sm transition ${idx === 0 ? 'border-cyan-300/25 bg-cyan-400/10 text-cyan-100' : 'border-white/10 bg-white/5 text-slate-300 hover:bg-white/8'}`}>
+                  <span key={factor} className={`rounded-full border px-4 py-2 text-sm transition ${idx === 0 ? 'border-amber-300/25 bg-amber-400/10 text-amber-100' : 'border-white/10 bg-white/5 text-slate-300 hover:bg-white/8'}`}>
                     {factor}
                   </span>
                 ))}
@@ -547,7 +547,7 @@ export default function WrirkLandingPage() {
                       <div className="text-[11px] uppercase tracking-[0.25em] text-slate-400">Recommended match</div>
                       <div className="mt-1 text-xl font-semibold text-slate-50">Strong scope alignment</div>
                     </div>
-                    <div className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-[11px] uppercase tracking-[0.25em] text-cyan-100 shadow-sm">
+                    <div className="rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1 text-[11px] uppercase tracking-[0.25em] text-amber-100 shadow-sm">
                       High fit
                     </div>
                   </div>
@@ -583,12 +583,12 @@ export default function WrirkLandingPage() {
                 ].map((item) => (
                   <div key={item} className="flex items-center justify-between rounded-[20px] border border-white/10 bg-[#0c171b] px-4 py-4 transition hover:bg-white/8">
                     <span className="text-sm text-slate-300">{item}</span>
-                    <BadgeCheck className="h-4 w-4 text-cyan-300" />
+                    <BadgeCheck className="h-4 w-4 text-amber-300" />
                   </div>
                 ))}
               </div>
 
-              <div className="mt-6 rounded-[28px] border border-cyan-400/15 bg-[linear-gradient(135deg,rgba(34,211,238,0.18),rgba(15,118,110,0.18))] p-6 text-white shadow-[0_25px_80px_rgba(0,0,0,0.24)]">
+              <div className="mt-6 rounded-[28px] border border-amber-400/15 bg-[linear-gradient(135deg,rgba(251,191,36,0.18),rgba(180,83,9,0.18))] p-6 text-white shadow-[0_25px_80px_rgba(0,0,0,0.24)]">
                 <div className="text-[11px] uppercase tracking-[0.35em] text-white/75">Recommendation style</div>
                 <div className="mt-2 text-2xl font-semibold">Data-led, ethical, and publication-focused.</div>
                 <p className="mt-3 text-sm leading-6 text-white/82">
@@ -610,8 +610,8 @@ export default function WrirkLandingPage() {
           <div className="mt-14 grid gap-5 lg:grid-cols-3">
             {serviceBlocks.map((block) => (
               <div key={block.title} className="rounded-[34px] border border-white/10 bg-white/5 p-6 md:p-8 transition hover:-translate-y-1 hover:bg-white/8">
-                <div className="flex items-center gap-3 text-cyan-200">
-                  <div className="h-10 w-10 rounded-full border border-cyan-400/20 bg-cyan-400/10" />
+                <div className="flex items-center gap-3 text-amber-200">
+                  <div className="h-10 w-10 rounded-full border border-amber-400/20 bg-amber-400/10" />
                   <div className="text-[11px] uppercase tracking-[0.3em]">Wrirk support</div>
                 </div>
                 <h3 className="mt-5 text-2xl font-semibold text-slate-50">{block.title}</h3>
@@ -619,7 +619,7 @@ export default function WrirkLandingPage() {
                 <div className="mt-6 space-y-3">
                   {block.items.map((item) => (
                     <div key={item} className="flex items-center gap-3 rounded-[18px] border border-white/10 bg-[#0c171b] px-4 py-3 text-sm text-slate-200">
-                      <CheckCircle2 className="h-4 w-4 text-cyan-300" />
+                      <CheckCircle2 className="h-4 w-4 text-amber-300" />
                       <span>{item}</span>
                     </div>
                   ))}
@@ -629,7 +629,7 @@ export default function WrirkLandingPage() {
           </div>
 
           <div className="mt-8 rounded-[30px] border border-white/10 bg-[#0c171b] p-6 md:p-8">
-            <div className="flex items-center gap-2 text-cyan-200">
+            <div className="flex items-center gap-2 text-amber-200">
               <LayoutList className="h-4 w-4" />
               <span className="text-[11px] uppercase tracking-[0.35em]">All supported services</span>
             </div>
@@ -647,7 +647,7 @@ export default function WrirkLandingPage() {
         <section className="py-16 md:py-20">
           <div className="grid gap-6 rounded-[36px] border border-white/10 bg-white/5 p-7 md:grid-cols-[1fr_1fr] md:p-10">
             <div>
-              <div className="text-[11px] uppercase tracking-[0.35em] text-cyan-200/70">Who we help</div>
+              <div className="text-[11px] uppercase tracking-[0.35em] text-amber-200/70">Who we help</div>
               <h2 className="mt-4 text-3xl md:text-5xl font-semibold leading-[1.02] tracking-tight text-slate-50">
                 Designed for individual researchers and institutional teams.
               </h2>
@@ -702,7 +702,7 @@ export default function WrirkLandingPage() {
         {/* Tips column */}
         <section className="grid gap-8 border-y border-white/10 py-16 md:grid-cols-[0.95fr_1.05fr] md:py-20">
           <div>
-            <div className="text-[11px] uppercase tracking-[0.35em] text-cyan-200/70">Research career tips</div>
+            <div className="text-[11px] uppercase tracking-[0.35em] text-amber-200/70">Research career tips</div>
             <h2 className="mt-4 text-4xl md:text-6xl leading-[0.98] tracking-tight text-slate-50 font-semibold">
               Editorial guidance for sharper research decisions.
             </h2>
@@ -712,7 +712,7 @@ export default function WrirkLandingPage() {
 
             <div className="mt-8 rounded-[30px] border border-white/10 bg-white/5 p-6 md:p-8">
               <div className="text-[11px] uppercase tracking-[0.3em] text-slate-400">Featured guidance</div>
-              <p className="mt-4 text-2xl md:text-3xl italic leading-tight text-cyan-100">
+              <p className="mt-4 text-2xl md:text-3xl italic leading-tight text-amber-100">
                 "A strong abstract does not just describe the paper. It positions the paper."
               </p>
             </div>
@@ -775,7 +775,7 @@ export default function WrirkLandingPage() {
                 >
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3 text-lg font-semibold text-slate-50">
-                      <CircleHelp className="h-5 w-5 text-cyan-300" />
+                      <CircleHelp className="h-5 w-5 text-amber-300" />
                       <span>{faq.q}</span>
                     </div>
                     <ChevronDown className={`h-5 w-5 text-slate-400 transition-transform ${open ? 'rotate-180' : ''}`} />
@@ -790,7 +790,7 @@ export default function WrirkLandingPage() {
         {/* Contact */}
         <section id="contact" className="pb-20 md:pb-28">
           <div className="grid overflow-hidden rounded-[40px] border border-white/10 bg-white/5 shadow-[0_30px_120px_rgba(0,0,0,0.25)] lg:grid-cols-[0.95fr_1.05fr]">
-            <div className="bg-[linear-gradient(180deg,rgba(34,211,238,0.18),rgba(15,118,110,0.22))] p-8 text-white md:p-12">
+            <div className="bg-[linear-gradient(180deg,rgba(251,191,36,0.18),rgba(180,83,9,0.22))] p-8 text-white md:p-12">
               <div className="text-[11px] uppercase tracking-[0.35em] text-white/70">Contact us</div>
               <h2 className="mt-5 text-4xl md:text-6xl font-semibold leading-[0.98] tracking-tight">
                 Start with a free consultation.
@@ -817,7 +817,7 @@ export default function WrirkLandingPage() {
             </div>
 
             <div className="p-8 md:p-12">
-              <div className="text-[11px] uppercase tracking-[0.35em] text-cyan-200/70">Request an assessment</div>
+              <div className="text-[11px] uppercase tracking-[0.35em] text-amber-200/70">Request an assessment</div>
               <div className="mt-3 text-3xl font-semibold text-slate-50">Tell us about your research</div>
               <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300">
                 Tell us the stage of your research, the target outcome, and what kind of support you need. The more context you share, the faster we can suggest the right publication path.
@@ -830,7 +830,7 @@ export default function WrirkLandingPage() {
                     <input
                       type="text"
                       placeholder={label === 'Phone number' ? '+91 XXXXX XXXXX' : ''}
-                      className="w-full rounded-[18px] border border-white/10 bg-[#0c171b] px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300/40 focus:bg-[#0e1b20]"
+                      className="w-full rounded-[18px] border border-white/10 bg-[#0c171b] px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-amber-300/40 focus:bg-[#0e1b20]"
                     />
                   </label>
                 ))}
@@ -840,7 +840,7 @@ export default function WrirkLandingPage() {
                   <input
                     type="text"
                     placeholder="Journal selection, editing, reviewer response, thesis to paper, etc."
-                    className="w-full rounded-[18px] border border-white/10 bg-[#0c171b] px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300/40 focus:bg-[#0e1b20]"
+                    className="w-full rounded-[18px] border border-white/10 bg-[#0c171b] px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-amber-300/40 focus:bg-[#0e1b20]"
                   />
                 </label>
 
@@ -849,13 +849,13 @@ export default function WrirkLandingPage() {
                   <textarea
                     rows={5}
                     placeholder="Describe your research, current stage, deadline, target journal type, and what you need help with."
-                    className="w-full rounded-[18px] border border-white/10 bg-[#0c171b] px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300/40 focus:bg-[#0e1b20]"
+                    className="w-full rounded-[18px] border border-white/10 bg-[#0c171b] px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-amber-300/40 focus:bg-[#0e1b20]"
                   />
                 </label>
 
                 <button
                   type="button"
-                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-cyan-400 px-6 py-3 text-xs font-semibold uppercase tracking-[0.26em] text-slate-950 transition hover:-translate-y-0.5 hover:bg-cyan-300 md:col-span-2"
+                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-xs font-semibold uppercase tracking-[0.26em] text-slate-950 transition hover:-translate-y-0.5 hover:bg-amber-300 md:col-span-2"
                 >
                   Book a free consultation <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </button>
