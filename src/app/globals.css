@@ -37,3 +37,23 @@ body {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
 }
+
+@keyframes shake-vibrate {
+  0%, 85%, 100% { transform: scale(1) rotate(0deg); }
+  87% { transform: scale(1.15) rotate(-10deg); }
+  89% { transform: scale(1.15) rotate(10deg); }
+  91% { transform: scale(1.15) rotate(-10deg); }
+  93% { transform: scale(1.15) rotate(10deg); }
+  95% { transform: scale(1.15) rotate(-5deg); }
+  97% { transform: scale(1.15) rotate(5deg); }
+  99% { transform: scale(1) rotate(0deg); }
+}
+
+.animate-shake-vibrate {
+  animation: shake-vibrate 6s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-150%) skewX(-15deg); }
+  30%, 100% { transform: translateX(200%) skewX(-15deg); }
+}
