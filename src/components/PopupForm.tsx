@@ -13,11 +13,27 @@ export default function PopupForm() {
     // Show after 12 seconds only if it hasn't been closed previously in this session
     const timer = setTimeout(() => {
       if (!hasClosed) {
+        // Don't pop up if user scrolled all the way to the Contact section
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+          const rect = contactSection.getBoundingClientRect();
+          const isContactInView = rect.top < window.innerHeight && rect.bottom > 0;
+          if (isContactInView) return; 
+        }
         setIsVisible(true);
       }
     }, 12000);
 
-    return () => clearTimeout(timer);
+    const handleInteraction = () => {
+      setHasClosed(true);
+      setIsVisible(false);
+    };
+    window.addEventListener('formInteractionStarted', handleInteraction);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('formInteractionStarted', handleInteraction);
+    };
   }, [hasClosed]);
 
   const handleClose = () => {

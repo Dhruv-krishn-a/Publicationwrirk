@@ -50,8 +50,14 @@ export default function SharedForm({ formId, buttonText, buttonIcon, onSuccess }
 
   const defaultIcon = <ArrowRight className="h-4 w-4 relative z-10 transition-transform group-hover/submitbtn:translate-x-1" />;
 
+  const handleInteraction = () => {
+    if (formId !== 'popup') {
+      window.dispatchEvent(new Event('formInteractionStarted'));
+    }
+  };
+
   return (
-    <form className="space-y-5 w-full" onSubmit={handleSubmit}>
+    <form className="space-y-5 w-full" onSubmit={handleSubmit} onFocus={handleInteraction} onClick={handleInteraction}>
       {/* Full Name */}
       <div className="relative group/field">
         <input 
