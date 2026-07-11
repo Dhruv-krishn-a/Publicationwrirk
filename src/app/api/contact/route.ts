@@ -45,7 +45,7 @@ export async function POST(request: Request) {
       email: body.email,
       message: body.message,
       date: getFormattedDate(),
-      source: " MPRW Research Work LLP"
+      source: " Wrirk Publications"
     };
 
     // Forward request to CRM API

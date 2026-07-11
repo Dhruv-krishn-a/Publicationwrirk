@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  CheckCircle2,
   ChevronDown,
   BookOpen,
   Award,
@@ -14,8 +13,6 @@ import {
   Send,
   PhoneCall,
   ArrowRight,
-  Sparkles,
-  Check,
   FileCheck2,
   Quote,
   Activity,
@@ -24,6 +21,7 @@ import {
 
 import dynamic from 'next/dynamic';
 import SharedForm from '@/components/SharedForm';
+import ReviewCarousel from '@/components/ReviewCarousel';
 
 const BackgroundEffect = dynamic(() => import('@/components/BackgroundEffect'), { ssr: false });
 const AnimatedCounter = dynamic(() => import('@/components/AnimatedCounter'), { ssr: false });
@@ -58,50 +56,56 @@ const useScrollProgress = (ref: React.RefObject<HTMLDivElement | null>) => {
 
 // --- DATA ARRAYS ---
 const faqs = [
-  { q: 'What is the typical timeframe for publishing a research paper?', a: 'The timeline varies by journal and indexing (Scopus, Web of Science, UGC-CARE). On average, the peer-review process takes between 2 to 6 months. We prioritize journals with proven, consistent review cycles.' },
-  { q: 'Do you guarantee publication in specific indexed journals?', a: 'We guarantee that your manuscript will meet the stringent quality, formatting, and scope requirements of high-impact journals, significantly maximizing your acceptance probability. Final editorial decisions remain with the journal.' },
-  { q: 'How do you handle manuscript rejections or major revisions?', a: 'Rejections are a part of academia. If rejected, we analyze the reviewers\' feedback, revise the manuscript accordingly, and strategically submit it to the next best-fit journal at no additional service cost.' },
-  { q: 'What is the difference between Writing + Publication and Publication Support?', a: 'Writing + Publication involves our experts drafting the manuscript from your raw data or concepts, all the way to publication. Publication Support is for authors who already have a completed draft and need editing, formatting, and submission management.' },
-  { q: 'How do you ensure the confidentiality of my unpublished research?', a: 'We operate under strict Non-Disclosure Agreements (NDAs). Your data, findings, and intellectual property are securely handled and never shared with third parties.' },
-  { q: 'Are your services ethical according to academic standards?', a: 'Yes. We strictly adhere to COPE (Committee on Publication Ethics) guidelines. We assist with language, structure, and journal matching without compromising academic integrity.' },
-  { q: 'Do you help in selecting the right journal for my manuscript?', a: 'Absolutely. We perform a rigorous journal matching process based on your paper\'s scope, desired indexing (e.g., Q1/Q2 Scopus), and target publication timeline.' },
-  { q: 'What domains and subject areas do your experts cover?', a: 'We have a network of subject-matter experts across diverse fields including Engineering, Medical Sciences, Management, Humanities, and Information Technology.' },
-  { q: 'Is formatting and referencing included in the service?', a: 'Yes, we meticulously format your manuscript and citations (APA, MLA, IEEE, Harvard, etc.) to comply exactly with your target journal\'s author guidelines.' },
-  { q: 'How do you check for plagiarism before submission?', a: 'Every manuscript is passed through advanced, institutional-grade Turnitin software. We provide you with a comprehensive similarity report and edit the text to ensure absolute originality.' },
-  { q: 'Can you help if I only have a research concept or raw data?', a: 'Yes. Through our Co-Authorship and Writing services, our PhD-level researchers can help you structure your raw data into a compelling, publication-ready manuscript.' },
-  { q: 'Do you provide a dedicated point of contact during the process?', a: 'Yes. You will be assigned a dedicated academic consultant who will provide regular milestone updates and assist you throughout the publication journey.' },
-  { q: 'What happens if the journal charges an Article Processing Charge (APC)?', a: 'Our service fees do not include journal APCs. We will inform you of any potential open-access fees during the journal selection phase so you can make an informed decision.' },
-  { q: 'Do you assist with crafting response letters to reviewers?', a: 'Yes. Addressing reviewer comments is critical. We help draft professional, point-by-point rebuttal letters that effectively address all editorial concerns.' },
-  { q: 'How do I start the process with WRIrk?', a: 'Simply fill out our contact form or reach us via WhatsApp. We will schedule a free initial consultation to evaluate your manuscript or research goals.' },
+  { q: 'What services does WRIRK provide?', a: 'WRIRK provides expert Research Writing Guidance & Publication Support, Publication Assistance, and Research Collaboration & Co-Authorship Support. Our goal is to help researchers navigate the publication journey with confidence while maintaining academic integrity.' },
+  { q: 'Do you write research papers for researchers?', a: 'No. WRIRK does not replace the researcher or claim authorship of any academic work. We provide research mentorship, manuscript review, publication guidance, and analytical support to help researchers strengthen and present their own work effectively.' },
+  { q: 'Can you help if my research paper is already completed?', a: 'Yes. If your manuscript is ready, our Publication Assistance service helps you identify suitable journals, prepare your manuscript according to journal guidelines, and guide you throughout the submission and publication process.' },
+  { q: 'Can you help me choose the right journal?', a: 'Yes. Based on your research area, publication goals, and manuscript, our experts recommend suitable journals that best match your research objectives, publication requirements, and indexing preferences.' },
+  { q: 'How does the Research Collaboration & Co-Authorship service work?', a: 'We facilitate ethical research collaboration by connecting eligible researchers with compatible academic partners based on research interests and publication objectives. Every collaboration is guided to ensure transparency, genuine contribution, and proper authorship practices.' },
+  { q: 'Will I remain the author of my research?', a: 'Yes. Your ideas, research, and intellectual contribution always remain yours. WRIRK provides expert guidance and publication support while respecting authorship, originality, and academic integrity.' },
+  { q: 'Is my research kept confidential?', a: 'Absolutely. Every research project is handled with complete confidentiality. Your documents, research data, and personal information remain secure and are never shared without your permission.' },
+  { q: 'Do you guarantee publication?', a: 'No. The final publication decision always depends on the journal\'s editorial and peer-review process. Our experts help improve publication readiness, recommend suitable journals, and guide you throughout the process to maximize your chances of successful publication.' },
+  { q: 'How long does the publication process usually take?', a: 'Publication timelines vary depending on the journal, subject area, and peer-review process. During your consultation, our experts will explain the expected timeline based on your publication requirements and journal selection.' },
+  { q: 'What research domain do you support?', a: 'Our experts provide guidance across a wide range of domains, including Engineering, Management, Medical & Healthcare, Computer Science, Life Sciences, Social Sciences, Commerce, Humanities, Education, and many more.' },
+  { q: 'How do I get started?', a: 'Simply fill out the consultation form or contact our team. One of our publication experts will understand your research requirements, recommend the most suitable support, and guide you through the next steps.' },
 ];
 
 const whyPublicationsMatter = [
-  { title: 'Career Advancement', desc: 'Secure tenure, promotions, and academic recognition through high-impact factor publications. A single Q1 publication can define your career trajectory.', icon: TrendingUp },
-  { title: 'Global Recognition', desc: 'Amplify your academic footprint globally by publishing in Scopus and Web of Science indexed journals, ensuring your work reaches the right peers.', icon: Award },
-  { title: 'Grant Acquisition', desc: 'A robust publication record is the most critical prerequisite for securing institutional and government research funding across all major academic bodies.', icon: BookOpen },
+  { title: 'Career Growth', desc: 'Build a stronger academic profile with publications that support promotions, faculty appointments, doctoral requirements, and professional recognition.', icon: TrendingUp },
+  { title: 'Global Visibility', desc: 'Increase the reach of your research by publishing in journals that are recognized and accessed by researchers across the world.', icon: Globe },
+  { title: 'Research Credibility', desc: 'Publishing in suitable peer-reviewed journals enhances the credibility of your work and demonstrates the quality of your research.', icon: Award },
+  { title: 'Future Opportunities', desc: 'A strong publication record opens doors to research collaborations, grants, higher education opportunities, and professional advancement.', icon: BookOpen },
+];
+
+const trustCards = [
+  { title: 'Ethical Research Guidance', desc: 'We mentor and guide researchers while respecting authorship, originality, and academic integrity.', icon: ShieldCheck },
+  { title: 'Experienced Research Experts', desc: 'Work with experienced research professionals and subject specialists who understand publication standards across multiple disciplines.', icon: Users },
+  { title: 'Confidential & Secure', desc: 'Your research remains private and protected throughout the consultation and publication process.', icon: FileCheck2 },
+  { title: 'Personalized Publication Strategy', desc: 'Every researcher has different goals. We recommend publication pathways based on your discipline, research stage, and publication objectives.', icon: Activity },
+  { title: 'Journal Selection Expertise', desc: 'We help identify journals that align with your research scope, publication requirements, and academic goals.', icon: BookOpen },
+  { title: 'End-to-End Guidance', desc: 'From manuscript preparation to journal submission and publication support, our team remains with you throughout the process.', icon: ArrowRight },
 ];
 
 const services = [
   {
     id: 'writing-pub',
-    title: 'Writing + Publication',
-    desc: 'Comprehensive support transforming raw data into high-impact manuscripts, managing formatting, and navigating the submission process to targeted databases.',
+    title: 'Research Writing Guidance & Publication Support',
+    desc: 'Receive expert guidance to develop your research paper from the initial idea to a publication-ready manuscript. Our experts support you in structuring your research, improving your manuscript, and guiding you through the complete publication process in suitable journals.',
     icon: PenTool,
     glow: 'hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] active:shadow-[0_0_15px_rgba(34,211,238,0.6)] hover:border-cyan-400',
     iconColor: 'text-cyan-400',
   },
   {
     id: 'publication',
-    title: 'Publication Support',
-    desc: 'Expert editing, strict journal-guideline formatting, and end-to-end submission management for your completed drafts. We handle the bureaucracy.',
+    title: 'Publication Assistance',
+    desc: 'Receive expert support in publishing your completed research paper. We help you identify suitable journals, prepare your manuscript according to journal requirements, and guide you through the submission and publication process.',
     icon: Send,
     glow: 'hover:shadow-[0_0_30px_rgba(129,140,248,0.4)] active:shadow-[0_0_15px_rgba(129,140,248,0.6)] hover:border-indigo-400',
     iconColor: 'text-indigo-400',
   },
   {
     id: 'co-authorship',
-    title: 'Co-Authorship',
-    desc: 'Collaborate directly with our elite researchers. We actively contribute to the research phase, sharing authorship and the workload of high-tier papers.',
+    title: 'Research Collaboration & Co-Authorship',
+    desc: 'Access ethical research collaboration opportunities with compatible researchers. We facilitate the collaboration process and provide guidance throughout publication while ensuring proper contribution and authorship practices.',
     icon: Users,
     glow: 'hover:shadow-[0_0_30px_rgba(52,211,153,0.4)] active:shadow-[0_0_15px_rgba(52,211,153,0.6)] hover:border-emerald-400',
     iconColor: 'text-emerald-400',
@@ -109,16 +113,37 @@ const services = [
 ];
 
 const processSteps = [
-  { step: '01', title: 'Consultation & Strategy', desc: 'Aligning on research objectives and identifying target Q1/Q2 indexed journals that match your scope.' },
-  { step: '02', title: 'Manuscript Enhancement', desc: 'Rigorous structural editing, technical formatting, and comprehensive zero-plagiarism checks.' },
-  { step: '03', title: 'Reviewer Management', desc: 'Handling submission logistics, tracking statuses, and drafting precise, respectful rebuttal letters.' },
-  { step: '04', title: 'Final Publication', desc: 'Final proofing, addressing last-minute editorial requests, and celebrating your academic achievement.' },
+  { step: '01', title: 'Consultation & Requirement Assessment', desc: 'We understand your research stage, publication goals, and specific requirements to recommend the most suitable support.' },
+  { step: '02', title: 'Expert Evaluation & Planning', desc: 'Our experts review your requirements and prepare a personalized roadmap based on the service you choose.' },
+  { step: '03', title: 'Research Guidance & Publication Support', desc: "Whether it's manuscript development, publication assistance, or research collaboration, our experts provide dedicated guidance throughout the process." },
+  { step: '04', title: 'Publication Journey & Ongoing Support', desc: 'From journal preparation to submission guidance and publication updates, we remain with you until the process is completed.' },
 ];
 
-const testimonials = [
-  { quote: "WRIrk completely transformed my raw thesis into a polished, Scopus-indexed publication within 4 months. Their team is exceptionally professional.", author: "Dr. A. Sharma", role: "Associate Professor" },
-  { quote: "The journal selection and formatting support was invaluable. They saved me countless hours of administrative work so I could focus on my research.", author: "James T.", role: "PhD Candidate" },
-  { quote: "Highly ethical and incredibly fast. The point-by-point rebuttal they drafted for my major revision was masterful. Accepted immediately after.", author: "Dr. E. Reynolds", role: "Research Scientist" }
+const googleReviews = [
+  {
+    id: 1,
+    author: "Anjali Jagtiani",
+    image: "/reviews/AnjaliJagtiani.png",
+    stars: 5,
+    reviewText: "I would like to express my sincere gratitude to WRIRK Publication for their exceptional guidance and support during the initial stage of my PhD journey, especially while preparing and submitting my synopsis. Being completely new to the research process, I initially found it quite overwhelming. However, their expert assistance, timely guidance, and constant encouragement made the entire process smooth and manageable. Thank you team. Looking forward for more support like this.",
+    link: "https://share.google/I98YdZe39NaYJIrzS"
+  },
+  {
+    id: 2,
+    author: "Surajit Sarkar",
+    image: "/reviews/SurajitSarkar.png",
+    stars: 5,
+    reviewText: "Great insights shared by then which lead to upliftment of my research work. Will definitely use their services again.",
+    link: "https://share.google/MUrCwGzPAEqj6GPxF"
+  },
+  {
+    id: 3,
+    author: "Bindu Jacob",
+    image: "/reviews/BinduJacob.png",
+    stars: 5,
+    reviewText: "I sincerely appreciate your invaluable support in my research work, Thank you so much for your help in my research. Your guidance and support made a big difference, and I truly appreciate the time and effort you put in to assist me.",
+    link: "https://share.google/FZVkC4ixdbCrC7w67"
+  }
 ];
 
 export default function Home() {
@@ -156,9 +181,6 @@ export default function Home() {
   }, []);
 
   const revealClass = "reveal opacity-0 translate-y-12 transition-all duration-[800ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]";
-  
-  // Staggered text logic
-  const heroTitle = ["Accelerate", "Your", "Research", "Impact"];
 
   return (
     <div className="min-h-screen bg-[#02050D] text-slate-100 font-sans selection:bg-cyan-500/40 relative overflow-x-hidden">
@@ -231,82 +253,105 @@ export default function Home() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           <div className={`lg:col-span-7 space-y-8 relative ${revealClass}`}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/50 bg-cyan-950/40 text-cyan-400 text-[10px] md:text-xs font-black uppercase tracking-widest shadow-[0_0_15px_rgba(34,211,238,0.2)] backdrop-blur-md active:scale-95 transition-transform duration-200">
-              <Sparkles className="h-3 w-3 md:h-4 md:w-4 drop-shadow-[0_0_5px_rgba(34,211,238,1)]" /> Premium Publication Support
-            </div>
-            
-            {/* Staggered Text Reveal */}
-            <h1 className="text-5xl lg:text-7xl font-extrabold leading-[1.1] text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] tracking-tight flex flex-wrap gap-x-4 gap-y-2">
-              {heroTitle.map((word, i) => (
-                <span 
-                  key={i} 
-                  className={`inline-block animate-[fadeSlideUp_0.8s_ease-out_forwards] opacity-0 ${i > 2 ? 'text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-blue-400 to-indigo-400 drop-shadow-[0_0_20px_rgba(34,211,238,0.4)]' : ''}`} 
-                  style={{ animationDelay: `${i * 150}ms` }}
-                >
-                  {word}
-                </span>
-              ))}
+
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.15] text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] tracking-tight animate-[fadeSlideUp_0.8s_ease-out_forwards] opacity-0">
+              Publish Your Research with <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-blue-400 to-indigo-400 drop-shadow-[0_0_20px_rgba(34,211,238,0.4)]">Confidence</span>, Guided by Experts Every Step of the Way.
             </h1>
             
-            <p className="text-lg md:text-xl text-slate-200 font-medium max-w-xl leading-relaxed drop-shadow-md animate-[fadeSlideUp_1s_ease-out_forwards] opacity-0 delay-500">
-              Navigate the complex landscape of high-impact publishing. We empower scholars to achieve recognition in Scopus, Web of Science, and UGC-CARE indexed journals seamlessly.
+            <p className="text-lg md:text-xl text-slate-200 font-medium max-w-xl leading-relaxed drop-shadow-md animate-[fadeSlideUp_1s_ease-out_forwards] opacity-0 delay-200">
+              Whether you&apos;re preparing your first manuscript, looking for the right journal, or seeking expert publication guidance, WRIRK helps researchers navigate the publication journey with confidence, transparency, and academic integrity.
             </p>
-            
-            <div className="flex flex-wrap gap-3 pt-2">
-              {['Scopus Indexed', 'Zero Plagiarism', 'Rigorous Editing'].map((tag, i) => (
-                <div key={i} className="flex items-center gap-2 text-xs md:text-sm font-bold text-white bg-slate-900/80 border border-slate-700 px-4 py-2 md:px-5 md:py-2.5 rounded-lg shadow-[0_0_10px_rgba(0,0,0,0.5)] active:scale-95 transition-transform duration-200 animate-[fadeSlideUp_1s_ease-out_forwards] opacity-0" style={{ animationDelay: `${700 + (i * 100)}ms` }}>
-                  <CheckCircle2 className="h-3.5 w-3.5 md:h-4 md:w-4 text-cyan-400 drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]" /> {tag}
-                </div>
-              ))}
+
+            <div className="bg-[#0A1326]/80 border-l-4 border-cyan-400 p-5 rounded-r-lg shadow-lg animate-[fadeSlideUp_1s_ease-out_forwards] opacity-0 delay-300">
+              <p className="text-sm md:text-base text-cyan-50 font-medium leading-relaxed">
+                <strong className="text-cyan-300">At WRIRK, your research always remains your intellectual property.</strong><br/>
+                We provide expert mentorship, publication guidance, manuscript improvement support, journal selection assistance, and submission guidance—helping you publish with confidence while maintaining the highest standards of academic integrity.
+              </p>
             </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 pt-2 animate-[fadeSlideUp_1s_ease-out_forwards] opacity-0 delay-500">
+              <a href="#contact" className="px-6 py-4 bg-linear-to-r from-cyan-500 to-indigo-600 rounded-lg text-white font-black uppercase tracking-widest text-xs md:text-sm text-center shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95 transition-all">
+                Get Free Publication Consultation
+              </a>
+              <a href="tel:+919548521866" className="px-6 py-4 bg-[#0A0F1C] border border-cyan-500/50 hover:border-cyan-400 rounded-lg text-cyan-400 hover:text-white font-black uppercase tracking-widest text-xs md:text-sm text-center active:scale-95 transition-all">
+                Talk to a Publication Expert
+              </a>
+            </div>
+            
+
           </div>
 
           <div className={`lg:col-span-5 relative group perspective-1000 ${revealClass} delay-200`}>
             <div className="absolute -inset-0.5 bg-linear-to-r from-cyan-500 to-indigo-500 rounded-2xl blur-md opacity-50 animate-pulse md:group-hover:opacity-80 transition-opacity duration-700"></div>
             
             <div className="relative bg-[#060D1A]/90 backdrop-blur-xl p-7 md:p-10 rounded-2xl border border-cyan-900/50 shadow-[0_10px_40px_rgba(0,0,0,0.8)] transition-transform duration-500 md:hover:-translate-y-1 transform-gpu">
-              <h3 className="text-xl md:text-2xl font-black text-white mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]">Request Evaluation</h3>
-              <p className="text-xs md:text-sm font-bold text-cyan-200/80 mb-8">Get a free, confidential manuscript review.</p>
+              <h3 className="text-xl md:text-2xl font-black text-white mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]">Get Your Free Publication Assessment</h3>
+              <p className="text-xs md:text-sm font-bold text-cyan-200/80 mb-6 leading-relaxed">Tell us about your research, and one of our publication experts will recommend the most suitable guidance based on your goals and publication stage.</p>
               
-              <SharedForm formId="hero" buttonText="Submit Request" />
+              <SharedForm formId="hero" buttonText="Request Free Consultation" />
+
+              <div className="mt-5 text-center flex items-center justify-center gap-2 text-slate-400 text-xs font-medium">
+                <span>🔒 Your information remains completely confidential.</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Global Impact / Metrics - Animated Counters */}
-      <section className={`relative z-10 py-10 md:py-12 border-y border-white/10 bg-black/40 backdrop-blur-md ${revealClass}`}>
-        <div className="max-w-7xl mx-auto px-6">
+      <section className={`relative z-10 py-10 md:py-12 border-y border-white/40 bg-white/95 backdrop-blur-xl shadow-[0_0_50px_rgba(255,255,255,0.15)] ${revealClass}`}>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="flex flex-col md:flex-row justify-center md:justify-between items-center gap-8 md:gap-4 text-center md:text-left">
-             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-white active:scale-95 transition-transform duration-200">
-                <Globe className="h-8 w-8 md:h-10 md:w-10 text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
+             
+             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-black active:scale-95 transition-transform duration-200">
+                <Clock className="h-8 w-8 md:h-10 md:w-10 text-black drop-shadow-sm" />
                 <div>
-                  <div className="text-3xl md:text-2xl font-black drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] flex">
-                    <AnimatedCounter end={30} suffix="+" />
+                  <div className="text-3xl md:text-2xl font-black drop-shadow-sm flex justify-center md:justify-start">
+                    <AnimatedCounter end={12} suffix="+" />
                   </div>
-                  <div className="text-[10px] md:text-xs text-cyan-200 font-bold uppercase tracking-wider">Countries Served</div>
+                  <div className="text-xs md:text-sm text-slate-700 font-bold uppercase tracking-wide mt-1">Years of Research Guidance</div>
                 </div>
              </div>
-             <div className="hidden md:block w-px h-12 bg-white/10"></div>
-             <div className="w-full h-px bg-white/10 md:hidden"></div>
-             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-white active:scale-95 transition-transform duration-200">
-                <FileCheck2 className="h-8 w-8 md:h-10 md:w-10 text-indigo-400 drop-shadow-[0_0_10px_rgba(99,102,241,0.8)]" />
+             
+             <div className="hidden md:block w-px h-12 bg-slate-300"></div>
+             <div className="w-full h-px bg-slate-300 md:hidden"></div>
+             
+             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-black active:scale-95 transition-transform duration-200">
+                <Users className="h-8 w-8 md:h-10 md:w-10 text-black drop-shadow-sm" />
                 <div>
-                  <div className="text-3xl md:text-2xl font-black drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] flex">
-                    <AnimatedCounter end={2500} suffix="+" duration={2500} />
+                  <div className="text-3xl md:text-2xl font-black drop-shadow-sm flex justify-center md:justify-start">
+                    <AnimatedCounter end={150} suffix="+" duration={2000} />
                   </div>
-                  <div className="text-[10px] md:text-xs text-indigo-200 font-bold uppercase tracking-wider">Papers Accepted</div>
+                  <div className="text-xs md:text-sm text-slate-700 font-bold uppercase tracking-wide mt-1">Experts & PhD Consultants</div>
                 </div>
              </div>
-             <div className="hidden md:block w-px h-12 bg-white/10"></div>
-             <div className="w-full h-px bg-white/10 md:hidden"></div>
-             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-white active:scale-95 transition-transform duration-200">
-                <Activity className="h-8 w-8 md:h-10 md:w-10 text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
+             
+             <div className="hidden md:block w-px h-12 bg-slate-300"></div>
+             <div className="w-full h-px bg-slate-300 md:hidden"></div>
+             
+             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-black active:scale-95 transition-transform duration-200">
+                <FileCheck2 className="h-8 w-8 md:h-10 md:w-10 text-black drop-shadow-sm" />
                 <div>
-                  <div className="text-3xl md:text-2xl font-black drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">Q1/Q2</div>
-                  <div className="text-[10px] md:text-xs text-emerald-200 font-bold uppercase tracking-wider">Journal Focus</div>
+                  <div className="text-3xl md:text-2xl font-black drop-shadow-sm flex justify-center md:justify-start">
+                    <AnimatedCounter end={1000} suffix="+" duration={2500} />
+                  </div>
+                  <div className="text-xs md:text-sm text-slate-700 font-bold uppercase tracking-wide mt-1">Researchers Supported</div>
                 </div>
              </div>
+             
+             <div className="hidden md:block w-px h-12 bg-slate-300"></div>
+             <div className="w-full h-px bg-slate-300 md:hidden"></div>
+             
+             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-black active:scale-95 transition-transform duration-200">
+                <ShieldCheck className="h-8 w-8 md:h-10 md:w-10 text-black drop-shadow-sm" />
+                <div>
+                  <div className="text-base md:text-lg font-black drop-shadow-sm flex justify-center md:justify-start max-w-[160px] leading-tight">
+                    Confidential & Ethical
+                  </div>
+                  <div className="text-xs md:text-sm text-slate-700 font-bold uppercase tracking-wide mt-1">Publication Support</div>
+                </div>
+             </div>
+
           </div>
         </div>
       </section>
@@ -315,11 +360,15 @@ export default function Home() {
       <section className="relative z-10 py-20 md:py-24" id="why-publish">
         <div className="max-w-7xl mx-auto px-5 md:px-6">
           <div className={`text-center mb-12 md:mb-16 ${revealClass}`}>
-            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Why Publication <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.6)]">Matters</span></h2>
-            <p className="text-slate-200 font-medium max-w-2xl mx-auto text-base md:text-lg">Publishing in recognized, high-impact journals is the foundation of a successful and credible academic career.</p>
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-6">Your Research Deserves <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.6)]">Global Recognition</span></h2>
+            <div className="text-slate-200 font-medium max-w-4xl mx-auto text-base md:text-lg space-y-4">
+              <p>Research creates knowledge—but publication gives that knowledge impact.</p>
+              <p>Publishing in recognized peer-reviewed journals not only strengthens your academic profile but also increases the visibility, credibility, and influence of your research within the global scholarly community.</p>
+              <p>Whether your goal is career progression, institutional recognition, funding opportunities, or academic contribution, a well-planned publication journey can make a lasting difference.</p>
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-16">
             {whyPublicationsMatter.map((item, idx) => (
               <div key={idx} className={`group bg-[#060D1A] p-7 md:p-8 rounded-2xl border border-white/5 transition-all duration-500 active:scale-[0.98] md:hover:-translate-y-2 md:hover:rotate-1 md:hover:scale-105 md:hover:shadow-[0_20px_40px_rgba(34,211,238,0.15)] md:hover:border-cyan-500/50 overflow-hidden relative ${revealClass}`} style={{ transitionDelay: `${idx * 150}ms` }}>
                 <div className="absolute -top-10 -right-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/30 transition-colors duration-500 pointer-events-none"></div>
@@ -339,52 +388,62 @@ export default function Home() {
               </div>
             ))}
           </div>
+
+          <div className={`max-w-3xl mx-auto text-center border-t border-b border-cyan-900/50 py-8 relative ${revealClass}`}>
+            <div className="absolute inset-0 bg-cyan-500/5 blur-xl pointer-events-none"></div>
+            <Quote className="h-8 w-8 text-cyan-400 mx-auto mb-4 opacity-50" />
+            <p className="text-xl md:text-2xl font-bold text-white italic drop-shadow-md">
+              &quot;A research paper is more than a publication—it&apos;s your contribution to the global academic community.&quot;
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Why Trust Us */}
       <section className="relative z-10 py-20 md:py-24 bg-black/20 border-y border-white/5">
         <div className="max-w-7xl mx-auto px-5 md:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
-            <div className="order-2 lg:order-1 grid grid-cols-2 gap-4 md:gap-6 relative">
-              <div className="absolute inset-0 bg-indigo-500/10 blur-[100px] rounded-full pointer-events-none"></div>
-              {[
-                { icon: ShieldCheck, val: '100%', label: 'Confidentiality', color: 'text-indigo-400', border: 'hover:border-indigo-500/50', delay: '0ms' },
-                { icon: Users, val: '500+', label: 'Scholars Assisted', color: 'text-cyan-400', border: 'hover:border-cyan-500/50', delay: '100ms' },
-                { icon: FileCheck2, val: '98%', label: 'Success Rate', color: 'text-emerald-400', border: 'hover:border-emerald-500/50', delay: '200ms' },
-                { icon: Clock, val: '24/7', label: 'Expert Support', color: 'text-blue-400', border: 'hover:border-blue-500/50', delay: '300ms' }
-              ].map((stat, i) => (
-                <div key={i} className={`p-6 md:p-8 rounded-2xl border border-white/10 bg-[#060D1A] flex flex-col items-center justify-center text-center group md:${stat.border} transition-all duration-500 active:scale-[0.96] md:hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] ${i === 0 || i === 3 ? 'lg:translate-y-8' : ''} md:hover:-translate-y-2 relative overflow-hidden ${revealClass}`} style={{ transitionDelay: stat.delay }}>
-                  <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-linear-to-t from-${stat.color.split('-')[1]}-500 to-transparent pointer-events-none`}></div>
-                  <stat.icon className={`h-8 w-8 md:h-10 md:w-10 mb-3 md:mb-4 ${stat.color} drop-shadow-[0_0_10px_currentColor] group-hover:scale-110 transition-transform duration-300 relative z-10`} />
-                  <div className="text-3xl md:text-4xl font-black text-white mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] relative z-10">{stat.val}</div>
-                  <div className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-400 group-hover:text-white transition-colors relative z-10">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-            
-            <div className={`order-1 lg:order-2 ${revealClass}`}>
-              <h2 className="text-3xl md:text-5xl font-black text-white mb-4 md:mb-6 text-center lg:text-left">Uncompromising <span className="text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.6)]">Integrity.</span></h2>
-              <p className="text-slate-200 font-medium text-base md:text-lg mb-8 md:mb-10 leading-relaxed text-center lg:text-left">
-                We believe in ethical publication. We don&apos;t employ shortcuts; we rely on rigorous peer review, domain-specific PhD experts, and transparent processes to elevate your work.
-              </p>
-              <ul className="space-y-4 md:space-y-6">
-                {[
-                  'PhD-holding subject matter experts handle your manuscript',
-                  'Legally binding NDAs protect your intellectual property',
-                  'Transparent communication with zero hidden fees',
-                  'Strict adherence to international COPE guidelines'
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 md:gap-4 group cursor-default active:scale-[0.98] transition-transform duration-200 p-2 md:p-0 rounded-lg md:hover:bg-transparent hover:bg-white/5">
-                    <div className="mt-1 shrink-0 bg-[#030712] border border-indigo-500/30 rounded-full p-1.5 md:p-2 md:group-hover:bg-indigo-500 md:group-hover:border-indigo-400 transition-colors shadow-[0_0_10px_rgba(99,102,241,0.2)] md:group-hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] relative overflow-hidden">
-                      <Check className="h-3 w-3 md:h-4 md:w-4 text-indigo-400 md:group-hover:text-[#0A0F1C] transition-colors relative z-10" />
-                    </div>
-                    <span className="text-slate-300 font-bold md:group-hover:text-white transition-colors text-sm md:text-lg pt-0.5 md:pt-1">{item}</span>
-                  </li>
-                ))}
-              </ul>
+          
+          <div className={`text-center mb-12 md:mb-16 ${revealClass}`}>
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-6">More Than Publication Support-A <span className="text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.6)]">Trusted Research Partner</span></h2>
+            <div className="text-slate-200 font-medium max-w-4xl mx-auto text-base md:text-lg space-y-4">
+              <p>For over 12 years, WRIRK has supported researchers through every stage of the publication journey.</p>
+              <p>We understand that publishing research is about more than submitting a manuscript. It requires thoughtful guidance, ethical practices, technical expertise, and a clear understanding of journal expectations.</p>
+              <p>Our role is to simplify that journey while ensuring that your work, ideas, and intellectual contribution always remain your own.</p>
             </div>
           </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
+            {trustCards.map((card, idx) => (
+              <div key={idx} className={`group bg-[#060D1A] p-7 rounded-2xl border border-white/5 transition-all duration-500 active:scale-[0.98] md:hover:-translate-y-2 md:hover:border-indigo-500/50 md:hover:shadow-[0_15px_30px_rgba(99,102,241,0.15)] relative overflow-hidden ${revealClass}`} style={{ transitionDelay: `${idx * 100}ms` }}>
+                <div className="absolute inset-0 bg-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                
+                <div className="flex flex-col h-full relative z-10">
+                  <card.icon className="h-10 w-10 text-indigo-400 mb-5 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_10px_rgba(99,102,241,0.8)]" />
+                  <h3 className="text-xl font-black text-white mb-3 drop-shadow-md">{card.title}</h3>
+                  <p className="text-slate-300 font-medium text-sm leading-relaxed">{card.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className={`relative bg-linear-to-r from-[#0A1326] to-[#030712] border border-cyan-900/50 rounded-2xl p-8 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 shadow-[0_10px_40px_rgba(0,0,0,0.5)] ${revealClass}`}>
+            <div className="absolute -inset-0.5 bg-linear-to-r from-indigo-500 to-cyan-500 rounded-2xl blur opacity-20 pointer-events-none"></div>
+            
+            <div className="relative z-10 max-w-3xl space-y-4">
+              <h3 className="text-2xl md:text-3xl font-black text-white drop-shadow-md">Research with Integrity. <span className="text-cyan-400">Publish with Confidence.</span></h3>
+              <p className="text-slate-300 font-medium text-base md:text-lg leading-relaxed">
+                At WRIRK, we don&apos;t believe in shortcuts.<br className="hidden md:block" /> 
+                We believe in helping researchers produce stronger work through expert guidance, transparent processes, and ethical publication practices.
+              </p>
+            </div>
+            
+            <div className="relative z-10 shrink-0">
+              <a href="#contact" className="px-8 py-4 bg-white text-[#0A0F1C] hover:bg-cyan-50 border border-transparent rounded-lg font-black uppercase tracking-widest text-sm text-center shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] active:scale-95 transition-all inline-block">
+                Start Your Journey
+              </a>
+            </div>
+          </div>
+          
         </div>
       </section>
 
@@ -396,16 +455,17 @@ export default function Home() {
             <p className="text-slate-200 font-medium max-w-2xl mx-auto text-base md:text-lg">Tailored publication strategies designed to meet the rigorous demands of global indexing databases.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
             {services.map((srv, idx) => (
-              <div key={srv.id} className={`group relative bg-[#060D1A] border border-white/10 rounded-2xl p-7 md:p-10 transition-all duration-500 active:scale-[0.97] md:hover:-translate-y-2 md:hover:bg-[#0A1326] ${srv.glow} ${revealClass}`} style={{ transitionDelay: `${idx * 150}ms` }}>
-                <div className="relative z-10">
-                  <div className={`h-14 w-14 md:h-16 md:w-16 rounded-xl md:rounded-2xl bg-[#030712] border border-white/10 flex items-center justify-center mb-6 md:mb-8 transition-all duration-500 group-hover:scale-110 shadow-lg relative overflow-hidden`}>
+              <div key={srv.id} className={`group relative bg-[#060D1A] border border-white/10 rounded-2xl p-7 md:p-10 transition-all duration-500 active:scale-[0.97] lg:hover:-translate-y-2 lg:hover:bg-[#0A1326] ${srv.glow} flex flex-col h-full ${revealClass}`} style={{ transitionDelay: `${idx * 150}ms` }}>
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className={`h-14 w-14 md:h-16 md:w-16 rounded-xl md:rounded-2xl bg-[#030712] border border-white/10 flex shrink-0 items-center justify-center mb-6 md:mb-8 transition-all duration-500 group-hover:scale-110 shadow-lg relative overflow-hidden`}>
                     <div className="absolute inset-0 bg-white/5 opacity-0 active:opacity-100 transition-opacity"></div>
                     <srv.icon className={`h-6 w-6 md:h-8 md:w-8 ${srv.iconColor} drop-shadow-[0_0_10px_currentColor]`} />
                   </div>
-                  <h3 className="text-xl md:text-2xl font-black text-white mb-3 md:mb-4 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">{srv.title}</h3>
-                  <p className="text-slate-300 font-medium leading-relaxed text-sm md:text-base">{srv.desc}</p>
+                  <h3 className="text-xl md:text-2xl font-black text-white mb-4 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">{srv.title}</h3>
+                  <div className="w-12 h-1 bg-white/10 rounded-full mb-5 group-hover:w-24 group-hover:bg-cyan-500/50 transition-all duration-500"></div>
+                  <p className="text-slate-300 font-medium leading-relaxed text-sm md:text-base flex-grow">{srv.desc}</p>
                 </div>
               </div>
             ))}
@@ -420,26 +480,8 @@ export default function Home() {
              <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Scholar <span className="text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]">Success</span></h2>
              <p className="text-slate-200 font-medium text-base md:text-lg">Hear from researchers who have elevated their academic profiles with WRIrk.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-             {testimonials.map((test, i) => (
-               <div key={i} className={`bg-[#060D1A] p-7 md:p-8 rounded-2xl border border-white/5 relative group md:hover:border-cyan-500/30 transition-all duration-300 active:scale-[0.98] md:hover:shadow-[0_10px_30px_rgba(34,211,238,0.1)] ${revealClass}`} style={{ transitionDelay: `${i * 150}ms` }}>
-                 <Quote className="absolute top-5 right-5 h-8 w-8 md:h-12 md:w-12 text-white/5 md:group-hover:text-cyan-500/10 transition-colors" />
-                 <p className="text-slate-200 font-medium leading-relaxed mb-6 md:mb-8 relative z-10 text-sm md:text-lg italic">&quot;{test.quote}&quot;</p>
-                 <div className="flex items-center gap-4 relative z-10">
-                    {/* Breathing Avatar Pulse */}
-                    <div className="relative">
-                      <div className="absolute inset-0 bg-cyan-500 rounded-full blur-md opacity-40 animate-[pulse_3s_ease-in-out_infinite]"></div>
-                      <div className="relative h-10 w-10 md:h-12 md:w-12 rounded-full bg-linear-to-br from-cyan-500 to-indigo-600 flex items-center justify-center text-white font-black text-base md:text-lg shadow-[0_0_10px_rgba(34,211,238,0.4)]">
-                        {test.author.charAt(0)}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-white font-bold text-sm md:text-base">{test.author}</div>
-                      <div className="text-cyan-400 text-[10px] md:text-xs font-black uppercase tracking-wider">{test.role}</div>
-                    </div>
-                 </div>
-               </div>
-             ))}
+          <div className="mt-8">
+             <ReviewCarousel reviews={googleReviews} />
           </div>
         </div>
       </section>
@@ -448,8 +490,8 @@ export default function Home() {
       <section className="relative z-10 py-20 md:py-24" id="process" ref={processRef}>
         <div className="max-w-7xl mx-auto px-5 md:px-6">
           <div className={`text-center mb-16 md:mb-20 ${revealClass}`}>
-            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">The <span className="text-indigo-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.5)]">Process</span></h2>
-            <p className="text-slate-200 font-medium max-w-2xl mx-auto text-base md:text-lg">A systematic, milestone-driven approach to achieving publication success.</p>
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Our Support <span className="text-indigo-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.5)]">Process</span></h2>
+            <p className="text-slate-200 font-medium max-w-2xl mx-auto text-base md:text-lg">Helping You at Every Stage of Your Research Journey</p>
           </div>
 
           <div className="relative pl-10 md:pl-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-8">
@@ -494,7 +536,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-5 md:px-6">
           <div className={`text-center mb-12 md:mb-16 ${revealClass}`}>
             <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Frequently Asked <span className="text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]">Questions</span></h2>
-            <p className="text-slate-200 font-medium text-base md:text-lg">Everything you need to know about our publication support services.</p>
+            <p className="text-slate-200 font-medium text-base md:text-lg">Everything You Need to Know About Our Research Guidance & Publication Support</p>
           </div>
 
           <div className="space-y-3 md:space-y-4">
@@ -548,12 +590,57 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="relative z-10 py-10 bg-[#02050D] text-center border-t border-white/5">
-        <div className="flex flex-col items-center justify-center gap-4 md:gap-5">
-           {/* eslint-disable-next-line @next/next/no-img-element */}
-           <img src="/WrirkLogoOld.png" alt="WRIrk Logo" className="h-12 w-12 md:h-16 md:w-16 object-contain opacity-80 hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)] hover:drop-shadow-[0_0_25px_rgba(34,211,238,1)] active:scale-90" />
-           <span className="text-slate-300 font-black uppercase tracking-widest text-xs md:text-sm">WRIrk Academic Services</span>
-           <p className="text-[9px] md:text-[10px] text-slate-500 font-bold uppercase tracking-widest">© 2026 WRIrk. All Rights Reserved.</p>
+      <footer className="relative z-10 py-12 md:py-16 bg-[#02050D] border-t border-white/5 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-cyan-900/10 via-[#02050D] to-[#02050D] pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-5 md:px-6 relative z-10">
+          
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-16 md:mb-10">
+            
+            {/* Left Side Content */}
+            <div className="max-w-2xl">
+              <div className="flex items-center gap-4 mb-10">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/WrirkLogoOld.png" alt="WRIrk Logo" className="h-10 w-10 md:h-12 md:w-12 object-contain drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]" />
+                <span className="text-white tracking-[0.25em] text-lg md:text-xl font-medium">WRIRK</span>
+              </div>
+              
+              <div className="mb-2">
+                <span className="text-slate-200 text-lg md:text-xl font-medium tracking-wide">A Product Of</span>
+              </div>
+              
+              <div className="flex items-center gap-3 md:gap-5 mb-5 flex-nowrap">
+                <h2 className="text-[1.3rem] sm:text-2xl md:text-[2rem] lg:text-[2.4rem] font-bold text-white drop-shadow-md whitespace-nowrap">MPRW Research Work LLP</h2>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/MPRW-Logo.png" alt="MPRW Logo" className="h-14 sm:h-16 md:h-20 lg:h-24 object-contain drop-shadow-[0_0_15px_rgba(34,211,238,0.3)] shrink-0" />
+              </div>
+              
+              <p className="text-slate-300 font-medium leading-relaxed text-sm md:text-base max-w-md">
+                We provide customized support for research scholars, from creating clear research outlines to offering expert reviews.
+              </p>
+            </div>
+
+            {/* Right Side Book Button - desktop bottom right, mobile stack */}
+            <div className="md:self-end self-start mt-4 md:mt-0 md:ml-auto">
+               <button 
+                onClick={() => {
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }} 
+                className="bg-white hover:bg-cyan-50 border border-transparent text-cyan-950 px-6 py-3 rounded-lg font-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]"
+               >
+                 Book a Consultation
+               </button>
+            </div>
+
+          </div>
+          
+          {/* Bottom Copyright Center */}
+          <div className="text-center pt-8 border-t border-white/5 flex flex-col gap-3 relative">
+            <p className="text-slate-300 font-medium text-sm md:text-base">Copyright © 2025 MPRW Research Work LLP. All rights Reserved</p>
+            <p className="text-slate-300 font-bold text-sm md:text-base tracking-widest uppercase flex items-center justify-center gap-2">
+              INDIA <span className="text-red-500 animate-pulse text-lg">❤️</span>
+            </p>
+          </div>
+
         </div>
       </footer>
       
