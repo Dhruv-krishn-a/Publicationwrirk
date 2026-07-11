@@ -50,8 +50,11 @@ export default function SharedForm({ formId, buttonText, buttonIcon, onSuccess }
 
   const defaultIcon = <ArrowRight className="h-4 w-4 relative z-10 transition-transform group-hover/submitbtn:translate-x-1" />;
 
+  const interactionFired = React.useRef(false);
+  
   const handleInteraction = () => {
-    if (formId !== 'popup') {
+    if (formId !== 'popup' && !interactionFired.current) {
+      interactionFired.current = true;
       window.dispatchEvent(new Event('formInteractionStarted'));
     }
   };
@@ -120,13 +123,16 @@ export default function SharedForm({ formId, buttonText, buttonIcon, onSuccess }
 
       {/* Submit Button */}
       <div className="relative group/submitbtn mt-6">
-        <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-indigo-500 rounded-lg blur opacity-60 animate-pulse group-hover/submitbtn:opacity-100 transition duration-500"></div>
-        <button disabled={submitStatus === 'loading'} className="w-full relative overflow-hidden bg-white text-[#0A0F1C] hover:text-white rounded-lg py-4 font-black tracking-widest uppercase text-xs md:text-sm transition-all duration-300 flex items-center justify-center gap-2 border border-transparent hover:border-cyan-400 active:scale-95 disabled:opacity-80">
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-indigo-600 transform translate-y-full group-hover/submitbtn:translate-y-0 transition-transform duration-300 ease-in-out"></div>
+        <div className="absolute -inset-1 bg-linear-to-r from-cyan-400 to-indigo-500 rounded-lg blur opacity-60 animate-pulse group-hover/submitbtn:opacity-100 transition duration-500"></div>
+        <button 
+          disabled={submitStatus !== 'idle'} 
+          className={`w-full relative overflow-hidden rounded-lg py-4 font-black tracking-widest uppercase text-xs md:text-sm transition-all duration-300 flex items-center justify-center gap-2 border border-transparent hover:border-cyan-400 active:scale-95 disabled:opacity-90 disabled:cursor-not-allowed ${submitStatus !== 'idle' ? 'text-white' : 'bg-white text-[#0A0F1C] hover:text-white'}`}
+        >
+          <div className={`absolute inset-0 bg-linear-to-r from-cyan-500 to-indigo-600 transform transition-transform duration-300 ease-in-out ${submitStatus !== 'idle' ? 'translate-y-0' : 'translate-y-full group-hover/submitbtn:translate-y-0'}`}></div>
           <span className="relative z-10 flex items-center justify-center gap-2 drop-shadow-md">
             {submitStatus === 'idle' && <><span className="relative z-10">{buttonText}</span> {buttonIcon || defaultIcon}</>}
-            {submitStatus === 'loading' && <Loader2 className="h-5 w-5 animate-spin text-white" />}
-            {submitStatus === 'success' && <><Check className="h-5 w-5 text-emerald-300" /> <span className="text-white relative z-10">Received!</span></>}
+            {submitStatus === 'loading' && <><Loader2 className="h-5 w-5 animate-spin text-white" /> <span>Sending...</span></>}
+            {submitStatus === 'success' && <><Check className="h-5 w-5 text-emerald-300" /> <span className="text-white relative z-10">Request Received!</span></>}
           </span>
         </button>
       </div>

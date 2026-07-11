@@ -264,7 +264,7 @@ export default function Home() {
           <div className={`lg:col-span-5 relative group perspective-1000 ${revealClass} delay-200`}>
             <div className="absolute -inset-0.5 bg-linear-to-r from-cyan-500 to-indigo-500 rounded-2xl blur-md opacity-50 animate-pulse md:group-hover:opacity-80 transition-opacity duration-700"></div>
             
-            <div className="relative bg-[#060D1A]/90 backdrop-blur-xl p-7 md:p-10 rounded-2xl border border-cyan-900/50 shadow-[0_10px_40px_rgba(0,0,0,0.8)] transition-transform duration-500 md:hover:-translate-y-1">
+            <div className="relative bg-[#060D1A]/90 backdrop-blur-xl p-7 md:p-10 rounded-2xl border border-cyan-900/50 shadow-[0_10px_40px_rgba(0,0,0,0.8)] transition-transform duration-500 md:hover:-translate-y-1 transform-gpu">
               <h3 className="text-xl md:text-2xl font-black text-white mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]">Request Evaluation</h3>
               <p className="text-xs md:text-sm font-bold text-cyan-200/80 mb-8">Get a free, confidential manuscript review.</p>
               
