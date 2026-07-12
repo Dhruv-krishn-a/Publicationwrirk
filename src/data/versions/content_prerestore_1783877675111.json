@@ -50,23 +50,19 @@
   "metrics": [
     {
       "value": "12+",
-      "label": "Years of Research Guidance",
-      "icon": "Clock"
+      "label": "Years of Research Guidance"
     },
     {
       "value": "150+",
-      "label": "Experts & PhD Consultants",
-      "icon": "Users"
+      "label": "Experts & PhD Consultants"
     },
     {
       "value": "1,000+",
-      "label": "Researchers Supported",
-      "icon": "FileCheck2"
+      "label": "Researchers Supported"
     },
     {
       "value": "Confidential & Ethical",
-      "label": "Publication Support",
-      "icon": "ShieldCheck"
+      "label": "Publication Support"
     }
   ],
   "whyTrustUs": {
@@ -81,23 +77,19 @@
     "features": [
       {
         "title": "Career Growth",
-        "description": "Build a stronger academic profile with publications that support promotions, faculty appointments, doctoral requirements, and professional recognition.",
-        "icon": "TrendingUp"
+        "description": "Build a stronger academic profile with publications that support promotions, faculty appointments, doctoral requirements, and professional recognition."
       },
       {
         "title": "Global Visibility",
-        "description": "Increase the reach of your research by publishing in journals that are recognized and accessed by researchers across the world.",
-        "icon": "Globe"
+        "description": "Increase the reach of your research by publishing in journals that are recognized and accessed by researchers across the world."
       },
       {
         "title": "Research Credibility",
-        "description": "Publishing in suitable peer-reviewed journals enhances the credibility of your work and demonstrates the quality of your research.",
-        "icon": "Award"
+        "description": "Publishing in suitable peer-reviewed journals enhances the credibility of your work and demonstrates the quality of your research."
       },
       {
         "title": "Future Opportunities",
-        "description": "A strong publication record opens doors to research collaborations, grants, higher education opportunities, and professional advancement.",
-        "icon": "BookOpen"
+        "description": "A strong publication record opens doors to research collaborations, grants, higher education opportunities, and professional advancement."
       }
     ]
   },
@@ -109,33 +101,27 @@
     "features": [
       {
         "title": "Ethical Research Guidance",
-        "description": "We mentor and guide researchers while respecting authorship, originality, and academic integrity.",
-        "icon": "ShieldCheck"
+        "description": "We mentor and guide researchers while respecting authorship, originality, and academic integrity."
       },
       {
         "title": "Experienced Research Experts",
-        "description": "Work with experienced research professionals and subject specialists who understand publication standards across multiple disciplines.",
-        "icon": "Users"
+        "description": "Work with experienced research professionals and subject specialists who understand publication standards across multiple disciplines."
       },
       {
         "title": "Confidential & Secure",
-        "description": "Your research remains private and protected throughout the consultation and publication process.",
-        "icon": "FileCheck2"
+        "description": "Your research remains private and protected throughout the consultation and publication process."
       },
       {
         "title": "Personalized Publication Strategy",
-        "description": "Every researcher has different goals. We recommend publication pathways based on your discipline, research stage, and publication objectives.",
-        "icon": "Activity"
+        "description": "Every researcher has different goals. We recommend publication pathways based on your discipline, research stage, and publication objectives."
       },
       {
         "title": "Journal Selection Expertise",
-        "description": "We help identify journals that align with your research scope, publication requirements, and academic goals.",
-        "icon": "BookOpen"
+        "description": "We help identify journals that align with your research scope, publication requirements, and academic goals."
       },
       {
         "title": "End-to-End Guidance",
-        "description": "From manuscript preparation to journal submission and publication support, our team remains with you throughout the process.",
-        "icon": "ArrowRight"
+        "description": "From manuscript preparation to journal submission and publication support, our team remains with you throughout the process."
       }
     ],
     "ctaHeading": {
@@ -166,20 +152,17 @@
       {
         "id": "guidance",
         "title": "Research Writing Guidance & Publication Support",
-        "desc": "Receive expert guidance to develop your research paper from the initial idea to a publication-ready manuscript. Our experts support you in structuring your research, improving your manuscript, and guiding you through the complete publication process in suitable journals.",
-        "icon": "PenTool"
+        "desc": "Receive expert guidance to develop your research paper from the initial idea to a publication-ready manuscript. Our experts support you in structuring your research, improving your manuscript, and guiding you through the complete publication process in suitable journals."
       },
       {
         "id": "assistance",
         "title": "Publication Assistance",
-        "desc": "Receive expert support in publishing your completed research paper. We help you identify suitable journals, prepare your manuscript according to journal requirements, and guide you through the submission and publication process.",
-        "icon": "Send"
+        "desc": "Receive expert support in publishing your completed research paper. We help you identify suitable journals, prepare your manuscript according to journal requirements, and guide you through the submission and publication process."
       },
       {
         "id": "co-authorship",
         "title": "Research Collaboration & Co-Authorship",
-        "desc": "Access ethical research collaboration opportunities with compatible researchers. We facilitate the collaboration process and provide guidance throughout publication while ensuring proper contribution and authorship practices.",
-        "icon": "Users"
+        "desc": "Access ethical research collaboration opportunities with compatible researchers. We facilitate the collaboration process and provide guidance throughout publication while ensuring proper contribution and authorship practices."
       }
     ]
   },
@@ -308,9 +291,5 @@
         "baseline": 118
       }
     ]
-  },
-  "_versionMetadata": {
-    "description": "Updated hero text",
-    "timestamp": 1783878027622
   }
 }

@@ -19,7 +19,7 @@
   },
   "hero": {
     "headline": {
-      "value": "From Manuscript to Publication, Expert Support Every Step of the Way.",
+      "value": "Publish Your Research with Confidence, Guided by Experts Every Step of the Way.",
       "baseline": 79
     },
     "description": [
@@ -308,9 +308,5 @@
         "baseline": 118
       }
     ]
-  },
-  "_versionMetadata": {
-    "description": "Updated hero text",
-    "timestamp": 1783878027622
   }
 }

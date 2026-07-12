@@ -13,13 +13,33 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "WRIrk - Premium Publication Support & Academic Services",
-  description: "Navigate the complex landscape of high-impact publishing. We empower scholars to achieve recognition in Scopus, Web of Science, and UGC-CARE indexed journals seamlessly.",
-  verification: {
-    google: "BYFn0MOlE9xYJjRXkmjrW9ooFx0MWn9jQ0FkbFDkRaY"
-  }
-};
+import fs from 'fs';
+import path from 'path';
+
+export async function generateMetadata(): Promise<Metadata> {
+  let title = "WRIrk - Premium Publication Support & Academic Services";
+  let description = "Navigate the complex landscape of high-impact publishing. We empower scholars to achieve recognition in Scopus, Web of Science, and UGC-CARE indexed journals seamlessly.";
+  
+  try {
+    const filePath = path.join(process.cwd(), 'src', 'data', 'content.json');
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    const data = JSON.parse(fileContent);
+    if (data.globalSettings?.seoTitle?.value) {
+      title = data.globalSettings.seoTitle.value;
+    }
+    if (data.globalSettings?.seoDescription?.value) {
+      description = data.globalSettings.seoDescription.value;
+    }
+  } catch(e) {}
+
+  return {
+    title,
+    description,
+    verification: {
+      google: "BYFn0MOlE9xYJjRXkmjrW9ooFx0MWn9jQ0FkbFDkRaY"
+    }
+  };
+}
 
 export default function RootLayout({
   children,

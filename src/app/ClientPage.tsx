@@ -1,23 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  ChevronDown,
-  BookOpen,
-  Award,
-  TrendingUp,
-  Users,
-  Clock,
-  ShieldCheck,
-  PenTool,
-  Send,
-  PhoneCall,
-  ArrowRight,
-  FileCheck2,
-  Quote,
-  Activity,
-  Globe
-} from 'lucide-react';
+import { ChevronDown, BookOpen, Award, TrendingUp, Users, Clock, ShieldCheck, PenTool, Send, PhoneCall, ArrowRight, FileCheck2, Quote, Activity, Globe, CheckCircle, Star } from 'lucide-react';
 
 import dynamic from 'next/dynamic';
 import SharedForm from '@/components/SharedForm';
@@ -57,52 +41,71 @@ const useScrollProgress = (ref: React.RefObject<HTMLDivElement | null>) => {
 export default function ClientPage({ initialContent }: { initialContent: any }) {
   const content = initialContent;
 // --- DYNAMIC DATA ARRAYS ---
+  
+  const renderHeading = (text: string | undefined, highlightClass: string) => {
+    if (!text) return null;
+    const words = text.trim().split(' ');
+    if (words.length <= 1) {
+       return <span className={highlightClass}>{text}</span>;
+    }
+    // Highlight the last 2 words
+    const numHighlight = Math.min(2, words.length - 1);
+    const regularWords = words.slice(0, words.length - numHighlight).join(' ');
+    const highlightWords = words.slice(words.length - numHighlight).join(' ');
+    
+    return (
+      <>
+        {regularWords} <span className={highlightClass}>{highlightWords}</span>
+      </>
+    );
+  };
+
   const faqs = content.faqs.items;
   const processSteps = content.process.steps;
   const googleReviews = content.reviews;
 
-  const whyPublicationsMatter = [
-    { title: content.whyTrustUs.features[0].title, desc: content.whyTrustUs.features[0].description, icon: TrendingUp },
-    { title: content.whyTrustUs.features[1].title, desc: content.whyTrustUs.features[1].description, icon: Globe },
-    { title: content.whyTrustUs.features[2].title, desc: content.whyTrustUs.features[2].description, icon: Award },
-    { title: content.whyTrustUs.features[3].title, desc: content.whyTrustUs.features[3].description, icon: BookOpen },
-  ];
+  const renderParagraphs = (arr: any[]) => {
+    if (!arr || !Array.isArray(arr)) return null;
+    return arr.map((p: any, i: number) => (
+      <React.Fragment key={i}>
+        {p.value}
+        {i < arr.length - 1 && <><br/><br/></>}
+      </React.Fragment>
+    ));
+  };
 
-  const trustCards = [
-    { title: content.trustedPartner.features[0].title, desc: content.trustedPartner.features[0].description, icon: ShieldCheck },
-    { title: content.trustedPartner.features[1].title, desc: content.trustedPartner.features[1].description, icon: Users },
-    { title: content.trustedPartner.features[2].title, desc: content.trustedPartner.features[2].description, icon: FileCheck2 },
-    { title: content.trustedPartner.features[3].title, desc: content.trustedPartner.features[3].description, icon: Activity },
-    { title: content.trustedPartner.features[4].title, desc: content.trustedPartner.features[4].description, icon: BookOpen },
-    { title: content.trustedPartner.features[5].title, desc: content.trustedPartner.features[5].description, icon: ArrowRight },
-  ];
+  
+  const IconMap: Record<string, any> = {
+    ChevronDown, BookOpen, Award, TrendingUp, Users, Clock, ShieldCheck, PenTool, Send, PhoneCall, ArrowRight, FileCheck2, Quote, Activity, Globe, CheckCircle, Star
+  };
+  const getIcon = (iconName: string, defaultIcon: any) => IconMap[iconName] || defaultIcon;
+  
+  const whyPublicationsMatter = (content.whyTrustUs.features || []).map((f: any, i: number) => ({
+    title: f.title,
+    desc: f.description,
+    icon: getIcon(f.icon, TrendingUp)
+  }));
 
-  const services = [
-    {
-      id: 'writing-pub',
-      title: content.services.cards[0].title,
-      desc: content.services.cards[0].desc,
-      icon: PenTool,
-      glow: 'hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] active:shadow-[0_0_15px_rgba(34,211,238,0.6)] hover:border-cyan-400',
-      iconColor: 'text-cyan-400',
-    },
-    {
-      id: 'publication',
-      title: content.services.cards[1].title,
-      desc: content.services.cards[1].desc,
-      icon: Send,
-      glow: 'hover:shadow-[0_0_30px_rgba(129,140,248,0.4)] active:shadow-[0_0_15px_rgba(129,140,248,0.6)] hover:border-indigo-400',
-      iconColor: 'text-indigo-400',
-    },
-    {
-      id: 'co-authorship',
-      title: content.services.cards[2].title,
-      desc: content.services.cards[2].desc,
-      icon: Users,
-      glow: 'hover:shadow-[0_0_30px_rgba(52,211,153,0.4)] active:shadow-[0_0_15px_rgba(52,211,153,0.6)] hover:border-emerald-400',
-      iconColor: 'text-emerald-400',
-    },
+  const trustCards = (content.trustedPartner.features || []).map((f: any, i: number) => ({
+    title: f.title,
+    desc: f.description,
+    icon: getIcon(f.icon, ShieldCheck)
+  }));
+
+  const servicesColors = [
+    { glow: 'hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] active:shadow-[0_0_15px_rgba(34,211,238,0.6)] hover:border-cyan-400', iconColor: 'text-cyan-400' },
+    { glow: 'hover:shadow-[0_0_30px_rgba(129,140,248,0.4)] active:shadow-[0_0_15px_rgba(129,140,248,0.6)] hover:border-indigo-400', iconColor: 'text-indigo-400' },
+    { glow: 'hover:shadow-[0_0_30px_rgba(52,211,153,0.4)] active:shadow-[0_0_15px_rgba(52,211,153,0.6)] hover:border-emerald-400', iconColor: 'text-emerald-400' },
+    { glow: 'hover:shadow-[0_0_30px_rgba(244,114,182,0.4)] active:shadow-[0_0_15px_rgba(244,114,182,0.6)] hover:border-pink-400', iconColor: 'text-pink-400' }
   ];
+  
+  const services = (content.services.cards || []).map((srv: any, i: number) => ({
+    icon: getIcon(srv.icon, PenTool),
+    id: srv.id || `srv-${i}`,
+    title: srv.title,
+    desc: srv.desc,
+    ...servicesColors[i % servicesColors.length]
+  }));
 
 
 
@@ -155,7 +158,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
       {/* Floating Action Buttons */}
       <div className="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-50 flex flex-col gap-4 reveal opacity-0 scale-95 transition-all duration-700 delay-500">
         <a 
-          href="https://wa.me/919548521866" 
+          href={`https://wa.me/${content.globalSettings.whatsappNumber.value.replace(/\+/g, '')}`} 
           target="_blank"
           rel="noreferrer"
           className="group relative flex items-center justify-center w-14 h-14 bg-[#0A0F1C]/90 backdrop-blur-md border border-emerald-500/50 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.8)] hover:bg-emerald-500 active:scale-90 active:bg-emerald-600 transition-all duration-300"
@@ -169,7 +172,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
         </a>
         
         <a 
-          href="tel:+919548521866"
+          href={`tel:${content.globalSettings.whatsappNumber.value}`}
           className="group relative flex items-center justify-center w-14 h-14 bg-[#0A0F1C]/90 backdrop-blur-md border border-indigo-500/50 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.3)] hover:shadow-[0_0_30px_rgba(99,102,241,0.8)] hover:bg-indigo-500 active:scale-90 active:bg-indigo-600 transition-all duration-300"
         >
           <PhoneCall className="h-6 w-6 text-indigo-400 group-hover:text-[#0A0F1C] transition-colors duration-300 relative z-10" />
@@ -214,26 +217,26 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
           <div className={`lg:col-span-7 space-y-8 relative ${revealClass}`}>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.15] text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] tracking-tight animate-[fadeSlideUp_0.8s_ease-out_forwards] opacity-0">
-              Publish Your Research with <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-blue-400 to-indigo-400 drop-shadow-[0_0_20px_rgba(34,211,238,0.4)]">Confidence</span>, Guided by Experts Every Step of the Way.
+              {renderHeading(content.hero.headline.value, "text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-blue-400 to-indigo-400 drop-shadow-[0_0_20px_rgba(34,211,238,0.4)]")}
             </h1>
             
             <p className="text-lg md:text-xl text-slate-200 font-medium max-w-xl leading-relaxed drop-shadow-md animate-[fadeSlideUp_1s_ease-out_forwards] opacity-0 delay-200">
-              {content.hero.description.value}
+              {renderParagraphs(content.hero.description)}
             </p>
 
             <div className="bg-[#0A1326]/80 border-l-4 border-cyan-400 p-5 rounded-r-lg shadow-lg animate-[fadeSlideUp_1s_ease-out_forwards] opacity-0 delay-300">
               <p className="text-sm md:text-base text-cyan-50 font-medium leading-relaxed">
-                <strong className="text-cyan-300">At WRIRK, your research always remains your intellectual property.</strong><br/>
-                We provide expert mentorship, publication guidance, manuscript improvement support, journal selection assistance, and submission guidance—helping you publish with confidence while maintaining the highest standards of academic integrity.
+                <strong className="text-cyan-300">{content.hero.integrityBold.value}</strong><br/>
+                {renderParagraphs(content.hero.integrityText)}
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-2 animate-[fadeSlideUp_1s_ease-out_forwards] opacity-0 delay-500">
               <a href="#contact" className="px-6 py-4 bg-linear-to-r from-cyan-500 to-indigo-600 rounded-lg text-white font-black uppercase tracking-widest text-xs md:text-sm text-center shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95 transition-all">
-                Get Free Publication Consultation
+                {content.hero.button1.value}
               </a>
-              <a href="tel:+919548521866" className="px-6 py-4 bg-[#0A0F1C] border border-cyan-500/50 hover:border-cyan-400 rounded-lg text-cyan-400 hover:text-white font-black uppercase tracking-widest text-xs md:text-sm text-center active:scale-95 transition-all">
-                Talk to a Publication Expert
+              <a href={`tel:${content.globalSettings.whatsappNumber.value}`} className="px-6 py-4 bg-[#0A0F1C] border border-cyan-500/50 hover:border-cyan-400 rounded-lg text-cyan-400 hover:text-white font-black uppercase tracking-widest text-xs md:text-sm text-center active:scale-95 transition-all">
+                {content.hero.button2.value}
               </a>
             </div>
             
@@ -260,57 +263,35 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
       {/* Global Impact / Metrics - Animated Counters */}
       <section className={`relative z-10 py-10 md:py-12 border-y border-white/40 bg-white/95 backdrop-blur-xl shadow-[0_0_50px_rgba(255,255,255,0.15)] ${revealClass}`}>
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="flex flex-col md:flex-row justify-center md:justify-between items-center gap-8 md:gap-4 text-center md:text-left">
-             
-             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-black active:scale-95 transition-transform duration-200">
-                <Clock className="h-8 w-8 md:h-10 md:w-10 text-black drop-shadow-sm" />
-                <div>
-                  <div className="text-3xl md:text-2xl font-black drop-shadow-sm flex justify-center md:justify-start">
-                    <AnimatedCounter end={12} suffix="+" />
-                  </div>
-                  <div className="text-xs md:text-sm text-slate-700 font-bold uppercase tracking-wide mt-1">{content.metrics[0].label}</div>
-                </div>
-             </div>
-             
-             <div className="hidden md:block w-px h-12 bg-slate-300"></div>
-             <div className="w-full h-px bg-slate-300 md:hidden"></div>
-             
-             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-black active:scale-95 transition-transform duration-200">
-                <Users className="h-8 w-8 md:h-10 md:w-10 text-black drop-shadow-sm" />
-                <div>
-                  <div className="text-3xl md:text-2xl font-black drop-shadow-sm flex justify-center md:justify-start">
-                    <AnimatedCounter end={150} suffix="+" duration={2000} />
-                  </div>
-                  <div className="text-xs md:text-sm text-slate-700 font-bold uppercase tracking-wide mt-1">{content.metrics[1].label}</div>
-                </div>
-             </div>
-             
-             <div className="hidden md:block w-px h-12 bg-slate-300"></div>
-             <div className="w-full h-px bg-slate-300 md:hidden"></div>
-             
-             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-black active:scale-95 transition-transform duration-200">
-                <FileCheck2 className="h-8 w-8 md:h-10 md:w-10 text-black drop-shadow-sm" />
-                <div>
-                  <div className="text-3xl md:text-2xl font-black drop-shadow-sm flex justify-center md:justify-start">
-                    <AnimatedCounter end={1000} suffix="+" duration={2500} />
-                  </div>
-                  <div className="text-xs md:text-sm text-slate-700 font-bold uppercase tracking-wide mt-1">{content.metrics[2].label}</div>
-                </div>
-             </div>
-             
-             <div className="hidden md:block w-px h-12 bg-slate-300"></div>
-             <div className="w-full h-px bg-slate-300 md:hidden"></div>
-             
-             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-black active:scale-95 transition-transform duration-200">
-                <ShieldCheck className="h-8 w-8 md:h-10 md:w-10 text-black drop-shadow-sm" />
-                <div>
-                  <div className="text-base md:text-lg font-black drop-shadow-sm flex justify-center md:justify-start max-w-[160px] leading-tight">
-                    Confidential & Ethical
-                  </div>
-                  <div className="text-xs md:text-sm text-slate-700 font-bold uppercase tracking-wide mt-1">Publication Support</div>
-                </div>
-             </div>
-
+          
+          <div className="flex flex-col md:flex-row justify-center md:justify-between items-center gap-8 md:gap-4 text-center md:text-left flex-wrap">
+             {content.metrics.map((metric: any, i: number) => {
+               const MetricIcon = getIcon(metric.icon, Clock);
+               
+               const numMatch = metric.value.match(/\d+/);
+               const num = numMatch ? parseInt(numMatch[0]) : null;
+               const suffix = metric.value.replace(/\d+/, '').trim();
+               
+               return (
+                 <React.Fragment key={i}>
+                   <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-black active:scale-95 transition-transform duration-200">
+                      <MetricIcon className="h-8 w-8 md:h-10 md:w-10 text-black drop-shadow-sm shrink-0" />
+                      <div>
+                        <div className="text-3xl md:text-2xl font-black drop-shadow-sm flex justify-center md:justify-start leading-tight">
+                          {num !== null ? <AnimatedCounter end={num} suffix={suffix} duration={2000} /> : metric.value}
+                        </div>
+                        <div className="text-xs md:text-sm text-slate-700 font-bold uppercase tracking-wide mt-1">{metric.label}</div>
+                      </div>
+                   </div>
+                   {i < content.metrics.length - 1 && (
+                     <>
+                       <div className="hidden md:block w-px h-12 bg-slate-300 shrink-0"></div>
+                       <div className="w-full h-px bg-slate-300 md:hidden shrink-0"></div>
+                     </>
+                   )}
+                 </React.Fragment>
+               );
+             })}
           </div>
         </div>
       </section>
@@ -319,11 +300,11 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
       <section className="relative z-10 py-20 md:py-24" id="why-publish">
         <div className="max-w-7xl mx-auto px-5 md:px-6">
           <div className={`text-center mb-12 md:mb-16 ${revealClass}`}>
-            <h2 className="text-3xl md:text-5xl font-black text-white mb-6">Your Research Deserves <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.6)]">Global Recognition</span></h2>
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-6">{renderHeading(content.whyTrustUs.heading?.value || "Your Research Deserves Global Recognition", "text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.6)]")}</h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-16">
-            {whyPublicationsMatter.map((item, idx) => (
+            {whyPublicationsMatter.map((item: any, idx: number) => (
               <div key={idx} className={`group bg-[#060D1A] p-7 md:p-8 rounded-2xl border border-white/5 transition-all duration-500 active:scale-[0.98] md:hover:-translate-y-2 md:hover:rotate-1 md:hover:scale-105 md:hover:shadow-[0_20px_40px_rgba(34,211,238,0.15)] md:hover:border-cyan-500/50 overflow-hidden relative ${revealClass}`} style={{ transitionDelay: `${idx * 150}ms` }}>
                 <div className="absolute -top-10 -right-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/30 transition-colors duration-500 pointer-events-none"></div>
                 
@@ -358,11 +339,11 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
         <div className="max-w-7xl mx-auto px-5 md:px-6">
           
           <div className={`text-center mb-12 md:mb-16 ${revealClass}`}>
-            <h2 className="text-3xl md:text-5xl font-black text-white mb-6">More Than Publication Support-A <span className="text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.6)]">Trusted Research Partner</span></h2>
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-6">{renderHeading(content.trustedPartner.heading?.value || "More Than Publication Support-A Trusted Research Partner", "text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.6)]")}</h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
-            {trustCards.map((card, idx) => (
+            {trustCards.map((card: any, idx: number) => (
               <div key={idx} className={`group bg-[#060D1A] p-7 rounded-2xl border border-white/5 transition-all duration-500 active:scale-[0.98] md:hover:-translate-y-2 md:hover:border-indigo-500/50 md:hover:shadow-[0_15px_30px_rgba(99,102,241,0.15)] relative overflow-hidden ${revealClass}`} style={{ transitionDelay: `${idx * 100}ms` }}>
                 <div className="absolute inset-0 bg-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                 
@@ -379,7 +360,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
             <div className="absolute -inset-0.5 bg-linear-to-r from-indigo-500 to-cyan-500 rounded-2xl blur opacity-20 pointer-events-none"></div>
             
             <div className="relative z-10 max-w-3xl space-y-4">
-              <h3 className="text-2xl md:text-3xl font-black text-white drop-shadow-md">Research with Integrity. <span className="text-cyan-400">Publish with Confidence.</span></h3>
+              <h3 className="text-2xl md:text-3xl font-black text-white drop-shadow-md">{renderHeading(content.trustedPartner.ctaHeading?.value || "Research with Integrity. Publish with Confidence.", "text-cyan-400")}</h3>
               <p className="text-slate-300 font-medium text-base md:text-lg leading-relaxed">
                 {content.trustedPartner.ctaText1.value}<br className="hidden md:block" /> {content.trustedPartner.ctaText2.value}
               </p>
@@ -399,12 +380,12 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
       <section className="relative z-10 py-20 md:py-24 overflow-hidden" id="services">
         <div className="max-w-7xl mx-auto px-5 md:px-6">
           <div className={`text-center mb-10 md:mb-20 ${revealClass}`}>
-            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Our <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]">Services</span></h2>
-            <p className="text-slate-200 font-medium max-w-2xl mx-auto text-base md:text-lg">{content.services.description.value}</p>
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">{renderHeading(content.services.heading?.value || "Our Services", "text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]")}</h2>
+            <p className="text-slate-200 font-medium max-w-2xl mx-auto text-base md:text-lg">{renderParagraphs(content.services.description)}</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-            {services.map((srv, idx) => (
+            {services.map((srv: any, idx: number) => (
               <div key={srv.id} className={`group relative bg-[#060D1A] border border-white/10 rounded-2xl p-7 md:p-10 transition-all duration-500 active:scale-[0.97] lg:hover:-translate-y-2 lg:hover:bg-[#0A1326] ${srv.glow} flex flex-col h-full ${revealClass}`} style={{ transitionDelay: `${idx * 150}ms` }}>
                 <div className="relative z-10 flex flex-col h-full">
                   <div className={`h-14 w-14 md:h-16 md:w-16 rounded-xl md:rounded-2xl bg-[#030712] border border-white/10 flex shrink-0 items-center justify-center mb-6 md:mb-8 transition-all duration-500 group-hover:scale-110 shadow-lg relative overflow-hidden`}>
@@ -425,7 +406,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
       <section className="relative z-10 py-20 md:py-24 bg-black/20 border-y border-white/5 overflow-hidden" id="testimonials">
         <div className="max-w-7xl mx-auto px-5 md:px-6">
           <div className={`text-center mb-12 md:mb-16 ${revealClass}`}>
-             <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Scholar <span className="text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]">Success</span></h2>
+             <h2 className="text-3xl md:text-5xl font-black text-white mb-4">{renderHeading("Scholar Success", "text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]")}</h2>
              <p className="text-slate-200 font-medium text-base md:text-lg">Hear from researchers who have elevated their academic profiles with WRIrk.</p>
           </div>
           <div className="mt-8">
@@ -438,8 +419,8 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
       <section className="relative z-10 py-20 md:py-24" id="process" ref={processRef}>
         <div className="max-w-7xl mx-auto px-5 md:px-6">
           <div className={`text-center mb-16 md:mb-20 ${revealClass}`}>
-            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Our Support <span className="text-indigo-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.5)]">Process</span></h2>
-            <p className="text-slate-200 font-medium max-w-2xl mx-auto text-base md:text-lg">{content.process.description.value}</p>
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">{renderHeading(content.process.heading?.value || "Our Support Process", "text-indigo-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.5)]")}</h2>
+            <p className="text-slate-200 font-medium max-w-2xl mx-auto text-base md:text-lg">{renderParagraphs(content.process.description)}</p>
           </div>
 
           <div className="relative pl-10 md:pl-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-8">
@@ -483,8 +464,8 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
       <section className="relative z-10 py-20 md:py-24 bg-black/30 border-y border-white/5" id="faqs">
         <div className="max-w-4xl mx-auto px-5 md:px-6">
           <div className={`text-center mb-12 md:mb-16 ${revealClass}`}>
-            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Frequently Asked <span className="text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]">Questions</span></h2>
-            <p className="text-slate-200 font-medium text-base md:text-lg">{content.faqs.description.value}</p>
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">{renderHeading(content.faqs.heading?.value || "Frequently Asked Questions", "text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]")}</h2>
+            <p className="text-slate-200 font-medium text-base md:text-lg">{renderParagraphs(content.faqs.description)}</p>
           </div>
 
           <div className="space-y-3 md:space-y-4">
@@ -527,7 +508,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
             <div className="absolute top-0 right-0 w-75 md:w-125 h-75 md:h-125 bg-cyan-500/10 rounded-full blur-[80px] md:blur-[100px] md:group-hover:bg-cyan-500/20 transition-colors duration-1000 pointer-events-none -translate-y-1/2 translate-x-1/4"></div>
             
             <div className="relative p-6 py-12 md:p-16 text-center backdrop-blur-xl">
-              <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Start Your Publication <span className="text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]">Journey</span></h2>
+              <h2 className="text-3xl md:text-5xl font-black text-white mb-4">{renderHeading("Start Your Publication Journey", "text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]")}</h2>
               <p className="text-slate-200 font-medium mb-10 md:mb-12 max-w-xl mx-auto text-sm md:text-lg">Partner with rigorous academics to achieve your research goals. Reach out for a comprehensive manuscript evaluation.</p>
               
               <div className="max-w-lg mx-auto text-left">
@@ -563,7 +544,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
               </div>
               
               <p className="text-slate-300 font-medium leading-relaxed text-sm md:text-base max-w-md">
-                {content.footer.description.value}
+                {renderParagraphs(content.footer.description)}
               </p>
             </div>
 
@@ -583,7 +564,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
           
           {/* Bottom Copyright Center */}
           <div className="text-center pt-8 border-t border-white/5 flex flex-col gap-3 relative">
-            <p className="text-slate-300 font-medium text-sm md:text-base">Copyright © 2025 MPRW Research Work LLP. All rights Reserved</p>
+            <p className="text-slate-300 font-medium text-sm md:text-base">Copyright © 2026 MPRW Research Work LLP. All rights Reserved</p>
             <p className="text-slate-300 font-bold text-sm md:text-base tracking-widest uppercase flex items-center justify-center gap-2">
               INDIA <span className="text-red-500 animate-pulse text-lg">❤️</span>
             </p>
