@@ -68,8 +68,7 @@ export default function PopupForm() {
         </button>
 
         <div className="relative p-8 z-10">
-          <h3 className="text-2xl font-black text-white mb-2">Claim Your Free <span className="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Consultation</span></h3>
-          <p className="text-slate-300 text-sm mb-6 leading-relaxed">Speak with a PhD expert about your manuscript today. Let&apos;s get you published in Q1/Q2 journals.</p>
+          <h3 className="text-3xl font-black text-white mb-6 hover:scale-105 transition-transform duration-300 cursor-default text-center">Contact <span className="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Us</span></h3>
           
           <SharedForm 
             formId="popup" 

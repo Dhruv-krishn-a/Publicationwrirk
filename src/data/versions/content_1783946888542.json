@@ -103,7 +103,7 @@
   },
   "trustedPartner": {
     "heading": {
-      "value": "More Than Publication Support-\nA Trusted Research Partner",
+      "value": "More Than Publication Support-A Trusted Research Partner",
       "baseline": 56
     },
     "features": [
@@ -309,6 +309,6 @@
   },
   "_versionMetadata": {
     "description": "Tiral",
-    "timestamp": 1783946911482
+    "timestamp": 1783946888542
   }
 }

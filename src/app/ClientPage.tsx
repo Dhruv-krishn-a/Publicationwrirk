@@ -188,7 +188,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
           <div className="flex items-center gap-3 group cursor-pointer active:scale-95 transition-transform duration-200">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/WrirkLogoOld.png" alt="WRIrk Logo" className="h-12 w-12 md:h-14 md:w-14 object-contain drop-shadow-[0_0_12px_rgba(34,211,238,0.8)] group-hover:drop-shadow-[0_0_25px_rgba(34,211,238,1)] transition-all duration-300" />
-            <span className="text-xl md:text-2xl font-black tracking-widest text-white uppercase drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">WRIrk</span>
+                <span className="font-libre text-[16px] lg:text-[1.3vw] tracking-wider lg:tracking-[0.2vw] px-2 lg:px-[0.8vw] font-bold text-white uppercase drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">WRIRK</span>
           </div>
           
           <nav className="hidden lg:flex items-center gap-10 text-xs font-black uppercase tracking-widest text-slate-200">
@@ -247,8 +247,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
             <div className="absolute -inset-0.5 bg-linear-to-r from-cyan-500 to-indigo-500 rounded-2xl blur-md opacity-50 animate-pulse md:group-hover:opacity-80 transition-opacity duration-700"></div>
             
             <div className="relative bg-[#060D1A]/90 backdrop-blur-xl p-7 md:p-10 rounded-2xl border border-cyan-900/50 shadow-[0_10px_40px_rgba(0,0,0,0.8)] transition-transform duration-500 md:hover:-translate-y-1 transform-gpu">
-              <h3 className="text-xl md:text-2xl font-black text-white mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]">Get Your Free Publication Assessment</h3>
-              <p className="text-xs md:text-sm font-bold text-cyan-200/80 mb-6 leading-relaxed">Tell us about your research, and one of our publication experts will recommend the most suitable guidance based on your goals and publication stage.</p>
+              <h3 className="text-2xl md:text-3xl font-black text-white mb-6 hover:scale-105 transition-transform duration-300 cursor-default text-center">Contact <span className="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Us</span></h3>
               
               <SharedForm formId="hero" buttonText="Request Free Consultation" />
 
@@ -261,35 +260,32 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
       </section>
 
       {/* Global Impact / Metrics - Animated Counters */}
-      <section className={`relative z-10 py-10 md:py-12 border-y border-white/40 bg-white/95 backdrop-blur-xl shadow-[0_0_50px_rgba(255,255,255,0.15)] ${revealClass}`}>
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <section className={`relative z-10 py-10 md:py-16 px-4 md:px-6 ${revealClass}`}>
+        <div className="max-w-7xl mx-auto relative z-10 py-10 md:py-12 border border-white/40 bg-white/95 backdrop-blur-xl shadow-[0_0_50px_rgba(255,255,255,0.15)] rounded-3xl lg:rounded-[2.5rem] px-6 md:px-12">
           
-          <div className="flex flex-col md:flex-row justify-center md:justify-between items-center gap-8 md:gap-4 text-center md:text-left flex-wrap">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-6 w-full max-w-7xl mx-auto">
              {content.metrics.map((metric: any, i: number) => {
                const MetricIcon = getIcon(metric.icon, Clock);
                
-               const numMatch = metric.value.match(/\d+/);
+               const cleanValue = metric.value.replace(/,/g, '');
+               const numMatch = cleanValue.match(/\d+/);
                const num = numMatch ? parseInt(numMatch[0]) : null;
-               const suffix = metric.value.replace(/\d+/, '').trim();
+               const suffix = metric.value.replace(/[\d,]+/, '').trim();
                
                return (
-                 <React.Fragment key={i}>
-                   <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-black active:scale-95 transition-transform duration-200">
-                      <MetricIcon className="h-8 w-8 md:h-10 md:w-10 text-black drop-shadow-sm shrink-0" />
-                      <div>
-                        <div className="text-3xl md:text-2xl font-black drop-shadow-sm flex justify-center md:justify-start leading-tight">
-                          {num !== null ? <AnimatedCounter end={num} suffix={suffix} duration={2000} /> : metric.value}
-                        </div>
-                        <div className="text-xs md:text-sm text-slate-700 font-bold uppercase tracking-wide mt-1">{metric.label}</div>
+                 <div key={i} className="flex flex-col md:flex-row items-center justify-center lg:justify-start gap-4 text-black active:scale-95 transition-transform duration-200 text-center md:text-left relative">
+                    <MetricIcon className="h-10 w-10 text-black drop-shadow-sm shrink-0" />
+                    <div>
+                      <div className="text-3xl font-black drop-shadow-sm flex justify-center md:justify-start leading-tight">
+                        {num !== null ? <AnimatedCounter end={num} suffix={suffix} duration={2000} /> : metric.value}
                       </div>
-                   </div>
-                   {i < content.metrics.length - 1 && (
-                     <>
-                       <div className="hidden md:block w-px h-12 bg-slate-300 shrink-0"></div>
-                       <div className="w-full h-px bg-slate-300 md:hidden shrink-0"></div>
-                     </>
-                   )}
-                 </React.Fragment>
+                      <div className="text-sm text-slate-700 font-bold uppercase tracking-wide mt-1">{metric.label}</div>
+                    </div>
+                    {/* Right Border Divider for LG screens */}
+                    {i < content.metrics.length - 1 && (
+                      <div className="hidden lg:block absolute right-[-12px] top-1/2 -translate-y-1/2 w-px h-12 bg-slate-300"></div>
+                    )}
+                 </div>
                );
              })}
           </div>
@@ -339,7 +335,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
         <div className="max-w-7xl mx-auto px-5 md:px-6">
           
           <div className={`text-center mb-12 md:mb-16 ${revealClass}`}>
-            <h2 className="text-3xl md:text-5xl font-black text-white mb-6">{renderHeading(content.trustedPartner.heading?.value || "More Than Publication Support-A Trusted Research Partner", "text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.6)]")}</h2>
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-6 whitespace-pre-line">{renderHeading(content.trustedPartner.heading?.value || "More Than Publication Support-\nA Trusted Research Partner", "text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.6)]")}</h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
@@ -381,10 +377,9 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
         <div className="max-w-7xl mx-auto px-5 md:px-6">
           <div className={`text-center mb-10 md:mb-20 ${revealClass}`}>
             <h2 className="text-3xl md:text-5xl font-black text-white mb-4">{renderHeading(content.services.heading?.value || "Our Services", "text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]")}</h2>
-            <p className="text-slate-200 font-medium max-w-2xl mx-auto text-base md:text-lg">{renderParagraphs(content.services.description)}</p>
-          </div>
+            </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 max-w-5xl mx-auto">
             {services.map((srv: any, idx: number) => (
               <div key={srv.id} className={`group relative bg-[#060D1A] border border-white/10 rounded-2xl p-7 md:p-10 transition-all duration-500 active:scale-[0.97] lg:hover:-translate-y-2 lg:hover:bg-[#0A1326] ${srv.glow} flex flex-col h-full ${revealClass}`} style={{ transitionDelay: `${idx * 150}ms` }}>
                 <div className="relative z-10 flex flex-col h-full">
@@ -407,8 +402,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
         <div className="max-w-7xl mx-auto px-5 md:px-6">
           <div className={`text-center mb-12 md:mb-16 ${revealClass}`}>
              <h2 className="text-3xl md:text-5xl font-black text-white mb-4">{renderHeading("Scholar Success", "text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]")}</h2>
-             <p className="text-slate-200 font-medium text-base md:text-lg">Hear from researchers who have elevated their academic profiles with WRIrk.</p>
-          </div>
+             </div>
           <div className="mt-8">
              <ReviewCarousel reviews={googleReviews} />
           </div>
@@ -420,8 +414,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
         <div className="max-w-7xl mx-auto px-5 md:px-6">
           <div className={`text-center mb-16 md:mb-20 ${revealClass}`}>
             <h2 className="text-3xl md:text-5xl font-black text-white mb-4">{renderHeading(content.process.heading?.value || "Our Support Process", "text-indigo-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.5)]")}</h2>
-            <p className="text-slate-200 font-medium max-w-2xl mx-auto text-base md:text-lg">{renderParagraphs(content.process.description)}</p>
-          </div>
+            </div>
 
           <div className="relative pl-10 md:pl-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-8">
             
@@ -465,8 +458,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
         <div className="max-w-4xl mx-auto px-5 md:px-6">
           <div className={`text-center mb-12 md:mb-16 ${revealClass}`}>
             <h2 className="text-3xl md:text-5xl font-black text-white mb-4">{renderHeading(content.faqs.heading?.value || "Frequently Asked Questions", "text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]")}</h2>
-            <p className="text-slate-200 font-medium text-base md:text-lg">{renderParagraphs(content.faqs.description)}</p>
-          </div>
+            </div>
 
           <div className="space-y-3 md:space-y-4">
             {faqs.map((faq: { q: string, a: string }, i: number) => (
@@ -508,8 +500,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
             <div className="absolute top-0 right-0 w-75 md:w-125 h-75 md:h-125 bg-cyan-500/10 rounded-full blur-[80px] md:blur-[100px] md:group-hover:bg-cyan-500/20 transition-colors duration-1000 pointer-events-none -translate-y-1/2 translate-x-1/4"></div>
             
             <div className="relative p-6 py-12 md:p-16 text-center backdrop-blur-xl">
-              <h2 className="text-3xl md:text-5xl font-black text-white mb-4">{renderHeading("Start Your Publication Journey", "text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]")}</h2>
-              <p className="text-slate-200 font-medium mb-10 md:mb-12 max-w-xl mx-auto text-sm md:text-lg">Partner with rigorous academics to achieve your research goals. Reach out for a comprehensive manuscript evaluation.</p>
+              <h2 className="text-3xl md:text-5xl font-black text-white mb-10 md:mb-12 hover:scale-105 transition-transform duration-300 cursor-default">{renderHeading("Contact Us", "text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]")}</h2>
               
               <div className="max-w-lg mx-auto text-left">
                 <SharedForm formId="contact" buttonText="Submit Inquiry" />
@@ -530,7 +521,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
               <div className="flex items-center gap-4 mb-10">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/WrirkLogoOld.png" alt="WRIrk Logo" className="h-10 w-10 md:h-12 md:w-12 object-contain drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]" />
-                <span className="text-white tracking-[0.25em] text-lg md:text-xl font-medium">WRIRK</span>
+                <span className="font-libre text-[16px] lg:text-[1.3vw] tracking-wider lg:tracking-[0.2vw] px-2 lg:px-[0.8vw] text-white font-medium">WRIRK</span>
               </div>
               
               <div className="mb-2">
