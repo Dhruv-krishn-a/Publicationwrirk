@@ -489,7 +489,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
                   className={`transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden ${openFaq === i ? 'max-h-125 opacity-100' : 'max-h-0 opacity-0'}`}
                 >
                   <div className={`transition-transform duration-500 ${openFaq === i ? 'translate-y-0' : '-translate-y-4'}`}>
-                    <p className="text-slate-200 font-medium text-sm md:text-base leading-relaxed px-5 md:px-8 pb-6 md:pb-8 pt-1 md:pt-2 border-t border-white/5 mt-2">
+                    <p className="text-slate-200 font-medium text-sm md:text-base leading-relaxed px-5 md:px-8 pb-6 md:pb-8 pt-1 md:pt-2 border-t border-white/5 mt-2 whitespace-pre-line">
                       {faq.a}
                     </p>
                   </div>
