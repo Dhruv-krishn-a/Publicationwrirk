@@ -1,7 +1,7 @@
 {
   "globalSettings": {
     "whatsappNumber": {
-      "value": "+916395795204",
+      "value": "+919548521866",
       "baseline": 13
     },
     "contactEmail": {
@@ -75,7 +75,7 @@
       "baseline": 41
     },
     "quote": {
-      "value": "A research paper is more than a publication-\nit's your contribution to the global academic community.",
+      "value": "A research paper is more than a publication\nit's your contribution to the global academic community.",
       "baseline": 101
     },
     "features": [
@@ -103,7 +103,7 @@
   },
   "trustedPartner": {
     "heading": {
-      "value": "More Than Publication Support-\nA Trusted Research Partner",
+      "value": "More Than Publication Support\nA Trusted Research Partner",
       "baseline": 56
     },
     "features": [
@@ -134,7 +134,7 @@
       },
       {
         "title": "End-to-End Guidance",
-        "description": "From manuscript preparation to journal submission and publication support, our team remains with you throughout the process.",
+        "description": "From manuscript review to journal submission and publication support, our team remains with you throughout the process.",
         "icon": "ArrowRight"
       }
     ],
@@ -201,6 +201,38 @@
       "stars": 5,
       "reviewText": "I sincerely appreciate your invaluable support in my research work, Thank you so much for your help in my research. Your guidance and support made a big difference, and I truly appreciate the time and effort you put in to assist me.",
       "link": "https://share.google/I98YdZe39NaYJIrzS"
+    },
+    {
+      "id": 4,
+      "author": "Shweta",
+      "image": "https://ui-avatars.com/api/?name=Shweta&background=0A1326&color=22D3EE&size=128",
+      "stars": 5,
+      "reviewText": "My research experience with this organization has been truly enriching and highly positive. Among all the resource persons I have interacted with, Ms. Nandini Khandelwal has been exceptionally supportive and outstanding in her guidance. She has always taken the time to understand my concerns in depth and provided effective solutions with great clarity and patience.\nHer continuous support played a significant role in helping me overcome challenges, including moments of anxiety and stress during my research journey. Without her guidance, I believe it would have been difficult for me to adapt so effectively within the organization.\nI sincerely express my heartfelt gratitude to Ms. Nandini Khandelwal her constant availability, encouragement, and dedication. She is not only an excellent professional but also a wonderful human being. Overall, my experience has been extremely rewarding. Thank you.",
+      "link": "https://share.google/FwOiZXUf1jq5oidyp"
+    },
+    {
+      "id": 5,
+      "author": "RAJIV JAIN",
+      "image": "https://ui-avatars.com/api/?name=RAJIV+JAIN&background=0A1326&color=22D3EE&size=128",
+      "stars": 5,
+      "reviewText": "The team supported me throughout the research process and ensured the delivery of high-quality work. I recommend them for reliable and high-quality research paper writing.",
+      "link": "https://share.google/rH921sslJB6iRlpsi"
+    },
+    {
+      "id": 6,
+      "author": "Ilakshi Singh",
+      "image": "https://ui-avatars.com/api/?name=Ilakshi+Singh&background=0A1326&color=22D3EE&size=128",
+      "stars": 5,
+      "reviewText": "I recently availed services from WRIRK-MP Research Work, and I’m highly satisfied with the overall experience. The team was knowledgeable, cooperative, and delivered quality work within the promised timeline. Their understanding of research and professionalism stood out. Due to their guidance I able to seek admission.",
+      "link": "https://share.google/6BnTBLenr0ldLWSnW"
+    },
+    {
+      "id": 7,
+      "author": "Saloni Dawar",
+      "image": "https://ui-avatars.com/api/?name=Saloni+Dawar&background=0A1326&color=22D3EE&size=128",
+      "stars": 5,
+      "reviewText": "They minutely check and tell you in details what needs to be done to improvise in the paper to publish it in a good and indexed journal.",
+      "link": "https://share.google/6fmBNZAXKKazL5RvN"
     }
   ],
   "process": {
@@ -255,7 +287,7 @@
     "items": [
       {
         "q": "What services does WRIRK provide?",
-        "a": "WRIRK provides expert Publication Assistance and Research Collaboration & Co-Authorship Support. Our experts help researchers identify suitable journals, assist with manuscript formatting according to journal guidelines, support journal communication, and guide them throughout the publication process."
+        "a": "WRIRK does not provide research writing services. We believe that every research work should remain the original intellectual contribution of its author.\n\nWe provide Publication Assistance and Research Collaboration & Co-Authorship Support. Our experts help researchers identify suitable journals, assist with manuscript formatting according to journal guidelines, support journal communication, and guide them throughout the publication process."
       },
       {
         "q": "Do you write research papers or theses?",
@@ -308,7 +340,7 @@
     ]
   },
   "_versionMetadata": {
-    "description": "Changed heading in why trust us",
-    "timestamp": 1784013710681
+    "description": "Current version",
+    "timestamp": 1784029605074
   }
 }

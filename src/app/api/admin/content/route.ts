@@ -124,6 +124,20 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true, message: `Successfully restored version: ${versionFile}` });
     }
 
+    // Delete a previous version
+    if (action === 'delete') {
+      if (!versionFile) {
+        return NextResponse.json({ success: false, message: 'No version file specified' }, { status: 400 });
+      }
+
+      const versionPath = path.join(VERSIONS_DIR, versionFile);
+      if (fs.existsSync(versionPath)) {
+        fs.unlinkSync(versionPath);
+      }
+
+      return NextResponse.json({ success: true, message: `Successfully deleted version: ${versionFile}` });
+    }
+
     return NextResponse.json({ success: false, message: 'Invalid action' }, { status: 400 });
 
   } catch (error) {

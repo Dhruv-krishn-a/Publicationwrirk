@@ -4,6 +4,24 @@
 import React, { useState, useEffect } from 'react';
 import { Star, ExternalLink, X, Quote } from 'lucide-react';
 
+
+const RichTextRenderer = ({ content, className }: { content: string, className?: string }) => {
+  if (!content) return null;
+  if (/<[a-z][\s\S]*>/i.test(content)) {
+    return <div className={className} dangerouslySetInnerHTML={{ __html: content }} />;
+  }
+  return (
+    <div className={className}>
+      {content.split(/(?:\\n|\n)/).map((line, i) => (
+        <React.Fragment key={i}>
+          {i > 0 && <br />}
+          {line.trim()}
+        </React.Fragment>
+      ))}
+    </div>
+  );
+};
+
 export interface GoogleReview {
   id: string | number;
   author: string;

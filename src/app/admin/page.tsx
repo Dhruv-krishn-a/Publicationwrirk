@@ -7,6 +7,22 @@ import {
   RotateCcw, AlertTriangle, Loader2, Plus, Trash2, Edit3
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
+import 'react-quill-new/dist/quill.snow.css';
+
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
+
+const quillModules = {
+  toolbar: [
+    [{ 'header': [1, 2, 3, false] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{'list': 'ordered'}, {'list': 'bullet'}],
+    [{ 'color': [] }, { 'background': [] }],
+    [{ 'align': [] }],
+    ['link'],
+    ['clean']
+  ],
+};
 
 type TabType = 'settings' | 'hero' | 'metrics' | 'whyTrustUs' | 'trustedPartner' | 'services' | 'process' | 'faqs' | 'reviews' | 'footer' | 'history';
 
@@ -105,6 +121,26 @@ export default function AdminDashboard() {
       setMessage({ type: 'error', text: 'Server error while restoring' });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDelete = async (versionFile: string) => {
+    if (!confirm('Are you sure you want to delete this version? This cannot be undone.')) return;
+    try {
+      const res = await fetch('/api/admin/content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete', versionFile })
+      });
+      const result = await res.json();
+      if (result.success) {
+        setMessage({ type: 'success', text: 'Version deleted successfully!' });
+        fetchHistory(); // Refresh history list
+      } else {
+        setMessage({ type: 'error', text: result.message });
+      }
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Failed to delete version.' });
     }
   };
 
@@ -617,7 +653,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className="md:w-2/3 pt-2">
                           <label className="block text-xs font-bold text-slate-500 mb-1">Review Text</label>
-                          <textarea value={item.reviewText || ''} onChange={(e) => updateArrayField(['reviews'], idx, 'reviewText', e.target.value)} className="w-full p-2 border rounded-md focus:ring-2 focus:ring-cyan-500 focus:outline-hidden min-h-[120px]" />
+                          <ReactQuill theme="snow" modules={quillModules} value={item.reviewText || ''} onChange={(val) => updateArrayField(['reviews'], idx, 'reviewText', val)} className="bg-white text-black mb-12" />
                         </div>
                       </div>
                     ))}
@@ -670,13 +706,22 @@ export default function AdminDashboard() {
                               </p>
                               <p className="text-xs text-slate-500 mt-1 font-medium">Saved on: {dateStr}</p>
                             </div>
-                            <button
-                              onClick={() => handleRestore(file)}
-                              className="px-4 py-2 bg-amber-100 hover:bg-amber-200 text-amber-800 font-semibold rounded-lg text-sm transition-colors flex items-center gap-2 shadow-xs"
-                            >
-                              <RotateCcw className="w-4 h-4" />
-                              Restore
-                            </button>
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => handleRestore(file)}
+                                className="px-4 py-2 bg-amber-100 hover:bg-amber-200 text-amber-800 font-semibold rounded-lg text-sm transition-colors flex items-center gap-2 shadow-xs"
+                              >
+                                <RotateCcw className="w-4 h-4" />
+                                Restore
+                              </button>
+                              <button
+                                onClick={() => handleDelete(file)}
+                                className="px-4 py-2 bg-red-100 hover:bg-red-200 text-red-800 font-semibold rounded-lg text-sm transition-colors flex items-center gap-2 shadow-xs"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                                Delete
+                              </button>
+                            </div>
                           </div>
                         );
                       })}

@@ -4,6 +4,25 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { ChevronDown, BookOpen, Award, TrendingUp, Users, Clock, ShieldCheck, PenTool, Send, PhoneCall, ArrowRight, FileCheck2, Quote, Activity, Globe, CheckCircle, Star } from 'lucide-react';
 
+const RichTextRenderer = ({ content, className }: { content: string, className?: string }) => {
+  if (!content) return null;
+  // If it contains HTML tags (from Quill), render as HTML
+  if (/<[a-z][\s\S]*>/i.test(content)) {
+    return <div className={className} dangerouslySetInnerHTML={{ __html: content }} />;
+  }
+  // Otherwise, handle legacy text by replacing newlines with <br />
+  return (
+    <div className={className}>
+      {content.split(/(?:\\n|\n)/).map((line, i) => (
+        <React.Fragment key={i}>
+          {i > 0 && <br />}
+          {line.trim()}
+        </React.Fragment>
+      ))}
+    </div>
+  );
+};
+
 import dynamic from 'next/dynamic';
 import SharedForm from '@/components/SharedForm';
 import ReviewCarousel from '@/components/ReviewCarousel';
@@ -489,9 +508,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
                   className={`transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden ${openFaq === i ? 'max-h-125 opacity-100' : 'max-h-0 opacity-0'}`}
                 >
                   <div className={`transition-transform duration-500 ${openFaq === i ? 'translate-y-0' : '-translate-y-4'}`}>
-                    <p className="text-slate-200 font-medium text-sm md:text-base leading-relaxed px-5 md:px-8 pb-6 md:pb-8 pt-1 md:pt-2 border-t border-white/5 mt-2 whitespace-pre-line">
-                      {faq.a}
-                    </p>
+                    <RichTextRenderer content={faq.a} className="text-slate-200 font-medium text-sm md:text-base leading-relaxed px-5 md:px-8 pb-6 md:pb-8 pt-1 md:pt-2 border-t border-white/5 mt-2" />
                   </div>
                 </div>
               </div>
