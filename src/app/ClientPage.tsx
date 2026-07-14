@@ -382,17 +382,17 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
             <h2 className="text-3xl md:text-5xl font-black text-white mb-4">{renderHeading(content.services.heading?.value || "Our Services", "text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]")}</h2>
             </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-4xl mx-auto">
             {services.map((srv: any, idx: number) => (
-              <div key={srv.id} className={`group relative bg-[#060D1A] border border-white/10 rounded-2xl p-7 md:p-10 transition-all duration-500 active:scale-[0.97] lg:hover:-translate-y-2 lg:hover:bg-[#0A1326] ${srv.glow} flex flex-col h-full ${revealClass}`} style={{ transitionDelay: `${idx * 150}ms` }}>
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className={`h-14 w-14 md:h-16 md:w-16 rounded-xl md:rounded-2xl bg-[#030712] border border-white/10 flex shrink-0 items-center justify-center mb-6 md:mb-8 transition-all duration-500 group-hover:scale-110 shadow-lg relative overflow-hidden`}>
+              <div key={srv.id} className={`group relative bg-[#060D1A] border border-white/10 rounded-2xl p-8 md:p-12 transition-all duration-500 active:scale-[0.97] lg:hover:-translate-y-2 lg:hover:bg-[#0A1326] ${srv.glow} flex flex-col h-full items-center text-center ${revealClass}`} style={{ transitionDelay: `${idx * 150}ms` }}>
+                <div className="relative z-10 flex flex-col h-full items-center">
+                  <div className={`h-16 w-16 md:h-20 md:w-20 rounded-2xl bg-[#030712] border border-white/10 flex shrink-0 items-center justify-center mb-8 transition-all duration-500 group-hover:scale-110 shadow-lg relative overflow-hidden mx-auto`}>
                     <div className="absolute inset-0 bg-white/5 opacity-0 active:opacity-100 transition-opacity"></div>
-                    <srv.icon className={`h-6 w-6 md:h-8 md:w-8 ${srv.iconColor} drop-shadow-[0_0_10px_currentColor]`} />
+                    <srv.icon className={`h-8 w-8 md:h-10 md:w-10 ${srv.iconColor} drop-shadow-[0_0_10px_currentColor]`} />
                   </div>
-                  <h3 className="text-xl md:text-2xl font-black text-white mb-4 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">{srv.title}</h3>
-                  <div className="w-12 h-1 bg-white/10 rounded-full mb-5 group-hover:w-24 group-hover:bg-cyan-500/50 transition-all duration-500"></div>
-                  <p className="text-slate-300 font-medium leading-relaxed text-sm md:text-base flex-grow">{srv.desc}</p>
+                  <h3 className="text-2xl font-black text-white mb-5 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">{srv.title}</h3>
+                  <div className="w-12 h-1.5 bg-white/10 rounded-full mb-6 group-hover:w-24 group-hover:bg-cyan-500/50 transition-all duration-500 mx-auto"></div>
+                  <p className="text-slate-300 font-medium leading-relaxed text-sm md:text-base flex-grow max-w-sm">{srv.desc}</p>
                 </div>
               </div>
             ))}
