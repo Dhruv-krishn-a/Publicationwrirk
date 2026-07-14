@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { ChevronDown, BookOpen, Award, TrendingUp, Users, Clock, ShieldCheck, PenTool, Send, PhoneCall, ArrowRight, FileCheck2, Quote, Activity, Globe, CheckCircle, Star } from 'lucide-react';
 
 import dynamic from 'next/dynamic';
@@ -145,7 +146,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
   const revealClass = "reveal opacity-0 translate-y-12 transition-all duration-[800ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]";
 
   return (
-    <div className="min-h-screen bg-[#02050D] text-slate-100 font-sans selection:bg-cyan-500/40 relative overflow-x-hidden">
+    <main className="min-h-screen bg-[#02050D] text-slate-100 font-sans selection:bg-cyan-500/40 relative overflow-x-hidden">
       {/* Hide Scrollbar for carousels */}
       <style dangerouslySetInnerHTML={{__html: `
         .hide-scrollbar::-webkit-scrollbar { display: none; }
@@ -161,6 +162,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
           href={`https://wa.me/${content.globalSettings.whatsappNumber.value.replace(/\+/g, '')}`} 
           target="_blank"
           rel="noreferrer"
+          aria-label="Contact us on WhatsApp"
           className="group relative flex items-center justify-center w-14 h-14 bg-[#0A0F1C]/90 backdrop-blur-md border border-emerald-500/50 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.8)] hover:bg-emerald-500 active:scale-90 active:bg-emerald-600 transition-all duration-300"
         >
           <svg viewBox="0 0 24 24" fill="currentColor" className="h-7 w-7 text-emerald-400 group-hover:text-white drop-shadow-[0_0_10px_rgba(52,211,153,0.8)] group-hover:drop-shadow-none transition-all duration-300 relative z-10">
@@ -173,6 +175,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
         
         <a 
           href={`tel:${content.globalSettings.whatsappNumber.value}`}
+          aria-label="Call us"
           className="group relative flex items-center justify-center w-14 h-14 bg-[#0A0F1C]/90 backdrop-blur-md border border-indigo-500/50 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.3)] hover:shadow-[0_0_30px_rgba(99,102,241,0.8)] hover:bg-indigo-500 active:scale-90 active:bg-indigo-600 transition-all duration-300"
         >
           <PhoneCall className="h-6 w-6 text-indigo-400 group-hover:text-[#0A0F1C] transition-colors duration-300 relative z-10" />
@@ -185,10 +188,10 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
       {/* Header */}
       <header className={`fixed top-0 w-full z-40 transition-all duration-500 ${scrolled ? 'bg-[#02050D]/90 backdrop-blur-xl border-b border-cyan-900/50 py-3 md:py-4 shadow-[0_4px_30px_rgba(0,0,0,0.5)]' : 'bg-transparent py-5 md:py-8'}`}>
         <div className="max-w-7xl mx-auto px-5 md:px-6 flex items-center justify-between">
-          <div className="flex items-center gap-3 group cursor-pointer active:scale-95 transition-transform duration-200">
+          <div className="flex items-center gap-3 md:gap-4 group cursor-pointer active:scale-95 transition-transform duration-200">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/WrirkLogoOld.png" alt="WRIrk Logo" className="h-12 w-12 md:h-14 md:w-14 object-contain drop-shadow-[0_0_12px_rgba(34,211,238,0.8)] group-hover:drop-shadow-[0_0_25px_rgba(34,211,238,1)] transition-all duration-300" />
-                <span className="font-libre text-[16px] lg:text-[1.3vw] tracking-wider lg:tracking-[0.2vw] px-2 lg:px-[0.8vw] font-bold text-white uppercase drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">WRIRK</span>
+            <Image priority={true} src="/WrirkLogoOld.png" alt="WRIrk Logo" width={80} height={80} className="h-16 w-16 md:h-20 md:w-20 object-contain drop-shadow-[0_0_12px_rgba(34,211,238,0.8)] group-hover:drop-shadow-[0_0_25px_rgba(34,211,238,1)] transition-all duration-300" />
+                <span className="font-libre text-[18px] lg:text-[1.5vw] tracking-wider lg:tracking-[0.2vw] px-2 lg:px-[0.8vw] font-normal text-white uppercase drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] translate-y-[2px]">WRIRK</span>
           </div>
           
           <nav className="hidden lg:flex items-center gap-10 text-xs font-black uppercase tracking-widest text-slate-200">
@@ -247,7 +250,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
             <div className="absolute -inset-0.5 bg-linear-to-r from-cyan-500 to-indigo-500 rounded-2xl blur-md opacity-50 animate-pulse md:group-hover:opacity-80 transition-opacity duration-700"></div>
             
             <div className="relative bg-[#060D1A]/90 backdrop-blur-xl p-7 md:p-10 rounded-2xl border border-cyan-900/50 shadow-[0_10px_40px_rgba(0,0,0,0.8)] transition-transform duration-500 md:hover:-translate-y-1 transform-gpu">
-              <h3 className="text-2xl md:text-3xl font-black text-white mb-6 hover:scale-105 transition-transform duration-300 cursor-default text-center">Contact <span className="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Us</span></h3>
+              <h2 className="text-2xl md:text-3xl font-black text-white mb-6 hover:scale-105 transition-transform duration-300 cursor-default text-center">Contact <span className="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Us</span></h2>
               
               <SharedForm formId="hero" buttonText="Request Free Consultation" />
 
@@ -518,10 +521,10 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
             
             {/* Left Side Content */}
             <div className="max-w-2xl">
-              <div className="flex items-center gap-4 mb-10">
+              <div className="flex items-center gap-3 md:gap-4 mb-5 md:mb-6 cursor-pointer group">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/WrirkLogoOld.png" alt="WRIrk Logo" className="h-10 w-10 md:h-12 md:w-12 object-contain drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]" />
-                <span className="font-libre text-[16px] lg:text-[1.3vw] tracking-wider lg:tracking-[0.2vw] px-2 lg:px-[0.8vw] text-white font-medium">WRIRK</span>
+                <Image src="/WrirkLogoOld.png" alt="WRIrk Logo" width={72} height={72} className="h-14 w-14 md:h-16 md:w-16 object-contain drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]" />
+                <span className="font-libre text-[20px] md:text-[1.8vw] tracking-wider md:tracking-[0.2vw] px-2 md:px-[0.5vw] font-normal text-white uppercase translate-y-[2px]">WRIRK</span>
               </div>
               
               <div className="mb-2">
@@ -531,7 +534,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
               <div className="flex items-center gap-3 md:gap-5 mb-5 flex-nowrap">
                 <h2 className="text-[1.3rem] sm:text-2xl md:text-[2rem] lg:text-[2.4rem] font-bold text-white drop-shadow-md whitespace-nowrap">MPRW Research Work LLP</h2>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/MPRW-Logo.png" alt="MPRW Logo" className="h-14 sm:h-16 md:h-20 lg:h-24 object-contain drop-shadow-[0_0_15px_rgba(34,211,238,0.3)] shrink-0" />
+                <Image src="/MPRW-Logo.png" alt="MPRW Logo" width={96} height={96} className="h-14 sm:h-16 md:h-20 lg:h-24 object-contain drop-shadow-[0_0_15px_rgba(34,211,238,0.3)] shrink-0" />
               </div>
               
               <p className="text-slate-300 font-medium leading-relaxed text-sm md:text-base max-w-md">
@@ -565,6 +568,6 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
       </footer>
       
       <PopupForm />
-    </div>
+    </main>
   );
 }

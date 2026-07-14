@@ -415,7 +415,7 @@ export default function AdminDashboard() {
               {activeTab === 'trustedPartner' && (
                 <div>
                   <h3 className="text-xl font-bold mb-6 text-slate-800">Trusted Partner</h3>
-                  {renderInput('Heading', data.trustedPartner?.heading, ['trustedPartner', 'heading'])}
+                  {renderInput('Heading', data.trustedPartner?.heading, ['trustedPartner', 'heading'], true)}
                   {renderInput('CTA Heading', data.trustedPartner?.ctaHeading, ['trustedPartner', 'ctaHeading'])}
                   {renderInput('CTA Text 1', data.trustedPartner?.ctaText1, ['trustedPartner', 'ctaText1'])}
                   {renderInput('CTA Text 2', data.trustedPartner?.ctaText2, ['trustedPartner', 'ctaText2'], true)}

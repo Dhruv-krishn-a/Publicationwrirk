@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Check, Loader2, ArrowRight } from 'lucide-react';
 
 interface SharedFormProps {
@@ -12,6 +13,7 @@ interface SharedFormProps {
 export default function SharedForm({ formId, buttonText, buttonIcon, onSuccess }: SharedFormProps) {
   const [formState, setFormState] = useState({ name: '', phone: '', email: '', message: '' });
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  const router = useRouter();
 
   const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -34,10 +36,9 @@ export default function SharedForm({ formId, buttonText, buttonIcon, onSuccess }
 
       setSubmitStatus('success');
       setTimeout(() => {
-        setSubmitStatus('idle');
-        setFormState({ name: '', phone: '', email: '', message: '' });
         if (onSuccess) onSuccess();
-      }, 3000);
+        router.push('/thank-you');
+      }, 1200);
       
     } catch(err) {
       console.error('Submission error:', err);

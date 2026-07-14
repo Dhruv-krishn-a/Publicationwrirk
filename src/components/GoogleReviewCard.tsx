@@ -48,6 +48,7 @@ export default function GoogleReviewCard({ review }: Props) {
             <img 
               src={review.image} 
               alt={review.author} 
+              width={56} height={56}
               className="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover border-2 border-white/10 group-hover:border-cyan-400/50 transition-colors duration-300 relative z-10 bg-[#0A1326]"
               onError={(e) => {
                 // Fallback if image fails to load
@@ -65,7 +66,7 @@ export default function GoogleReviewCard({ review }: Props) {
             </div>
           </div>
           <div>
-            <h4 className="text-white font-bold text-sm md:text-base group-hover:text-cyan-50 transition-colors">{review.author}</h4>
+            <h3 className="text-white font-bold text-sm md:text-base group-hover:text-cyan-50 transition-colors">{review.author}</h3>
             <div className="flex items-center gap-0.5 mt-1">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className={`w-3.5 h-3.5 md:w-4 md:h-4 ${i < review.stars ? 'text-amber-400 fill-amber-400 drop-shadow-[0_0_5px_rgba(251,191,36,0.6)]' : 'text-slate-600'}`} />
@@ -115,6 +116,7 @@ export default function GoogleReviewCard({ review }: Props) {
             <button 
               onClick={() => setIsModalOpen(false)}
               className="absolute top-4 right-4 md:top-6 md:right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white active:scale-95 transition-all"
+              aria-label="Close review modal"
             >
               <X className="w-5 h-5" />
             </button>
@@ -124,6 +126,7 @@ export default function GoogleReviewCard({ review }: Props) {
               <img 
                 src={review.image} 
                 alt={review.author} 
+                width={80} height={80}
                 className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-cyan-500/30 shadow-[0_0_20px_rgba(34,211,238,0.2)] bg-[#0A1326]"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(review.author)}&background=0A1326&color=22D3EE`;

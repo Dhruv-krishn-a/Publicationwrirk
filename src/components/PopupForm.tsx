@@ -62,13 +62,14 @@ export default function PopupForm() {
 
         <button 
           onClick={handleClose}
+          aria-label="Close form"
           className="absolute top-4 right-4 z-20 p-2 text-slate-400 hover:text-white bg-[#030712]/50 hover:bg-[#0A1326] rounded-full transition-all active:scale-90"
         >
           <X className="h-5 w-5" />
         </button>
 
         <div className="relative p-8 z-10">
-          <h3 className="text-3xl font-black text-white mb-6 hover:scale-105 transition-transform duration-300 cursor-default text-center">Contact <span className="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Us</span></h3>
+          <h2 className="text-3xl font-black text-white mb-6 hover:scale-105 transition-transform duration-300 cursor-default text-center">Contact <span className="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Us</span></h2>
           
           <SharedForm 
             formId="popup" 

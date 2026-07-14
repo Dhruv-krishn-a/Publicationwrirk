@@ -217,27 +217,27 @@
     "steps": [
       {
         "id": "step-1",
-        "number": "01",
         "title": "Technical Discussion",
-        "desc": "Our team connects you with a domain expert who understands your research area, discusses your publication requirements, and provides personalized guidance based on your goals."
+        "desc": "Our team connects you with a domain expert who understands your research area, discusses your publication requirements, and provides personalized guidance based on your goals.",
+        "step": "01"
       },
       {
         "id": "step-2",
-        "number": "02",
         "title": "Manuscript Review",
-        "desc": "Our experts carefully review your manuscript to evaluate its quality, publication readiness, and identify areas that may need improvement before submission."
+        "desc": "Our experts carefully review your manuscript to evaluate its quality, publication readiness, and identify areas that may need improvement before submission.",
+        "step": "02"
       },
       {
         "id": "step-3",
-        "number": "03",
         "title": "Journal Recommendation",
-        "desc": "Based on your research area, manuscript quality, indexing preferences, and publication requirements, we recommend suitable journals that best align with your publication goals."
+        "desc": "Based on your research area, manuscript quality, indexing preferences, and publication requirements, we recommend suitable journals that best align with your publication goals.",
+        "step": "03"
       },
       {
         "id": "step-4",
-        "number": "04",
         "title": "Publication Assistance",
-        "desc": "Once the journal is finalized, our team guides you throughout the submission and publication process, providing continuous support until your publication journey is successfully completed."
+        "desc": "Once the journal is finalized, our team guides you throughout the submission and publication process, providing continuous support until your publication journey is successfully completed.",
+        "step": "04"
       }
     ]
   },

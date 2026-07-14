@@ -63,6 +63,7 @@ export default function ReviewCarousel({ reviews }: Props) {
           <button 
             onClick={() => scrollByAmount(-350)}
             disabled={!canScrollLeft}
+            aria-label="Previous review"
             className={`absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-[#0A1326] border border-cyan-500/50 flex items-center justify-center text-white shadow-[0_0_20px_rgba(0,0,0,0.8)] transition-all duration-300 ${!canScrollLeft ? 'opacity-0 pointer-events-none scale-90' : 'opacity-100 hover:scale-110 hover:bg-cyan-900/50 hover:border-cyan-400'}`}
           >
             <ChevronLeft className="w-6 h-6" />
@@ -71,6 +72,7 @@ export default function ReviewCarousel({ reviews }: Props) {
           <button 
             onClick={() => scrollByAmount(350)}
             disabled={!canScrollRight}
+            aria-label="Next review"
             className={`absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-[#0A1326] border border-cyan-500/50 flex items-center justify-center text-white shadow-[0_0_20px_rgba(0,0,0,0.8)] transition-all duration-300 ${!canScrollRight ? 'opacity-0 pointer-events-none scale-90' : 'opacity-100 hover:scale-110 hover:bg-cyan-900/50 hover:border-cyan-400'}`}
           >
             <ChevronRight className="w-6 h-6" />
