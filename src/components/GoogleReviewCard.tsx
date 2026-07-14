@@ -35,7 +35,7 @@ export default function GoogleReviewCard({ review }: Props) {
   return (
     <>
       {/* The Review Card */}
-      <div className="flex-shrink-0 w-[320px] md:w-[400px] snap-center bg-[#060D1A] border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col h-[350px] relative group hover:border-cyan-500/30 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(34,211,238,0.1)]">
+      <div className="flex-shrink-0 w-[320px] md:w-[400px] bg-[#060D1A] border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col h-[350px] relative group hover:border-cyan-500/30 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(34,211,238,0.1)]">
         
         {/* Subtle Background Glow on Hover */}
         <div className="absolute inset-0 bg-linear-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"></div>

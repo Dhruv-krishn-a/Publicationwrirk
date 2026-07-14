@@ -327,7 +327,14 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
             <div className="absolute inset-0 bg-cyan-500/5 blur-xl pointer-events-none"></div>
             <Quote className="h-8 w-8 text-cyan-400 mx-auto mb-4 opacity-50" />
             <p className="text-xl md:text-2xl font-bold text-white italic drop-shadow-md">
-              &quot;{content.whyTrustUs.quote.value}&quot;
+              &quot;
+              {content.whyTrustUs.quote.value.split(/(?:\\n|\n)/).map((line: string, i: number) => (
+                <React.Fragment key={i}>
+                  {i > 0 && <br />}
+                  {line.trim()}
+                </React.Fragment>
+              ))}
+              &quot;
             </p>
           </div>
         </div>
@@ -402,13 +409,11 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
 
       {/* Testimonials */}
       <section className="relative z-10 py-20 md:py-24 bg-black/20 border-y border-white/5 overflow-hidden" id="testimonials">
-        <div className="max-w-7xl mx-auto px-5 md:px-6">
-          <div className={`text-center mb-12 md:mb-16 ${revealClass}`}>
+        <div className="max-w-7xl mx-auto px-5 md:px-6 mb-12 md:mb-16 text-center">
              <h2 className="text-3xl md:text-5xl font-black text-white mb-4">{renderHeading("Scholar Success", "text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]")}</h2>
-             </div>
-          <div className="mt-8">
+        </div>
+        <div className="w-full relative mt-8">
              <ReviewCarousel reviews={googleReviews} />
-          </div>
         </div>
       </section>
 
