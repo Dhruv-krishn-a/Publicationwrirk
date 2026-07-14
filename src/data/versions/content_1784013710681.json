@@ -75,7 +75,7 @@
       "baseline": 41
     },
     "quote": {
-      "value": "A research paper is more than a publication\nit's your contribution to the global academic community.",
+      "value": "A research paper is more than a publication-\nit's your contribution to the global academic community.",
       "baseline": 101
     },
     "features": [
@@ -103,7 +103,7 @@
   },
   "trustedPartner": {
     "heading": {
-      "value": "More Than Publication Support\nA Trusted Research Partner",
+      "value": "More Than Publication Support-\nA Trusted Research Partner",
       "baseline": 56
     },
     "features": [
@@ -134,7 +134,7 @@
       },
       {
         "title": "End-to-End Guidance",
-        "description": "From manuscript review to journal submission and publication support, our team remains with you throughout the process.",
+        "description": "From manuscript preparation to journal submission and publication support, our team remains with you throughout the process.",
         "icon": "ArrowRight"
       }
     ],
@@ -308,7 +308,7 @@
     ]
   },
   "_versionMetadata": {
-    "description": "Publication -> review",
-    "timestamp": 1784013815985
+    "description": "Changed heading in why trust us",
+    "timestamp": 1784013710681
   }
 }

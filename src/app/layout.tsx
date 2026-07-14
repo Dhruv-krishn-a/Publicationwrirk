@@ -22,6 +22,8 @@ const libreBaskerville = Libre_Baskerville({
 import fs from 'fs';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata(): Promise<Metadata> {
   let title = "WRIrk - Premium Publication Support & Academic Services";
   let description = "Navigate the complex landscape of high-impact publishing. We empower scholars to achieve recognition in Scopus, Web of Science, and UGC-CARE indexed journals seamlessly.";

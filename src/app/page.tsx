@@ -3,6 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import ClientPage from './ClientPage';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page() {
   // Read content.json dynamically on the server
   const filePath = path.join(process.cwd(), 'src', 'data', 'content.json');

@@ -250,7 +250,7 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
             <div className="absolute -inset-0.5 bg-linear-to-r from-cyan-500 to-indigo-500 rounded-2xl blur-md opacity-50 animate-pulse md:group-hover:opacity-80 transition-opacity duration-700"></div>
             
             <div className="relative bg-[#060D1A]/90 backdrop-blur-xl p-7 md:p-10 rounded-2xl border border-cyan-900/50 shadow-[0_10px_40px_rgba(0,0,0,0.8)] transition-transform duration-500 md:hover:-translate-y-1 transform-gpu">
-              <h2 className="text-2xl md:text-3xl font-black text-white mb-6 hover:scale-105 transition-transform duration-300 cursor-default text-center">Contact <span className="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Us</span></h2>
+              <h2 className="text-3xl md:text-4xl font-black text-white mb-6 hover:scale-105 transition-transform duration-300 cursor-default text-center">Contact <span className="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Us</span></h2>
               
               <SharedForm formId="hero" buttonText="Request Free Consultation" />
 

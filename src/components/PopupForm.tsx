@@ -69,7 +69,7 @@ export default function PopupForm() {
         </button>
 
         <div className="relative p-8 z-10">
-          <h2 className="text-3xl font-black text-white mb-6 hover:scale-105 transition-transform duration-300 cursor-default text-center">Contact <span className="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Us</span></h2>
+          <h2 className="text-2xl font-black text-white mb-6 hover:scale-105 transition-transform duration-300 cursor-default text-center">Contact <span className="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Us</span></h2>
           
           <SharedForm 
             formId="popup" 
