@@ -19,7 +19,7 @@
   },
   "hero": {
     "headline": {
-      "value": "From Journal Selection to Publication, Expert Support Every Step of the Way.",
+      "value": "From Manuscript to Publication, Expert Support Every Step of the Way.",
       "baseline": 79
     },
     "description": [
@@ -286,12 +286,12 @@
     ],
     "items": [
       {
-        "q": "Does WRIRK provide research writing services?",
-        "a": "<p>No. WRIRK does not provide research writing services. We believe that every research work should remain the original intellectual contribution of its author.</p>"
+        "q": "What services does WRIRK provide?",
+        "a": "WRIRK does not provide research writing services. We believe that every research work should remain the original intellectual contribution of its author.\n\nWe provide Publication Assistance and Research Collaboration & Co-Authorship Support. Our experts help researchers identify suitable journals, assist with manuscript formatting according to journal guidelines, support journal communication, and guide them throughout the publication process."
       },
       {
-        "q": "What services does WRIRK provide?",
-        "a": "<p>We provide Publication Assistance and Research Collaboration & Co-Authorship Support. Our experts help researchers identify suitable journals, assist with manuscript formatting according to journal guidelines, support journal communication, and guide them throughout the publication process.</p>"
+        "q": "Do you write research papers or theses?",
+        "a": "No. WRIRK does not write research papers or theses on behalf of researchers. We provide publication guidance and support, including journal selection, manuscript formatting assistance, journal communication, and publication process guidance while respecting academic integrity."
       },
       {
         "q": "Can you help if my research paper is already completed?",
