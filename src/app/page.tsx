@@ -1,15 +1,16 @@
 import React from 'react';
-import fs from 'fs';
-import path from 'path';
 import ClientPage from './ClientPage';
+import { getContentData } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Page() {
-  // Read content.json dynamically on the server
-  const filePath = path.join(process.cwd(), 'src', 'data', 'content.json');
-  const fileContents = fs.readFileSync(filePath, 'utf8');
-  const content = JSON.parse(fileContents);
+  // Fetch from Supabase with local fallback
+  const content = await getContentData();
+
+  if (!content) {
+    return <div className="p-10 text-white">Error loading site content.</div>;
+  }
 
   return <ClientPage initialContent={content} />;
 }

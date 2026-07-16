@@ -19,8 +19,7 @@ const libreBaskerville = Libre_Baskerville({
   variable: "--font-libre",
 });
 
-import fs from 'fs';
-import path from 'path';
+import { getContentData } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
@@ -29,13 +28,11 @@ export async function generateMetadata(): Promise<Metadata> {
   let description = "Navigate the complex landscape of high-impact publishing. We empower scholars to achieve recognition in Scopus, Web of Science, and UGC-CARE indexed journals seamlessly.";
   
   try {
-    const filePath = path.join(process.cwd(), 'src', 'data', 'content.json');
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    const data = JSON.parse(fileContent);
-    if (data.globalSettings?.seoTitle?.value) {
+    const data = await getContentData();
+    if (data?.globalSettings?.seoTitle?.value) {
       title = data.globalSettings.seoTitle.value;
     }
-    if (data.globalSettings?.seoDescription?.value) {
+    if (data?.globalSettings?.seoDescription?.value) {
       description = data.globalSettings.seoDescription.value;
     }
   } catch(e) {}

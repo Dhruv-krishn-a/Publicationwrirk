@@ -1,15 +1,27 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { getContentData, saveContentData, getVersions, getVersionData, saveVersion, deleteVersion } from '@/lib/db';
 
-// Define paths
 const CONTENT_FILE_PATH = path.join(process.cwd(), 'src', 'data', 'content.json');
 const VERSIONS_DIR = path.join(process.cwd(), 'src', 'data', 'versions');
 
-// Ensure directories exist
-function ensureDirs() {
-  if (!fs.existsSync(VERSIONS_DIR)) {
-    fs.mkdirSync(VERSIONS_DIR, { recursive: true });
+// Silent local write (won't crash on Vercel)
+function silentWriteFile(filePath: string, data: string) {
+  try {
+    const dir = path.dirname(filePath);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(filePath, data, 'utf8');
+  } catch (e) {
+    // Ignore error for serverless environments
+  }
+}
+
+function silentUnlinkFile(filePath: string) {
+  try {
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+  } catch (e) {
+    // Ignore error for serverless environments
   }
 }
 
@@ -18,46 +30,52 @@ export async function GET(req: Request) {
     const url = new URL(req.url);
     const action = url.searchParams.get('action');
 
-    ensureDirs();
-
     // If requesting version history
     if (action === 'history') {
-      
-      const files = fs.readdirSync(VERSIONS_DIR)
-        .filter(file => file.endsWith('.json'))
-        .sort((a, b) => {
-          const timeA = parseInt(a.replace(/\D/g, '')) || 0;
-          const timeB = parseInt(b.replace(/\D/g, '')) || 0;
-          return timeB - timeA;
-        });
-        
-      const versionsWithMeta = files.map(file => {
-        try {
-          const fileData = fs.readFileSync(path.join(VERSIONS_DIR, file), 'utf8');
-          const parsed = JSON.parse(fileData);
-          const timestamp = parseInt(file.replace(/\D/g, '')) || Date.now();
-          return {
-            filename: file,
-            description: parsed._versionMetadata?.description || 'No description provided',
-            timestamp: parsed._versionMetadata?.timestamp || timestamp
-          };
-        } catch(e) {
-          const timestamp = parseInt(file.replace(/\D/g, '')) || Date.now();
-          return { filename: file, description: 'Unknown', timestamp };
+      const dbVersions = await getVersions();
+      if (dbVersions) {
+        return NextResponse.json({ success: true, versions: dbVersions });
+      }
+
+      // Local fallback
+      try {
+        if (fs.existsSync(VERSIONS_DIR)) {
+          const files = fs.readdirSync(VERSIONS_DIR)
+            .filter(file => file.endsWith('.json'))
+            .sort((a, b) => {
+              const timeA = parseInt(a.replace(/\\D/g, '')) || 0;
+              const timeB = parseInt(b.replace(/\\D/g, '')) || 0;
+              return timeB - timeA;
+            });
+            
+          const versionsWithMeta = files.map(file => {
+            try {
+              const fileData = fs.readFileSync(path.join(VERSIONS_DIR, file), 'utf8');
+              const parsed = JSON.parse(fileData);
+              const timestamp = parseInt(file.replace(/\\D/g, '')) || Date.now();
+              return {
+                filename: file,
+                description: parsed._versionMetadata?.description || 'No description provided',
+                timestamp: parsed._versionMetadata?.timestamp || timestamp
+              };
+            } catch(e) {
+              const timestamp = parseInt(file.replace(/\\D/g, '')) || Date.now();
+              return { filename: file, description: 'Unknown', timestamp };
+            }
+          });
+          return NextResponse.json({ success: true, versions: versionsWithMeta });
         }
-      });
-
-      return NextResponse.json({ success: true, versions: versionsWithMeta });
-
+      } catch (e) {}
+      
+      return NextResponse.json({ success: true, versions: [] });
     }
 
     // Default: GET current content
-    if (!fs.existsSync(CONTENT_FILE_PATH)) {
+    const data = await getContentData();
+    if (!data) {
       return NextResponse.json({ success: false, message: 'Content file not found' }, { status: 404 });
     }
-
-    const fileContents = fs.readFileSync(CONTENT_FILE_PATH, 'utf8');
-    return NextResponse.json({ success: true, data: JSON.parse(fileContents) });
+    return NextResponse.json({ success: true, data });
 
   } catch (error) {
     console.error('API Error (GET content):', error);
@@ -67,73 +85,70 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    ensureDirs();
     const body = await req.json();
     const { action, payload, versionFile, description } = body;
 
     // Save new content
     if (action === 'save') {
-      if (!payload) {
-        return NextResponse.json({ success: false, message: 'No payload provided' }, { status: 400 });
-      }
+      if (!payload) return NextResponse.json({ success: false, message: 'No payload provided' }, { status: 400 });
 
-      // Step 1: Add version metadata to the new payload
       const timestamp = Date.now();
+      const desc = description || 'Manual save from Admin Panel';
+      
       if (payload) {
-        payload._versionMetadata = {
-          description: description || 'Manual save from Admin Panel',
-          timestamp: timestamp
-        };
+        payload._versionMetadata = { description: desc, timestamp: timestamp };
       }
       
-      // Step 2: Save the new payload as a version backup so it appears in history
-      const backupPath = path.join(VERSIONS_DIR, `content_${timestamp}.json`);
-      fs.writeFileSync(backupPath, JSON.stringify(payload, null, 2), 'utf8');
+      // Save to Supabase (Active + Version History)
+      const dbSuccess = await saveContentData(payload);
+      const versionId = `content_${timestamp}.json`;
+      await saveVersion(versionId, desc, timestamp, payload);
 
-      // Step 3: Write new payload to active content file
-      fs.writeFileSync(CONTENT_FILE_PATH, JSON.stringify(payload, null, 2), 'utf8');
+      // Local fallback
+      silentWriteFile(path.join(VERSIONS_DIR, versionId), JSON.stringify(payload, null, 2));
+      silentWriteFile(CONTENT_FILE_PATH, JSON.stringify(payload, null, 2));
 
-      return NextResponse.json({ success: true, message: 'Content saved successfully with backup created.' });
+      return NextResponse.json({ success: true, message: dbSuccess ? 'Content saved successfully.' : 'Saved to local fallback (Supabase update failed).' });
     }
 
     // Restore a previous version
     if (action === 'restore') {
-      if (!versionFile) {
-        return NextResponse.json({ success: false, message: 'No version file specified' }, { status: 400 });
+      if (!versionFile) return NextResponse.json({ success: false, message: 'No version file specified' }, { status: 400 });
+
+      let versionData = await getVersionData(versionFile);
+      
+      // Fallback local fetch
+      if (!versionData) {
+        const versionPath = path.join(VERSIONS_DIR, versionFile);
+        if (fs.existsSync(versionPath)) {
+          versionData = JSON.parse(fs.readFileSync(versionPath, 'utf8'));
+        }
       }
 
-      const versionPath = path.join(VERSIONS_DIR, versionFile);
-      if (!fs.existsSync(versionPath)) {
-        return NextResponse.json({ success: false, message: 'Version not found' }, { status: 404 });
-      }
+      if (!versionData) return NextResponse.json({ success: false, message: 'Version not found' }, { status: 404 });
 
-      // Read the version data
-      const versionData = fs.readFileSync(versionPath, 'utf8');
-
-      // Backup the CURRENT state before restoring, just in case!
-      if (fs.existsSync(CONTENT_FILE_PATH)) {
-        const currentData = fs.readFileSync(CONTENT_FILE_PATH, 'utf8');
+      // Backup CURRENT state
+      const currentData = await getContentData();
+      if (currentData) {
         const timestamp = Date.now();
-        const backupPath = path.join(VERSIONS_DIR, `content_prerestore_${timestamp}.json`);
-        fs.writeFileSync(backupPath, currentData, 'utf8');
+        const prerestoreId = `content_prerestore_${timestamp}.json`;
+        await saveVersion(prerestoreId, 'Auto-backup before restore', timestamp, currentData);
+        silentWriteFile(path.join(VERSIONS_DIR, prerestoreId), JSON.stringify(currentData, null, 2));
       }
 
-      // Overwrite current content with restored version
-      fs.writeFileSync(CONTENT_FILE_PATH, versionData, 'utf8');
+      // Overwrite current content
+      await saveContentData(versionData);
+      silentWriteFile(CONTENT_FILE_PATH, JSON.stringify(versionData, null, 2));
 
       return NextResponse.json({ success: true, message: `Successfully restored version: ${versionFile}` });
     }
 
     // Delete a previous version
     if (action === 'delete') {
-      if (!versionFile) {
-        return NextResponse.json({ success: false, message: 'No version file specified' }, { status: 400 });
-      }
+      if (!versionFile) return NextResponse.json({ success: false, message: 'No version file specified' }, { status: 400 });
 
-      const versionPath = path.join(VERSIONS_DIR, versionFile);
-      if (fs.existsSync(versionPath)) {
-        fs.unlinkSync(versionPath);
-      }
+      await deleteVersion(versionFile);
+      silentUnlinkFile(path.join(VERSIONS_DIR, versionFile));
 
       return NextResponse.json({ success: true, message: `Successfully deleted version: ${versionFile}` });
     }
