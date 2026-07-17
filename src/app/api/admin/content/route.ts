@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
@@ -42,14 +43,19 @@ export async function POST(req: Request) {
       // Save to Supabase
       const dbSuccess = await saveContentData(payload);
 
+      if (!dbSuccess) {
+        return NextResponse.json({ success: false, message: 'Database save failed. Please check server logs.' }, { status: 500 });
+      }
+
       // Local fallback
       silentWriteFile(CONTENT_FILE_PATH, JSON.stringify(payload, null, 2));
 
       // Force Next.js to purge its cache instantly!
       revalidatePath('/', 'page');
       revalidatePath('/');
+      revalidatePath('/api/admin/content');
 
-      return NextResponse.json({ success: true, message: dbSuccess ? 'Content saved successfully!' : 'Saved to local fallback (Supabase update failed).' });
+      return NextResponse.json({ success: true, message: 'Content saved successfully!' });
     }
 
     return NextResponse.json({ success: false, message: 'Invalid action' }, { status: 400 });
