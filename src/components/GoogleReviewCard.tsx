@@ -4,6 +4,11 @@
 import React, { useState, useEffect } from 'react';
 import { Star, ExternalLink, X, Quote } from 'lucide-react';
 
+const stripHtml = (html: string) => {
+  if (!html) return '';
+  return html.replace(/<[^>]*>?/gm, '').replace(/&nbsp;/g, ' ').trim();
+};
+
 
 const RichTextRenderer = ({ content, className }: { content: string, className?: string }) => {
   if (!content) return null;
@@ -95,7 +100,7 @@ export default function GoogleReviewCard({ review }: Props) {
 
         <div className="flex-grow relative z-10 flex flex-col">
           <p className="text-slate-300 font-medium text-sm md:text-base leading-relaxed line-clamp-4 relative group-hover:text-slate-200 transition-colors">
-            {review.reviewText}
+            {stripHtml(review.reviewText)}
           </p>
           <button 
             onClick={() => setIsModalOpen(true)}
@@ -163,9 +168,10 @@ export default function GoogleReviewCard({ review }: Props) {
             {/* Modal Body (Scrollable if text is massive) */}
             <div className="overflow-y-auto pr-2 custom-scrollbar flex-grow">
               <Quote className="h-10 w-10 text-cyan-500/20 mb-4" />
-              <p className="text-slate-200 font-medium text-base md:text-lg leading-relaxed whitespace-pre-line">
-                {review.reviewText}
-              </p>
+              <RichTextRenderer 
+                content={review.reviewText} 
+                className="text-slate-200 font-medium text-base md:text-lg leading-relaxed whitespace-pre-line [&>p]:mb-4 last:[&>p]:mb-0"
+              />
             </div>
 
             {/* Modal Footer */}
