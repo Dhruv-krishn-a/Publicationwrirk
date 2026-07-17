@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Settings, Home, BarChart2, Shield, Users, Briefcase, 
-  MessageSquare, Layout, HelpCircle, History, Save, 
+  MessageSquare, Layout, HelpCircle, Save, 
   RotateCcw, AlertTriangle, Loader2, Plus, Trash2, Edit3
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -24,7 +24,7 @@ const quillModules = {
   ],
 };
 
-type TabType = 'settings' | 'hero' | 'metrics' | 'whyTrustUs' | 'trustedPartner' | 'services' | 'process' | 'faqs' | 'reviews' | 'footer' | 'history';
+type TabType = 'settings' | 'hero' | 'metrics' | 'whyTrustUs' | 'trustedPartner' | 'services' | 'process' | 'faqs' | 'reviews' | 'footer';
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -33,7 +33,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
-  const [historyFiles, setHistoryFiles] = useState<{filename: string, description: string}[]>([]);
+
 
   useEffect(() => {
     fetchContent();
@@ -56,39 +56,18 @@ export default function AdminDashboard() {
     }
   };
 
-  const fetchHistory = async () => {
-    try {
-      const res = await fetch('/api/admin/content?action=history', { cache: 'no-store' });
-      const json = await res.json();
-      if (json.success) {
-        setHistoryFiles(json.versions);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  useEffect(() => {
-    if (activeTab === 'history') {
-      fetchHistory();
-    }
-  }, [activeTab]);
-
   const handleSave = async () => {
-    const description = window.prompt('Enter a short description for this version backup (e.g. "Updated Hero text"):');
-    if (description === null) return; // User cancelled
-    
     setSaving(true);
     setMessage({ type: '', text: '' });
     try {
       const res = await fetch('/api/admin/content', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'save', payload: data, description })
+        body: JSON.stringify({ action: 'save', payload: data })
       });
       const json = await res.json();
       if (json.success) {
-        setMessage({ type: 'success', text: 'Changes saved successfully (Backup created)' });
+        setMessage({ type: 'success', text: 'Changes saved successfully!' });
       } else {
         setMessage({ type: 'error', text: json.message });
       }
@@ -97,50 +76,6 @@ export default function AdminDashboard() {
     } finally {
       setSaving(false);
       setTimeout(() => setMessage({ type: '', text: '' }), 5000);
-    }
-  };
-
-  const handleRestore = async (versionFile: string) => {
-    if (!confirm('Are you sure you want to restore this version? Current changes will be overwritten.')) return;
-    
-    setLoading(true);
-    try {
-      const res = await fetch('/api/admin/content', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'restore', versionFile })
-      });
-      const json = await res.json();
-      if (json.success) {
-        setMessage({ type: 'success', text: 'Version restored successfully!' });
-        await fetchContent();
-      } else {
-        setMessage({ type: 'error', text: json.message });
-      }
-    } catch (err) {
-      setMessage({ type: 'error', text: 'Server error while restoring' });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDelete = async (versionFile: string) => {
-    if (!confirm('Are you sure you want to delete this version? This cannot be undone.')) return;
-    try {
-      const res = await fetch('/api/admin/content', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'delete', versionFile })
-      });
-      const result = await res.json();
-      if (result.success) {
-        setMessage({ type: 'success', text: 'Version deleted successfully!' });
-        fetchHistory(); // Refresh history list
-      } else {
-        setMessage({ type: 'error', text: result.message });
-      }
-    } catch (error) {
-      setMessage({ type: 'error', text: 'Failed to delete version.' });
     }
   };
 
@@ -324,7 +259,6 @@ export default function AdminDashboard() {
     { id: 'faqs', label: 'FAQs', icon: HelpCircle },
     { id: 'reviews', label: 'Reviews', icon: MessageSquare },
     { id: 'footer', label: 'Footer', icon: Edit3 },
-    { id: 'history', label: 'Version History', icon: History },
   ];
 
   return (
@@ -375,16 +309,14 @@ export default function AdminDashboard() {
                 {message.text}
               </span>
             )}
-            {activeTab !== 'history' && (
-              <button
-                onClick={handleSave}
-                disabled={saving}
-                className="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors disabled:opacity-70 shadow-xs"
-              >
-                {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-                Save Changes
-              </button>
-            )}
+            <button
+              onClick={handleSave}
+              disabled={saving}
+              className="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors disabled:opacity-70 shadow-xs"
+            >
+              {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+              Save Changes
+            </button>
           </div>
         </header>
 
@@ -691,67 +623,7 @@ export default function AdminDashboard() {
                 </div>
               )}
 
-              {activeTab === 'history' && (
-                <div>
-                  <h3 className="text-xl font-bold mb-6 text-slate-800">Version History</h3>
-                  <p className="text-sm text-slate-500 mb-6">Select a previous backup to restore. Your current state will be backed up before restoration.</p>
-                  
-                  {historyFiles.length === 0 ? (
-                    <p className="text-slate-500 italic">No backups found.</p>
-                  ) : (
-                    <div className="space-y-3">
-                      {historyFiles.map((version: any) => {
-                        const isString = typeof version === 'string';
-                        const file = isString ? version : version.filename;
-                        const desc = isString ? 'Previous Backup' : version.description;
-                        
-                        if (!file) return null;
 
-                        let timestamp = Date.now();
-                        if (!isString && version.timestamp) {
-                           timestamp = version.timestamp;
-                        } else {
-                           const parsed = parseInt(file.replace(/\D/g, ''));
-                           if (!isNaN(parsed)) timestamp = parsed;
-                        }
-
-                        const dateStr = new Date(timestamp).toLocaleString('en-US', {
-                          year: 'numeric', month: 'short', day: 'numeric',
-                          hour: '2-digit', minute: '2-digit', second: '2-digit'
-                        });
-
-                        return (
-                          <div key={file} className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex items-center justify-between hover:border-cyan-200 transition-colors">
-                            <div>
-                              <p className="font-bold text-slate-700 flex items-center gap-2">
-                                {desc}
-                                <span className="text-[10px] bg-slate-100 px-2 py-0.5 rounded-full text-slate-400 font-mono">{file}</span>
-                              </p>
-                              <p className="text-xs text-slate-500 mt-1 font-medium">Saved on: {dateStr}</p>
-                            </div>
-                            <div className="flex gap-2">
-                              <button
-                                onClick={() => handleRestore(file)}
-                                className="px-4 py-2 bg-amber-100 hover:bg-amber-200 text-amber-800 font-semibold rounded-lg text-sm transition-colors flex items-center gap-2 shadow-xs"
-                              >
-                                <RotateCcw className="w-4 h-4" />
-                                Restore
-                              </button>
-                              <button
-                                onClick={() => handleDelete(file)}
-                                className="px-4 py-2 bg-red-100 hover:bg-red-200 text-red-800 font-semibold rounded-lg text-sm transition-colors flex items-center gap-2 shadow-xs"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                                Delete
-                              </button>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              )}
 
             </div>
           )}
