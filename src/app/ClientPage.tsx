@@ -4,6 +4,43 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { ChevronDown, BookOpen, Award, TrendingUp, Users, Clock, ShieldCheck, PenTool, Send, PhoneCall, ArrowRight, FileCheck2, Quote, Activity, Globe, CheckCircle, Star } from 'lucide-react';
 
+const WhatsappIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#25D366" className={className}>
+    <path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.12.553 4.183 1.605 5.998L.103 23.513l5.626-1.476A11.977 11.977 0 0 0 12.031 24c6.645 0 12.031-5.385 12.031-12.031S18.677 0 12.031 0zm6.545 17.202c-.276.776-1.579 1.488-2.181 1.554-.565.06-1.32-.152-3.842-1.196-3.08-1.275-5.074-4.436-5.226-4.639-.153-.203-1.246-1.658-1.246-3.16 0-1.503.784-2.247 1.06-2.553.277-.305.602-.381.802-.381.2 0 .4.004.576.012.185.008.434-.07.671.498.241.578.826 2.015.898 2.167.073.152.12.33.023.523-.097.193-.146.315-.291.487-.145.173-.306.376-.436.488-.145.127-.298.269-.136.55.163.282.723 1.197 1.556 1.939.907.808 1.804 1.111 2.086 1.238.282.127.447.102.612-.081.165-.183.714-.827.904-1.111.191-.285.381-.238.638-.142.257.096 1.624.767 1.902.909.278.142.463.213.531.33.067.117.067.676-.209 1.452z" />
+  </svg>
+);
+
+const FacebookIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1877F2" className={className}>
+    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+  </svg>
+);
+
+const InstagramIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="url(#instagram-grad)" className={className}>
+    <defs>
+      <linearGradient id="instagram-grad" x1="2" y1="22" x2="22" y2="2">
+        <stop offset="0%" stopColor="#FD1D1D" />
+        <stop offset="50%" stopColor="#E1306C" />
+        <stop offset="100%" stopColor="#405DE6" />
+      </linearGradient>
+    </defs>
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm3.98-10.876a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" />
+  </svg>
+);
+
+const LinkedinIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0A66C2" className={className}>
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+  </svg>
+);
+
+const YoutubeIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FF0000" className={className}>
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.501 5.814a3.016 3.016 0 0 0 2.122 2.136c1.872.55 9.377.55 9.377.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+  </svg>
+);
+
 const RichTextRenderer = ({ content, className }: { content: string, className?: string }) => {
   if (!content) return null;
   // If it contains HTML tags (from Quill), render as HTML
@@ -535,53 +572,85 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
         </div>
       </section>
 
-      <footer className="relative z-10 py-12 md:py-16 bg-[#02050D] border-t border-white/5 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-cyan-900/10 via-[#02050D] to-[#02050D] pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto px-5 md:px-6 relative z-10">
+      <footer className="relative z-10 py-10 md:py-12 bg-[#02050D] border-t border-white/10 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_var(--tw-gradient-stops))] from-cyan-900/20 via-[#02050D] to-[#02050D] pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
           
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-16 md:mb-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 mb-8">
             
-            {/* Left Side Content */}
-            <div className="max-w-2xl">
-              <div className="flex items-center gap-3 md:gap-4 mb-5 md:mb-6 cursor-pointer group">
+            {/* Left Side: Branding & Description (Spans 6 cols) */}
+            <div className="lg:col-span-6 flex flex-col items-start">
+              <div className="flex items-center gap-4 mb-6 cursor-pointer group">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <Image src="/WrirkLogoOld.png" alt="WRIrk Logo" width={72} height={72} className="h-14 w-14 md:h-16 md:w-16 object-contain drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]" />
-                <span className="font-libre text-[20px] md:text-[1.8vw] tracking-wider md:tracking-[0.2vw] px-2 md:px-[0.5vw] font-normal text-white uppercase translate-y-[2px]">WRIRK</span>
+                <Image src="/WrirkLogoOld.png" alt="WRIrk Logo" width={80} height={80} className="h-12 w-12 md:h-14 md:w-14 object-contain drop-shadow-[0_0_20px_rgba(34,211,238,0.6)] group-hover:scale-110 transition-transform duration-500" />
+                <span className="font-libre text-2xl md:text-3xl tracking-[0.2em] text-white uppercase drop-shadow-lg">WRIRK</span>
               </div>
               
-              <div className="mb-2">
-                <span className="text-slate-200 text-lg md:text-xl font-medium tracking-wide">A Product Of</span>
+              <div className="flex flex-col xl:flex-row items-start xl:items-center gap-6 w-full">
+                <div className="bg-white/5 border border-white/10 p-4 rounded-xl backdrop-blur-sm shrink-0 inline-block">
+                  <span className="text-cyan-400 text-[10px] font-bold uppercase tracking-widest block mb-2">A Product Of</span>
+                  <div className="flex items-center gap-3">
+                    <h2 className="text-lg md:text-xl font-black text-white whitespace-nowrap">MPRW Research Work</h2>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <Image src="/MPRW-Logo.png" alt="MPRW Logo" width={40} height={40} className="h-10 w-10 object-contain" />
+                  </div>
+                </div>
+                
+                <div className="text-slate-400 font-medium leading-relaxed text-sm max-w-sm">
+                  {renderParagraphs(content.footer?.description)}
+                </div>
               </div>
-              
-              <div className="flex items-center gap-3 md:gap-5 mb-5 flex-nowrap">
-                <h2 className="text-[1.3rem] sm:text-2xl md:text-[2rem] lg:text-[2.4rem] font-bold text-white drop-shadow-md whitespace-nowrap">MPRW Research Work LLP</h2>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <Image src="/MPRW-Logo.png" alt="MPRW Logo" width={96} height={96} className="h-14 sm:h-16 md:h-20 lg:h-24 object-contain drop-shadow-[0_0_15px_rgba(34,211,238,0.3)] shrink-0" />
-              </div>
-              
-              <p className="text-slate-300 font-medium leading-relaxed text-sm md:text-base max-w-md">
-                {renderParagraphs(content.footer.description)}
-              </p>
             </div>
 
-            {/* Right Side Book Button - desktop bottom right, mobile stack */}
-            <div className="md:self-end self-start mt-4 md:mt-0 md:ml-auto">
+            {/* Middle: Social Links (Spans 3 cols) */}
+            <div className="lg:col-span-3 flex flex-col lg:items-center justify-center pt-2">
+              <h3 className="text-white font-bold text-sm mb-4 uppercase tracking-widest">Connect With Us</h3>
+              <div className="flex gap-4">
+                {[
+                  { id: 'whatsapp', icon: WhatsappIcon, url: content.footer?.socials?.whatsapp, glow: 'rgba(37, 211, 102, 0.4)', borderGlow: 'rgba(37, 211, 102, 0.6)', delay: '0s' },
+                  { id: 'facebook', icon: FacebookIcon, url: content.footer?.socials?.facebook, glow: 'rgba(24, 119, 242, 0.4)', borderGlow: 'rgba(24, 119, 242, 0.6)', delay: '0.2s' },
+                  { id: 'instagram', icon: InstagramIcon, url: content.footer?.socials?.instagram, glow: 'rgba(225, 48, 108, 0.4)', borderGlow: 'rgba(225, 48, 108, 0.6)', delay: '0.4s' },
+                  { id: 'linkedin', icon: LinkedinIcon, url: content.footer?.socials?.linkedin, glow: 'rgba(10, 102, 194, 0.4)', borderGlow: 'rgba(10, 102, 194, 0.6)', delay: '0.6s' },
+                  { id: 'youtube', icon: YoutubeIcon, url: content.footer?.socials?.youtube, glow: 'rgba(255, 0, 0, 0.4)', borderGlow: 'rgba(255, 0, 0, 0.6)', delay: '0.8s' }
+                ].map((social) => social.url ? (
+                  <a 
+                    key={social.id} 
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative h-10 w-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 hover:scale-[1.15] animate-social-float z-10"
+                    style={{ 
+                      '--glow-color': social.glow, 
+                      '--border-glow': social.borderGlow, 
+                      animationDelay: social.delay 
+                    } as React.CSSProperties}
+                  >
+                    <social.icon className="h-5 w-5" />
+                  </a>
+                ) : null)}
+              </div>
+            </div>
+
+            {/* Right Side: CTA (Spans 3 cols) */}
+            <div className="lg:col-span-3 flex flex-col lg:items-end justify-center pt-2">
                <button 
-                onClick={() => {
-                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                }} 
-                className="bg-white hover:bg-cyan-50 border border-transparent text-cyan-950 px-6 py-3 rounded-lg font-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]"
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} 
+                className="group relative inline-flex items-center justify-center bg-cyan-500 hover:bg-cyan-400 text-[#02050D] px-6 py-3 rounded-lg font-black text-sm transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] overflow-hidden"
                >
-                 Book a Consultation
+                 <span className="relative z-10 flex items-center gap-2">
+                   Book a Consultation
+                   <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                 </span>
+                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
                </button>
             </div>
 
           </div>
           
           {/* Bottom Copyright Center */}
-          <div className="text-center pt-8 border-t border-white/5 flex flex-col gap-3 relative">
-            <p className="text-slate-300 font-medium text-sm md:text-base">Copyright © 2026 MPRW Research Work LLP. All rights Reserved</p>
-            <p className="text-slate-300 font-bold text-sm md:text-base tracking-widest uppercase flex items-center justify-center gap-2">
+          <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 relative">
+            <p className="text-slate-400 font-medium text-xs">Copyright © 2026 MPRW Research Work LLP. All rights Reserved</p>
+            <p className="text-slate-400 font-bold text-xs tracking-widest uppercase flex items-center gap-2">
               INDIA <span className="text-red-500 animate-pulse text-lg">❤️</span>
             </p>
           </div>

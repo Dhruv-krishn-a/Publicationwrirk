@@ -69,3 +69,19 @@ body {
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+@keyframes socialFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 0 0px 0px transparent;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.05);
+    box-shadow: 0 10px 25px 0px var(--glow-color);
+    border-color: var(--border-glow);
+  }
+}
+.animate-social-float {
+  animation: socialFloat 3s ease-in-out infinite;
+}

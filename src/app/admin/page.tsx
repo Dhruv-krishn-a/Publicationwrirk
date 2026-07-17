@@ -665,6 +665,29 @@ export default function AdminDashboard() {
                 <div>
                   <h3 className="text-xl font-bold mb-6 text-slate-800">Footer</h3>
                   {renderParagraphArray('Footer Description Paragraphs', data.footer?.description, ['footer', 'description'])}
+                  
+                  <div className="mt-8 border-t pt-6">
+                    <h4 className="text-lg font-bold mb-4 text-slate-700">Social Media Links</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {['whatsapp', 'facebook', 'instagram', 'linkedin', 'youtube'].map(social => (
+                        <div key={social} className="bg-slate-50 p-4 rounded-lg border">
+                          <label className="block text-sm font-bold text-slate-700 mb-2 capitalize">{social}</label>
+                          <input 
+                            type="text" 
+                            placeholder={`Enter ${social} URL`}
+                            value={data.footer?.socials?.[social] || ''} 
+                            onChange={(e) => {
+                              const newData = { ...data };
+                              if (!newData.footer.socials) newData.footer.socials = {};
+                              newData.footer.socials[social] = e.target.value;
+                              setData(newData);
+                            }} 
+                            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-cyan-500 focus:outline-hidden text-slate-800" 
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               )}
 
