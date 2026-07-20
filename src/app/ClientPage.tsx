@@ -412,7 +412,10 @@ export default function ClientPage({ initialContent }: { initialContent: any }) 
                 <div className="flex flex-col h-full relative z-10">
                   <card.icon className="h-10 w-10 text-indigo-400 mb-5 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_10px_rgba(99,102,241,0.8)]" />
                   <h3 className="text-xl font-black text-white mb-3 drop-shadow-md">{card.title}</h3>
-                  <p className="text-slate-300 font-medium text-sm leading-relaxed">{card.desc}</p>
+                  <p 
+                    className="text-slate-300 font-medium text-sm leading-relaxed [&>a]:text-cyan-400 [&>a]:hover:underline [&>a]:transition-colors [&>a]:font-bold [&>a]:cursor-pointer"
+                    dangerouslySetInnerHTML={{ __html: card.desc }}
+                  ></p>
                 </div>
               </div>
             ))}
