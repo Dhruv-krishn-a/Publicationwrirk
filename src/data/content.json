@@ -67,7 +67,7 @@
       "baseline": 28
     },
     "headline": {
-      "value": "From Journal Selection to Publication, Expert Support Every Step of the Way.",
+      "value": "Publication Support from Journal Selection to Publication Every Step of the Way",
       "baseline": 79
     },
     "description": [
@@ -87,6 +87,7 @@
       }
     ]
   },
+  "test": 2,
   "footer": {
     "socials": {
       "youtube": "https://www.youtube.com/@Wrirk_1",
@@ -152,7 +153,7 @@
       }
     ],
     "heading": {
-      "value": "Our Support Process",
+      "value": "Publication Support Process",
       "baseline": 19
     },
     "description": [
@@ -280,19 +281,24 @@
   },
   "globalSettings": {
     "seoTitle": {
-      "value": "WRIRK - Publish Your Research with Confidence.",
+      "value": "Publication Support for Researchers | WRIRK",
       "baseline": 45
+    },
+    "callNumber": {
+      "type": "text",
+      "label": "Call Number",
+      "value": "+919548521859"
     },
     "contactEmail": {
       "value": "contact@wrirk.com",
       "baseline": 17
     },
     "seoDescription": {
-      "value": "Expert research writing guidance, publication support, and co-authorship opportunities.",
+      "value": "Get professional publication support for research papers, journals, and manuscripts. WRIRK helps researchers improve quality and publish with confidence.",
       "baseline": 87
     },
     "whatsappNumber": {
-      "value": "+919548521866",
+      "value": "+919548521859",
       "baseline": 13
     }
   },
@@ -323,7 +329,7 @@
       {
         "icon": "FileCheck2",
         "title": "Confidential & Secure",
-        "description": "Your research remains private and protected throughout the consultation and publication process."
+        "description": "Your research remains private and protected throughout the consultation and <a href=\"https://publication.wrirk.in/#process\">publication process</a>."
       },
       {
         "icon": "Activity",
@@ -347,7 +353,7 @@
     }
   },
   "_versionMetadata": {
-    "description": "Updated footer whatsapp",
-    "timestamp": 1784263585850
+    "timestamp": 1784263585850,
+    "description": "Updated footer whatsapp"
   }
 }

@@ -328,6 +328,7 @@ export default function AdminDashboard() {
                 <div>
                   <h3 className="text-xl font-bold mb-6 text-slate-800">Global Settings</h3>
                   {renderInput('WhatsApp Number', data.globalSettings?.whatsappNumber, ['globalSettings', 'whatsappNumber'])}
+                  {renderInput('Call Number', data.globalSettings?.callNumber, ['globalSettings', 'callNumber'])}
                   {renderInput('Contact Email', data.globalSettings?.contactEmail, ['globalSettings', 'contactEmail'])}
                   {renderInput('SEO Title', data.globalSettings?.seoTitle, ['globalSettings', 'seoTitle'])}
                   {renderInput('SEO Description', data.globalSettings?.seoDescription, ['globalSettings', 'seoDescription'], true)}
