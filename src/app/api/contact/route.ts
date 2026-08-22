@@ -41,7 +41,7 @@ export async function POST(request: Request) {
     // Format payload as expected by CRM
     const payload = {
       full_name: body.name,
-      phone_no: body.phone,
+      phone_no: `${body.countryCode || ''}${body.phone || ''}`,
       email: body.email,
       message: body.message,
       date: getFormattedDate(),
