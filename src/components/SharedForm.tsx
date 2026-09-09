@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, Loader2, ArrowRight } from 'lucide-react';
+import { Check, Loader2, ArrowRight, ChevronDown } from 'lucide-react';
 
 const COUNTRY_CODE_OPTIONS = [
   { value: '+91', label: 'India', short: 'IN' },
@@ -36,7 +36,7 @@ interface SharedFormProps {
 
 export default function SharedForm({ formId, buttonText, buttonIcon, onSuccess }: SharedFormProps) {
   const [formState, setFormState] = useState({
-    type: 'service' as 'service' | 'job',
+    type: '' as '' | 'service' | 'job',
     name: '',
     countryCode: '+91',
     customCountryCode: '',
@@ -45,11 +45,19 @@ export default function SharedForm({ formId, buttonText, buttonIcon, onSuccess }
     message: '',
   });
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  const [typeError, setTypeError] = useState('');
   const [nameError, setNameError] = useState('');
   const [phoneError, setPhoneError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [messageError, setMessageError] = useState('');
   const router = useRouter();
+
+  const getTypeError = (type: string) => {
+    if (!type) {
+      return 'Please select an inquiry type.';
+    }
+    return '';
+  };
 
   const isValidName = (name: string) => name.trim().length >= 2;
   const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
@@ -130,6 +138,12 @@ export default function SharedForm({ formId, buttonText, buttonIcon, onSuccess }
     return isValidMessage(message) ? '' : 'Please enter a longer message.';
   };
 
+  const handleTypeChange = (value: string) => {
+    const selectedType = value as '' | 'service' | 'job';
+    setFormState((prev) => ({ ...prev, type: selectedType }));
+    setTypeError(getTypeError(selectedType));
+  };
+
   const handlePhoneChange = (value: string) => {
     const digits = value.replace(/\D/g, '');
     setFormState((prev) => {
@@ -177,16 +191,18 @@ export default function SharedForm({ formId, buttonText, buttonIcon, onSuccess }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const nextTypeError = getTypeError(formState.type);
     const nextNameError = getNameError(formState.name);
     const nextPhoneError = getPhoneError(formState.countryCode, formState.phone, formState.customCountryCode);
     const nextEmailError = getEmailError(formState.email);
     const nextMessageError = getMessageError(formState.message);
+    setTypeError(nextTypeError);
     setNameError(nextNameError);
     setPhoneError(nextPhoneError);
     setEmailError(nextEmailError);
     setMessageError(nextMessageError);
 
-    if (nextNameError || nextPhoneError || nextEmailError || nextMessageError) {
+    if (nextTypeError || nextNameError || nextPhoneError || nextEmailError || nextMessageError || formState.type === 'job') {
       return;
     }
 
@@ -243,52 +259,31 @@ export default function SharedForm({ formId, buttonText, buttonIcon, onSuccess }
 
   return (
     <form className="space-y-5 w-full" onSubmit={handleSubmit} onFocus={handleInteraction} onClick={handleInteraction} noValidate>
-      {/* Type Selection: Service vs Job (Radio Buttons) */}
-      <div className="space-y-2">
-        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400">
-          Inquiry Type
-        </label>
-        <div className="grid grid-cols-2 gap-3">
-          <label 
-            htmlFor={`${formId}-type-service`}
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg border cursor-pointer transition-all duration-200 ${
-              formState.type === 'service'
-                ? 'border-cyan-400/80 bg-cyan-950/20 text-white shadow-[0_0_15px_rgba(34,211,238,0.15)]'
-                : 'border-white/10 bg-[#030712] text-slate-400 hover:border-white/20 hover:text-slate-300'
-            }`}
+      {/* Inquiry Type Dropdown */}
+      <div className="relative group/field">
+        <div className="relative">
+          <select
+            id={`${formId}-inquiry-type`}
+            className={`w-full bg-[#030712] border rounded-lg px-4 py-3.5 text-sm appearance-none outline-none transition-colors cursor-pointer pr-10 ${
+              typeError ? 'border-red-500' : 'border-white/10 focus:border-cyan-400'
+            } ${formState.type ? 'text-white' : 'text-slate-400'}`}
+            value={formState.type}
+            onChange={(e) => handleTypeChange(e.target.value)}
+            required
           >
-            <input
-              type="radio"
-              id={`${formId}-type-service`}
-              name={`${formId}-inquiry-type`}
-              value="service"
-              checked={formState.type === 'service'}
-              onChange={() => setFormState((prev) => ({ ...prev, type: 'service' }))}
-              className="accent-cyan-400 h-4 w-4 cursor-pointer"
-            />
-            <span className="text-sm font-semibold">Service</span>
-          </label>
-
-          <label 
-            htmlFor={`${formId}-type-job`}
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg border cursor-pointer transition-all duration-200 ${
-              formState.type === 'job'
-                ? 'border-cyan-400/80 bg-cyan-950/20 text-white shadow-[0_0_15px_rgba(34,211,238,0.15)]'
-                : 'border-white/10 bg-[#030712] text-slate-400 hover:border-white/20 hover:text-slate-300'
-            }`}
-          >
-            <input
-              type="radio"
-              id={`${formId}-type-job`}
-              name={`${formId}-inquiry-type`}
-              value="job"
-              checked={formState.type === 'job'}
-              onChange={() => setFormState((prev) => ({ ...prev, type: 'job' }))}
-              className="accent-cyan-400 h-4 w-4 cursor-pointer"
-            />
-            <span className="text-sm font-semibold">Job</span>
-          </label>
+            <option value="" disabled className="bg-[#030712] text-slate-500">
+              Select Inquiry Type *
+            </option>
+            <option value="service" className="bg-[#030712] text-white">
+              Service
+            </option>
+            <option value="job" className="bg-[#030712] text-white">
+              Job
+            </option>
+          </select>
+          <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
         </div>
+        {typeError && <p className="mt-2 text-sm text-red-400">{typeError}</p>}
         {isJob && (
           <p className="mt-2 text-xs text-amber-400/90 bg-amber-500/10 border border-amber-500/20 rounded-md px-3 py-2 animate-[fadeIn_0.2s_ease-out]">
             Notice: We are currently not accepting job applications through this form. Submission is disabled.
