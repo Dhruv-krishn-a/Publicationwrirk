@@ -36,6 +36,7 @@ interface SharedFormProps {
 
 export default function SharedForm({ formId, buttonText, buttonIcon, onSuccess }: SharedFormProps) {
   const [formState, setFormState] = useState({
+    type: 'service' as 'service' | 'job',
     name: '',
     countryCode: '+91',
     customCountryCode: '',
@@ -199,7 +200,10 @@ export default function SharedForm({ formId, buttonText, buttonIcon, onSuccess }
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          ...formState,
+          name: formState.name,
+          phone: formState.phone,
+          email: formState.email,
+          message: formState.message,
           countryCode: activeCountryCode,
         })
       });
@@ -234,8 +238,64 @@ export default function SharedForm({ formId, buttonText, buttonIcon, onSuccess }
     }
   };
 
+  const isJob = formState.type === 'job';
+  const isSubmitDisabled = submitStatus !== 'idle' || isJob;
+
   return (
     <form className="space-y-5 w-full" onSubmit={handleSubmit} onFocus={handleInteraction} onClick={handleInteraction} noValidate>
+      {/* Type Selection: Service vs Job (Radio Buttons) */}
+      <div className="space-y-2">
+        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400">
+          Inquiry Type
+        </label>
+        <div className="grid grid-cols-2 gap-3">
+          <label 
+            htmlFor={`${formId}-type-service`}
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg border cursor-pointer transition-all duration-200 ${
+              formState.type === 'service'
+                ? 'border-cyan-400/80 bg-cyan-950/20 text-white shadow-[0_0_15px_rgba(34,211,238,0.15)]'
+                : 'border-white/10 bg-[#030712] text-slate-400 hover:border-white/20 hover:text-slate-300'
+            }`}
+          >
+            <input
+              type="radio"
+              id={`${formId}-type-service`}
+              name={`${formId}-inquiry-type`}
+              value="service"
+              checked={formState.type === 'service'}
+              onChange={() => setFormState((prev) => ({ ...prev, type: 'service' }))}
+              className="accent-cyan-400 h-4 w-4 cursor-pointer"
+            />
+            <span className="text-sm font-semibold">Service</span>
+          </label>
+
+          <label 
+            htmlFor={`${formId}-type-job`}
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg border cursor-pointer transition-all duration-200 ${
+              formState.type === 'job'
+                ? 'border-cyan-400/80 bg-cyan-950/20 text-white shadow-[0_0_15px_rgba(34,211,238,0.15)]'
+                : 'border-white/10 bg-[#030712] text-slate-400 hover:border-white/20 hover:text-slate-300'
+            }`}
+          >
+            <input
+              type="radio"
+              id={`${formId}-type-job`}
+              name={`${formId}-inquiry-type`}
+              value="job"
+              checked={formState.type === 'job'}
+              onChange={() => setFormState((prev) => ({ ...prev, type: 'job' }))}
+              className="accent-cyan-400 h-4 w-4 cursor-pointer"
+            />
+            <span className="text-sm font-semibold">Job</span>
+          </label>
+        </div>
+        {isJob && (
+          <p className="mt-2 text-xs text-amber-400/90 bg-amber-500/10 border border-amber-500/20 rounded-md px-3 py-2 animate-[fadeIn_0.2s_ease-out]">
+            Notice: We are currently not accepting job applications through this form. Submission is disabled.
+          </p>
+        )}
+      </div>
+
       {/* Full Name */}
       <div className="relative group/field">
         <input 
@@ -341,16 +401,33 @@ export default function SharedForm({ formId, buttonText, buttonIcon, onSuccess }
 
       {/* Submit Button */}
       <div className="relative group/submitbtn mt-6">
-        <div className="absolute -inset-1 bg-linear-to-r from-cyan-400 to-indigo-500 rounded-lg blur opacity-60 animate-pulse group-hover/submitbtn:opacity-100 transition duration-500"></div>
+        {!isJob && (
+          <div className="absolute -inset-1 bg-linear-to-r from-cyan-400 to-indigo-500 rounded-lg blur opacity-60 animate-pulse group-hover/submitbtn:opacity-100 transition duration-500"></div>
+        )}
         <button 
-          disabled={submitStatus !== 'idle'} 
-          className={`w-full relative overflow-hidden rounded-lg py-4 font-black tracking-widest uppercase text-xs md:text-sm transition-all duration-300 flex items-center justify-center gap-2 border border-transparent hover:border-cyan-400 active:scale-95 disabled:opacity-90 disabled:cursor-not-allowed ${submitStatus !== 'idle' ? 'text-white' : 'bg-white text-[#0A0F1C] hover:text-white'}`}
+          type="submit"
+          disabled={isSubmitDisabled} 
+          className={`w-full relative overflow-hidden rounded-lg py-4 font-black tracking-widest uppercase text-xs md:text-sm transition-all duration-300 flex items-center justify-center gap-2 border border-transparent ${
+            isJob
+              ? 'bg-slate-800/80 text-slate-500 border-white/5 cursor-not-allowed opacity-60'
+              : submitStatus !== 'idle'
+              ? 'text-white border-transparent disabled:opacity-90 disabled:cursor-not-allowed'
+              : 'bg-white text-[#0A0F1C] hover:text-white hover:border-cyan-400 active:scale-95'
+          }`}
         >
-          <div className={`absolute inset-0 bg-linear-to-r from-cyan-500 to-indigo-600 transform transition-transform duration-300 ease-in-out ${submitStatus !== 'idle' ? 'translate-y-0' : 'translate-y-full group-hover/submitbtn:translate-y-0'}`}></div>
+          {!isJob && (
+            <div className={`absolute inset-0 bg-linear-to-r from-cyan-500 to-indigo-600 transform transition-transform duration-300 ease-in-out ${submitStatus !== 'idle' ? 'translate-y-0' : 'translate-y-full group-hover/submitbtn:translate-y-0'}`}></div>
+          )}
           <span className="relative z-10 flex items-center justify-center gap-2 drop-shadow-md">
-            {submitStatus === 'idle' && <><span className="relative z-10">{buttonText}</span> {buttonIcon || defaultIcon}</>}
-            {submitStatus === 'loading' && <><Loader2 className="h-5 w-5 animate-spin text-white" /> <span>Sending...</span></>}
-            {submitStatus === 'success' && <><Check className="h-5 w-5 text-emerald-300" /> <span className="text-white relative z-10">Request Received!</span></>}
+            {isJob ? (
+              <span>Submissions Closed for Jobs</span>
+            ) : (
+              <>
+                {submitStatus === 'idle' && <><span className="relative z-10">{buttonText}</span> {buttonIcon || defaultIcon}</>}
+                {submitStatus === 'loading' && <><Loader2 className="h-5 w-5 animate-spin text-white" /> <span>Sending...</span></>}
+                {submitStatus === 'success' && <><Check className="h-5 w-5 text-emerald-300" /> <span className="text-white relative z-10">Request Received!</span></>}
+              </>
+            )}
           </span>
         </button>
       </div>
